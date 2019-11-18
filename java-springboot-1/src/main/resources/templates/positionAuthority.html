@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>店铺管理</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="robots" content="all,follow">
+		<!-- Bootstrap CSS-->
+
+		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+
+		<!-- Font Awesome CSS-->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+		<!-- Google fonts - Popppins for copy-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,800">
+		<!-- orion icons-->
+		<link rel="stylesheet" href="css/orionicons.css">
+		<!-- theme stylesheet-->
+		<link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+		<!-- Custom stylesheet - for your changes-->
+		<link rel="stylesheet" href="css/custom.css">
+		<!-- Favicon-->
+		<link rel="shortcut icon" href="img/favicon.png?3">
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css" />
+		<style type="text/css">
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			tr td:last-child:hover {
+				cursor: pointer;
+			}
+			
+			thead th {
+				text-align: center;
+			}
+		</style>
+
+		<!-- Tweaks for older IEs-->
+		<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+
+		<!-- JavaScript files-->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<!--<script src="vendor/popper.js/umd/popper.min.js"></script>
+		<script src="vendor/jquery.cookie/jquery.cookie.js"></script>
+		<script src="vendor/chart.js/Chart.min.js"></script>
+		<script src="js/js.cookie.min.js"></script>
+		<script src="js/front.js"></script>-->
+		<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+	</head>
+
+	<body>
+		<!-- 头部-->
+		<header class="header">
+			<nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
+				<a href="#" class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead">
+					<i class="fas fa-align-left"></i>
+				</a>
+				<a href="index.html" class="navbar-brand font-weight-bold text-uppercase text-base">日进斗金管理系统</a>
+				<ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+					<li class="nav-item dropdown ml-auto">
+						<a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="img/avatar-6.jpg" alt="Jason Doe" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
+						<div aria-labelledby="userInfo" class="dropdown-menu">
+							<a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">Mark
+									Stephen</strong><small>Web Developer</small></a>
+							<div class="dropdown-divider"></div>
+							<a href="#" class="dropdown-item">Settings</a>
+							<a href="#" class="dropdown-item">Activity log </a>
+							<div class="dropdown-divider"></div>
+							<a href="login.html" class="dropdown-item">Logout</a>
+						</div>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<!-- 左侧导航栏 -->
+		<div class="d-flex align-items-stretch">
+			<div id="sidebar" class="sidebar py-3">
+				<div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">MAIN</div>
+				<ul class="sidebar-menu list-unstyled">
+					<li class="sidebar-list-item "><a th:href="@{/index}" class="sidebar-link text-muted active"><i class="o-home-1 mr-3 text-gray"></i><span>用户信息</span></a></li>
+					<li class="sidebar-list-item "><a th:href="@{/collect}" class="sidebar-link text-muted"><i class="o-sales-up-1 mr-3 text-gray"></i><span>收银</span></a></li>
+					<li class="sidebar-list-item">
+						<a href="javascript:void(0)" data-toggle="collapse" data-target="#shop" aria-expanded="false" aria-controls="shop"
+						 class="sidebar-link text-muted">
+							<i class="o-wireframe-1 mr-3 text-gray"></i><span>店铺</span>
+						</a>
+						<div id="shop" class="collapse">
+							<ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
+								<li class="sidebar-list-item"><a th:href="@{/shopManagement}" class="sidebar-link text-muted pl-lg-5">店铺管理</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/positionAuthority}" class="sidebar-link text-muted pl-lg-5">职位权限</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/authorityManagement}" class="sidebar-link text-muted pl-lg-5">权限管理</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/staffManagement}" class="sidebar-link text-muted pl-lg-5">员工管理</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="sidebar-list-item">
+						<a href="javascript:void(0)" data-toggle="collapse" data-target="#pro" aria-expanded="false" aria-controls="pro"
+						 class="sidebar-link text-muted">
+							<i class="o-wireframe-1 mr-3 text-gray"></i><span>商品</span>
+						</a>
+						<div id="pro" class="collapse">
+							<ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
+								<li class="sidebar-list-item"><a th:href="@{/proType}" class="sidebar-link text-muted pl-lg-5">商品类别</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/proManagement}" class="sidebar-link text-muted pl-lg-5">商品管理</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/proUploading}" class="sidebar-link text-muted pl-lg-5">商品上传</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/supplier}" class="sidebar-link text-muted pl-lg-5">供应商</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/purchase}" class="sidebar-link text-muted pl-lg-5">采购单</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="sidebar-list-item">
+						<a href="javascript:void(0)" data-toggle="collapse" data-target="#vip" aria-expanded="false" aria-controls="vip"
+						 class="sidebar-link text-muted">
+							<i class="o-wireframe-1 mr-3 text-gray"></i><span>会员</span>
+						</a>
+						<div id="vip" class="collapse">
+							<ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
+								<li class="sidebar-list-item"><a th:href="@{/vipInfo}" class="sidebar-link text-muted pl-lg-5">会员信息</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/levelSetting}" class="sidebar-link text-muted pl-lg-5">等级设置</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/integralSetting}" class="sidebar-link text-muted pl-lg-5">积分设置</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/chargingOffset}" class="sidebar-link text-muted pl-lg-5">充值抵扣</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/transactionRecord}" class="sidebar-link text-muted pl-lg-5">成交记录</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="sidebar-list-item"><a th:href="@{/login}" class="sidebar-link text-muted"><i class="o-exit-1 mr-3 text-gray"></i><span>注销</span></a></li>
+				</ul>
+			</div>
+			<!-- 右侧主体 -->
+			<div class="page-holder w-100 d-flex flex-wrap">
+				<div class="container-fluid px-xl-5">
+					<!-- 自己的页面内容 -->
+					<div class="position-content" style="margin-top: 30px;">
+						<span style="font-family: '微软雅黑';font-size: 20px;">职位权限</span>
+						<button class="btn btn-success" style="float: right;position: relative;top: -10px;" data-toggle="modal" data-target="#myModal">添加职位</button>
+						<!-- 模态框（Modal） -->
+					</div>
+					<hr />
+					<table class="table table-hover" style="text-align: center;">
+						<thead>
+							<th>序号</th>
+							<th>名称</th>
+							<th>操作</th>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>店长</td>
+								<td data-toggle="modal" data-target="#myModal1">编辑</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!--新增模态框-->
+				<div class="modal " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content" style="width: 700px;margin-left: -100px;">
+							<div class="modal-header" style="width: 700px;">
+
+								<h4 class="modal-title" id="myModalLabel">添加职位</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -11px;">&times;</button>
+							</div>
+							<div class="modal-body" style="width: 700px;">
+								<form role="form">
+									<div class="form-group">
+										<label for="name">职位名称：</label>
+										<input type="text" class="form-control" id="name" placeholder="" style="width: 220px;">
+									</div>
+
+									<div class="form-group">
+										<label for="name">职位权限：</label>
+										<div class="" style="margin-left: 50px;">
+											<p style="font-family: Consolas Consolas;font-size: 16px;">销售：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 收银开单
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 编辑订单
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 删除订单
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1"> 操作发货
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios4"  value="option2">查看订单
+											    </label>
+											</p>
+
+											<p style="font-family: Consolas Consolas;font-size: 16px;">报表：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 营收概况
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 热销商品
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 业绩排名
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 月损益表
+											    </label>
+
+											</p>
+											<p style="font-family: Consolas Consolas;font-size: 16px;">会员：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 增加会员
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 编辑会员
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 删除会员
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 会员充值
+											    </label>
+											</p>
+											<p style="font-family: Consolas Consolas;font-size: 16px;">商品：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 增加商品
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 编辑商品
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 删除商品
+											    </label>
+
+											</p>
+											<p style="font-family: Consolas Consolas;font-size: 16px;">库存：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 入仓单
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 出货单
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 调拨单
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 退货单
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios4"  value="option2">报损单
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios4"  value="option2">报点单
+											    </label>
+											</p>
+											<p style="font-family: Consolas Consolas;font-size: 16px;">采购：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 供应商
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 订货会
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 采购单
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 合同深刻
+											    </label>
+											</p>
+											<p style="font-family: Consolas Consolas;font-size: 16px;">店铺：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 店铺信息
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 职位权限
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 员工管理
+											    </label>
+
+											</p>
+										</div>
+
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer" style="width: 700px;">
+								<button type="button" class="btn btn-default" data-dismiss="modal" style="background: white;color: black;" id="btn">取消</button>
+								<button type="button" class="btn btn-success">确定</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal -->
+				</div>
+
+				<!--编辑模态框-->
+				<div class="modal " id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content" style="width: 700px;margin-left: -100px;">
+							<div class="modal-header" style="width: 700px;">
+
+								<h4 class="modal-title" id="myModalLabel">编辑职位</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -11px;">&times;</button>
+							</div>
+							<div class="modal-body" style="width: 700px;">
+								<form role="form">
+									<div class="form-group">
+										<label for="name">职位名称：</label>
+										<input type="text" class="form-control" id="name" placeholder="" style="width: 220px;">
+									</div>
+
+									<div class="form-group">
+										<label for="name">职位权限：</label>
+										<div class="" style="margin-left: 50px;">
+											<p style="font-family: Consolas Consolas;font-size: 16px;">销售：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 收银开单
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 编辑订单
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 删除订单
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 操作发货
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios4"  value="option2">查看订单
+											    </label>
+											</p>
+
+											<p style="font-family: Consolas Consolas;font-size: 16px;">报表：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 营收概况
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 热销商品
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 业绩排名
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 月损益表
+											    </label>
+
+											</p>
+											<p style="font-family: Consolas Consolas;font-size: 16px;">会员：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 增加会员
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 编辑会员
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 删除会员
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 会员充值
+											    </label>
+											</p>
+											<p style="font-family: Consolas Consolas;font-size: 16px;">商品：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 增加商品
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 编辑商品
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 删除商品
+											    </label>
+
+											</p>
+											<p style="font-family: Consolas Consolas;font-size: 16px;">库存：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 入仓单
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 出货单
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 调拨单
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 退货单
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios4"  value="option2">报损单
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios4"  value="option2">报点单
+											    </label>
+											</p>
+											<p style="font-family: Consolas Consolas;font-size: 16px;">采购：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 供应商
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 订货会
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 采购单
+											    </label>
+												<label class="radio-inline">
+											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 合同深刻
+											    </label>
+											</p>
+											<p style="font-family: Consolas Consolas;font-size: 16px;">店铺：
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 店铺信息
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 职位权限
+											    </label>
+												<label class="checkbox-inline">
+											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 员工管理
+											    </label>
+
+											</p>
+										</div>
+
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer" style="width: 700px;">
+								<button type="button" class="btn btn-default" data-dismiss="modal" style="background: white;color: black;">取消</button>
+								<button type="button" class="btn btn-danger">删除</button>
+								<button type="button" class="btn btn-success">确定</button>
+							</div>
+						</div>
+						<!-- /.modal-content -->
+					</div>
+					<!-- /.modal -->
+				</div>
+	</body>
+
+</html>

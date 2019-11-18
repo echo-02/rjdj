@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>采购单</title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="robots" content="all,follow">
+		<!-- Bootstrap CSS-->
+		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+		<!-- Font Awesome CSS-->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+		 crossorigin="anonymous">
+		<!-- Google fonts - Popppins for copy-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,800">
+		<!-- orion icons-->
+		<link rel="stylesheet" href="css/orionicons.css">
+		<!-- theme stylesheet-->
+		<link rel="stylesheet" href="css/style.default.css" id="theme-stylesheet">
+		<!-- Custom stylesheet - for your changes-->
+		<link rel="stylesheet" href="css/custom.css">
+		<!-- Favicon-->
+		<link rel="shortcut icon" href="img/favicon.png?3">
+		<!-- Tweaks for older IEs-->
+		<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+		<style>
+			.addpur{
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 头部-->
+		<header class="header">
+			<nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
+				<a href="#" class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead">
+					<i class="fas fa-align-left"></i>
+				</a>
+				<a href="index.html" class="navbar-brand font-weight-bold text-uppercase text-base">日进斗金管理系统</a>
+				<ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
+					<li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown"
+						 aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="img/avatar-6.jpg" alt="Jason Doe"
+							 style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
+						<div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">Mark
+									Stephen</strong><small>Web Developer</small></a>
+							<div class="dropdown-divider"></div><a href="#" class="dropdown-item">Settings</a><a href="#" class="dropdown-item">Activity
+								log </a>
+							<div class="dropdown-divider"></div><a href="login.html" class="dropdown-item">Logout</a>
+						</div>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<!-- 左侧导航栏 -->
+		<div class="d-flex align-items-stretch">
+			<div id="sidebar" class="sidebar py-3">
+				<div class="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">MAIN</div>
+				<ul class="sidebar-menu list-unstyled">
+					<li class="sidebar-list-item "><a th:href="@{/index}" class="sidebar-link text-muted active"><i class="o-home-1 mr-3 text-gray"></i><span>用户信息</span></a></li>
+					<li class="sidebar-list-item "><a th:href="@{/collect}" class="sidebar-link text-muted"><i class="o-sales-up-1 mr-3 text-gray"></i><span>收银</span></a></li>
+					<li class="sidebar-list-item">
+						<a href="javascript:void(0)" data-toggle="collapse" data-target="#shop" aria-expanded="false" aria-controls="shop"
+						 class="sidebar-link text-muted">
+							<i class="o-wireframe-1 mr-3 text-gray"></i><span>店铺</span>
+						</a>
+						<div id="shop" class="collapse">
+							<ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
+								<li class="sidebar-list-item"><a th:href="@{/shopManagement}" class="sidebar-link text-muted pl-lg-5">店铺管理</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/positionAuthority}" class="sidebar-link text-muted pl-lg-5">职位权限</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/authorityManagement}" class="sidebar-link text-muted pl-lg-5">权限管理</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/staffManagement}" class="sidebar-link text-muted pl-lg-5">员工管理</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="sidebar-list-item">
+						<a href="javascript:void(0)" data-toggle="collapse" data-target="#pro" aria-expanded="false" aria-controls="pro"
+						 class="sidebar-link text-muted">
+							<i class="o-wireframe-1 mr-3 text-gray"></i><span>商品</span>
+						</a>
+						<div id="pro" class="collapse">
+							<ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
+								<li class="sidebar-list-item"><a th:href="@{/proType}" class="sidebar-link text-muted pl-lg-5">商品类别</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/proManagement}" class="sidebar-link text-muted pl-lg-5">商品管理</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/proUploading}" class="sidebar-link text-muted pl-lg-5">商品上传</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/supplier}" class="sidebar-link text-muted pl-lg-5">供应商</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/purchase}" class="sidebar-link text-muted pl-lg-5">采购单</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="sidebar-list-item">
+						<a href="javascript:void(0)" data-toggle="collapse" data-target="#vip" aria-expanded="false" aria-controls="vip"
+						 class="sidebar-link text-muted">
+							<i class="o-wireframe-1 mr-3 text-gray"></i><span>会员</span>
+						</a>
+						<div id="vip" class="collapse">
+							<ul class="sidebar-menu list-unstyled border-left border-primary border-thick">
+								<li class="sidebar-list-item"><a th:href="@{/vipInfo}" class="sidebar-link text-muted pl-lg-5">会员信息</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/levelSetting}" class="sidebar-link text-muted pl-lg-5">等级设置</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/integralSetting}" class="sidebar-link text-muted pl-lg-5">积分设置</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/chargingOffset}" class="sidebar-link text-muted pl-lg-5">充值抵扣</a></li>
+								<li class="sidebar-list-item"><a th:href="@{/transactionRecord}" class="sidebar-link text-muted pl-lg-5">成交记录</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="sidebar-list-item"><a th:href="@{/login}" class="sidebar-link text-muted"><i class="o-exit-1 mr-3 text-gray"></i><span>注销</span></a></li>
+				</ul>
+			</div>
+			<!-- 右侧主体 -->
+			<div class="page-holder w-100 d-flex flex-wrap">
+				<div class="container-fluid px-xl-5">
+					<!-- 自己的页面内容 -->
+					<div class="row purhead">
+						<p class="col-md-4">采购单</p>
+						<div class="col-md-4">
+							<input type="date" name="startseachtime" />
+							-
+							<input type="date" name="endseachtime" />
+						</div>
+						<div class="col-md-2">
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="查找" name="seachContext">
+								<button class="btn-default" type="button">Go!</button>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<button type="button" class="btn btn-info" onclick="openaddpur()">新建采购单</button>
+						</div>
+					</div>
+					<div class="row purcontent">
+						<table class="table table-striped text-center">
+							<tr>
+								<td>序号</td>
+								<td>审核</td>
+								<td>采购单号</td>
+								<td>交货期</td>
+								<td>供应商</td>
+								<td>数量</td>
+								<td>金额</td>
+								<td>备注</td>
+								<td>操作</td>
+							</tr>
+							<tr>
+								<td>1</td>
+								<td>审核中</td>
+								<td>10001</td>
+								<td>2019-11-1</td>
+								<td>供应商1</td>
+								<td>10</td>
+								<td>10000</td>
+								<td>无</td>
+								<td>
+									<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#purModel">审核</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="addpur">
+						<p>新建采购单</p>
+						<hr />
+						<div>
+							<form class="form-inline">
+								<div class="form-group">
+									<label>单号</label>
+									<input class="form-control" name="" />
+								</div>
+								<div class="form-group">
+									<label>交期</label>
+									<input class="form-control" type="date" name="" />
+								</div>
+								<div class="form-group">
+									<label>供应商</label>
+									<select class="form-control">
+										<option>供应商1</option>
+										<option>供应商1</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label>制表人</label>
+									<input class="form-control" name="" />
+								</div>
+							</form>
+							<div class="form-group">
+								<label>备注</label>
+								<input class="form-control" name="" />
+							</div>
+						</div>
+						<div>
+							<table class="table table-bordered text-center">
+								<thead>
+									<tr>
+										<td>货号</td>
+										<td>条码</td>
+										<td>产品名称</td>
+										<td>规格</td>
+										<td>成本价</td>
+										<td>数量</td>
+										<td>金额</td>
+									</tr>
+								</thead>
+								<tbody id="newpurdels">
+									<tr>
+										<td>0001</td>
+										<td>123484</td>
+										<td>皮大衣</td>
+										<td>--</td>
+										<td>
+											<span class="price">50.0</span>
+										</td>
+										<td>
+											<input name="nums" type="number" onchange="getSum()" min="0" />
+										</td>
+										<td>
+											<span class="money"></span>
+										</td>
+									</tr>
+									<tr>
+										<td>0001</td>
+										<td>123484</td>
+										<td>皮大衣</td>
+										<td>--</td>
+										<td>
+											<span class="price">50.0</span>
+										</td>
+										<td>
+											<input name="nums" type="number" onchange="getSum()" min="0" />
+										</td>
+										<td>
+											<span class="money"></span>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<p>合计<span id="nums" class="text-red"></span>件，金额<span id="sums" class="text-red"></span></p>
+							<button class="btn btn-blue" data-toggle="modal" data-target="#addproModel">添加商品</button>
+							<button class="btn btn-default" onclick="canceladd()">取消</button>
+							<button class="btn btn-success" onclick="addpur()">确认</button>
+						</div>
+					</div>
+				</div>
+				<footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
+					<div class="container-fluid">
+						<div class="row">
+						</div>
+					</div>
+				</footer>
+			</div>
+		</div>
+		<!-- 模态框 -->
+		<div class="modal fade" tabindex="-1" role="dialog" id="purModel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">采购审核</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					</div>
+					<div class="modal-body text-center">
+						<div class="row">
+							<p>采购单号：<span class="modelpurid">1001</span></p>
+						</div>
+						<table class="table table-info">
+							<tr>
+								<td>货号/条码</td>
+								<td>商品</td>
+								<td>规格</td>
+								<td>单价</td>
+								<td>数量</td>
+							</tr>
+							<tr>
+								<td>001/15648</td>
+								<td>皮大衣</td>
+								<td>--</td>
+								<td>50.0</td>
+								<td>100</td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" id="saveProType">确认</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<div class="modal fade" tabindex="-1" role="dialog" id="addproModel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">添加货物</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					</div>
+					<div class="modal-body text-center">
+						<table class="table table-info">
+							<tr>
+								<td>选择</td>
+								<td>货号/条码</td>
+								<td>商品</td>
+								<td>规格</td>
+								<td>单价</td>
+								<td>库存</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="checkbox" name="ck" />
+								</td>
+								<td>001/123548</td>
+								<td>皮大衣</td>
+								<td>--</td>
+								<td>50.0</td>
+								<td>50</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="checkbox" name="ck" />
+								</td>
+								<td>001/123548</td>
+								<td>皮大衣</td>
+								<td>--</td>
+								<td>50.0</td>
+								<td>50</td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" id="saveProType1">确认</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<!-- JavaScript files-->
+		<script src="vendor/jquery/jquery.min.js"></script>
+		<script src="vendor/popper.js/umd/popper.min.js"> </script>
+		<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+		<script src="vendor/jquery.cookie/jquery.cookie.js"> </script>
+		<script src="vendor/chart.js/Chart.min.js"></script>
+		<script src="js/js.cookie.min.js"></script>
+		<script src="js/front.js"></script>
+		<script>
+			function openaddpur() {
+				$(".purhead").hide();
+				$(".purcontent").hide();
+				$(".addpur").show();
+			};
+			function canceladd() {
+				$(".purhead").show();
+				$(".purcontent").show();
+				$(".addpur").hide();
+			};
+			function addpur() {
+				$(".purhead").show();
+				$(".purcontent").show();
+				$(".addpur").hide();
+			};
+			/* 计算 */
+			function getSum(){
+				let sums=0;
+				let count=0;
+				$("#newpurdels tr").each(function(){
+					let price=$(this).find(".price").html();
+					let num=$(this).find("input").val();
+					let sum=price*num;
+					$(this).find(".money").html(sum);
+					sums+=Number(sum);
+					count+=Number(num);
+				});
+				$("#nums").html(count);
+				$("#sums").html(sums);
+			}
+		</script>
+	</body>
+</html>

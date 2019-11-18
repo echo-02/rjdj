@@ -1,0 +1,38 @@
+*{
+	font-family: "黑体";
+	font-size: 16px;
+	padding: 0;
+	margin: 0;
+}
+.userinfo{
+	padding-top: 20px;
+	
+}
+.user-content{
+	margin: 100px 0 0 100px;
+	float: left;
+}
+.user-img{
+	position: ;
+	float: left;
+}
+.user-img span{
+	float: right;
+	margin: 200px 0 0 -200px ;
+	position: absolute;
+}
+.user-content-i{
+	float: right;
+	margin-left: 40px;
+}
+.user-content-i p:first-child{
+	font-weight: 700;
+}
+#img:hover{
+	cursor: pointer;
+	
+}
+.user-img span{
+	margin-left: -136px;
+	cursor: pointer;
+}

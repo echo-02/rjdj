@@ -1,0 +1,32 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+.shop-content{
+	margin-top: 30px;
+}
+.span{
+	font-size: 18px;
+	font-family: 宋体;
+}
+.shop-span{
+	margin-top: 10px;
+}
+#btn-success{
+	float: right;
+	position: relative;top: -7px;
+}
+tr td:last-child:hover{
+	cursor: pointer;
+}
+.shop-content-div{
+	width: 4px;
+	height: 18px;
+	/*border: 1px solid red;*/
+	background-color: forestgreen;
+	float: left;
+	margin-top: 3px;
+}
+thead th{
+	text-align: center;
+}

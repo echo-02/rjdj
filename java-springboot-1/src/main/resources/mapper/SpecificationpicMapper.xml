@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.accp.mapper.SpecificationpicMapper" >
+  <resultMap id="BaseResultMap" type="com.accp.domain.Specificationpic" >
+    <id column="scpicid" property="scpicid" jdbcType="INTEGER" />
+    <result column="sfdid" property="sfdid" jdbcType="INTEGER" />
+    <result column="scpicname" property="scpicname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    scpicid, sfdid, scpicname
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.accp.domain.SpecificationpicExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from specificationpic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from specificationpic
+    where scpicid = #{scpicid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from specificationpic
+    where scpicid = #{scpicid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.accp.domain.SpecificationpicExample" >
+    delete from specificationpic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.accp.domain.Specificationpic" >
+    insert into specificationpic (scpicid, sfdid, scpicname
+      )
+    values (#{scpicid,jdbcType=INTEGER}, #{sfdid,jdbcType=INTEGER}, #{scpicname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.accp.domain.Specificationpic" >
+    insert into specificationpic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scpicid != null" >
+        scpicid,
+      </if>
+      <if test="sfdid != null" >
+        sfdid,
+      </if>
+      <if test="scpicname != null" >
+        scpicname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scpicid != null" >
+        #{scpicid,jdbcType=INTEGER},
+      </if>
+      <if test="sfdid != null" >
+        #{sfdid,jdbcType=INTEGER},
+      </if>
+      <if test="scpicname != null" >
+        #{scpicname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.accp.domain.SpecificationpicExample" resultType="java.lang.Integer" >
+    select count(*) from specificationpic
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update specificationpic
+    <set >
+      <if test="record.scpicid != null" >
+        scpicid = #{record.scpicid,jdbcType=INTEGER},
+      </if>
+      <if test="record.sfdid != null" >
+        sfdid = #{record.sfdid,jdbcType=INTEGER},
+      </if>
+      <if test="record.scpicname != null" >
+        scpicname = #{record.scpicname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update specificationpic
+    set scpicid = #{record.scpicid,jdbcType=INTEGER},
+      sfdid = #{record.sfdid,jdbcType=INTEGER},
+      scpicname = #{record.scpicname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.accp.domain.Specificationpic" >
+    update specificationpic
+    <set >
+      <if test="sfdid != null" >
+        sfdid = #{sfdid,jdbcType=INTEGER},
+      </if>
+      <if test="scpicname != null" >
+        scpicname = #{scpicname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where scpicid = #{scpicid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.accp.domain.Specificationpic" >
+    update specificationpic
+    set sfdid = #{sfdid,jdbcType=INTEGER},
+      scpicname = #{scpicname,jdbcType=VARCHAR}
+    where scpicid = #{scpicid,jdbcType=INTEGER}
+  </update>
+</mapper>

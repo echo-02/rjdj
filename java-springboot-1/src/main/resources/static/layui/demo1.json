@@ -1,0 +1,25 @@
+{
+  "code": 0,
+  "msg": "",
+  "count": 15,
+  "data": [
+    {
+      "id": "1",
+      "username": "上衣",
+      "email": "M",
+      "imgsrc":"layui/1.jpg",
+      "experience":"100",
+      "sex": "1"
+    
+    },{
+      "id": "2",
+      "username": "上衣",
+      "email": "M",
+      "imgsrc":"layui/2.png",
+      "experience":"100",
+      "sex": "1"
+    
+    }
+    
+  ]
+}
