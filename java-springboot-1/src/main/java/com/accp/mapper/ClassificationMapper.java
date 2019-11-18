@@ -6,7 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface ClassificationMapper {
-    int countByExample(ClassificationExample example);
+	int removeProType(Integer id);
+   
+	int countByExample(ClassificationExample example);
 
     int deleteByExample(ClassificationExample example);
 

@@ -6,6 +6,10 @@
     <result column="cfname" property="cfname" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
+  <!-- 软删除类别 -->
+  <update id="removeProType" >
+    UPDATE classification SET `status`=1 WHERE cfid=#{id}
+  </update>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

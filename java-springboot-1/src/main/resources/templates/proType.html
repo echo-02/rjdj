@@ -113,27 +113,23 @@
 					</div>
 					<div class="row">
 						<table class="table text-center">
-							<tr>
-								<td>序号</td>
-								<td>名称</td>
-								<td>操作</td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>上衣</td>
-								<td>
-									<a href="javascript:void(0)" onclick="showModel()">修改</a>
-									<a href="javascript:void(0)">删除</a>
-								</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>裤子</td>
-								<td>
-									<a href="javascript:void(0)" onclick="showModel()">修改</a>
-									<a href="javascript:void(0)">删除</a>
-								</td>
-							</tr>
+							<thead>
+								<tr>
+									<td>序号</td>
+									<td>名称</td>
+									<td>操作</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>上衣</td>
+									<td>
+										<a href="javascript:void(0)" onclick="showModel(id)">修改</a>
+										<a href="javascript:void(0)" onclick="delProType(id)">删除</a>
+									</td>
+								</tr>
+							</tbody>
 						</table>
 					</div>
 				</div>
@@ -155,17 +151,42 @@
 					<div class="modal-body">
 						<form class="form-horizontal">
 							<div class="form-group row">
-								<input type="hidden" name="typeId"/>
+								<input type="hidden" name="status" value="0"/>
 								<label for="proTypeName" class="col-sm-2 control-label">名称</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" id="proTypeName" name="proTypeName">
+									<input type="text" class="form-control" name="cfname">
 								</div>
 							</div>
 						</form>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						<button type="button" class="btn btn-primary" id="saveProType">保存</button>
+						<button type="button" class="btn btn-primary" id="addProType" onclick="addProType()">保存</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<div class="modal fade" tabindex="-1" role="dialog" id="updateProTypeModel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title">修改类别</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					</div>
+					<div class="modal-body">
+						<form class="form-horizontal">
+							<div class="form-group row">
+								<input type="hidden" name="cfid"/>
+								<label for="proTypeName" class="col-sm-2 control-label">名称</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="cfname">
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary" id="saveProType" onclick="saveProType()">保存</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
@@ -179,8 +200,80 @@
 		<script src="js/js.cookie.min.js"></script>
 		<script src="js/front.js"></script>
 		<script>
-			function showModel(){
-				$('#proTypeModel').modal('show')
+			$(function(){
+				getTypes();
+			});
+			/* 查询商品类别 */
+			function getTypes(){
+				$("tbody").empty();
+				$.getJSON("[[@{/Classification/getProTypes}]]",function(result){
+					/* console.info(result); */
+					$(result).each(function(i,obj){
+						let tr="<tr>"+
+							"<td>"+(i+1)+"</td>"+
+							"<td>"+obj.cfname+"</td>"+
+							"<td>"+
+								"<a href=\"javascript:void(0)\" onclick=\"showModel("+obj.cfid+")\">修改</a>"+
+								"<a href=\"javascript:void(0)\" onclick=\"delProType("+obj.cfid+")\">删除</a>"+
+							"</td>"+
+						"</tr>";
+						$("tbody").append(tr);
+					});
+				});
+			}
+			/* 打开修改框 */
+			function showModel(id){
+				$.getJSON("[[@{/Classification/getProTypeById}]]",{id:id},function(result){
+					/* console.info(result); */
+					$('#updateProTypeModel [name=cfid]').val(result.cfid);
+					$('#updateProTypeModel [name=cfname]').val(result.cfname);
+				})
+				$('#updateProTypeModel').modal('show');
+			};
+			/* 删除类别 */
+			function delProType(id){
+				let r = confirm("请确认删除。");
+				if(r==true){
+					/* console.info(id); */
+					$.post("[[@{/Classification/removeProType}]]",{id:id},function(){
+						getTypes();
+					});
+				};
+				
+			};
+			/* 新增类别 */
+			function addProType(){
+				let proType={};
+				let cfname=$("#proTypeModel [name=cfname]").val();
+				if(cfname==""){
+					alert("请输入类别名称");
+					return false;
+				}
+				let status=$("#proTypeModel [name=status]").val();
+				proType.cfname=cfname;
+				proType.status=status;
+				/* console.info(proType); */
+				$.post("[[@{/Classification/saveProType}]]",proType,function(){
+					$("#proTypeModel").modal('hide');
+					getTypes();
+				});
+			};
+			/* 修改类别 */
+			function saveProType(){
+				let proType={};
+				let cfname=$("#updateProTypeModel [name=cfname]").val();
+				if(cfname==""){
+					alert("请输入类别名称");
+					return false;
+				}
+				let cfid=$("#updateProTypeModel [name=cfid]").val();
+				proType.cfname=cfname;
+				proType.cfid=cfid;
+				/* console.info(proType); */
+				$.post("[[@{/Classification/updateProType}]]",proType,function(){
+					$("#updateProTypeModel").modal('hide');
+					getTypes();
+				});
 			}
 		</script>
 	</body>
