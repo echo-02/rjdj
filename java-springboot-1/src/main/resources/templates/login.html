@@ -38,12 +38,12 @@
 						<h1 class="text-base text-primary text-uppercase mb-4">日进斗金管理系统</h1>
 						<h2 class="mb-4">欢迎使用系统</h2>
 						<p class="text-muted">如需注册，请联系客服。</p>
-						<form id="loginForm" action="index.html" class="mt-4">
+						<form id="loginForm" action="" class="mt-4">
 							<div class="form-group mb-4">
 								<input type="text" name="username" placeholder="账号" class="form-control border-0 shadow form-control-lg">
 							</div>
 							<div class="form-group mb-4">
-								<input type="password" name="passowrd" placeholder="密码" class="form-control border-0 shadow form-control-lg text-violet">
+								<input type="password" name="password" placeholder="密码" class="form-control border-0 shadow form-control-lg text-violet">
 							</div>
 							<div class="form-group mb-4">
 								<input type="text" class="input-code form-control border-0 shadow form-control-lg" placeholder="验证码" name="yzm" id="yzm">
@@ -55,7 +55,7 @@
 									<label for="customCheck1" class="custom-control-label">记住密码</label>
 								</div>
 							</div>
-							<button type="submit" class="btn btn-primary shadow px-5" onclick="Login()">登录</button>
+							<button type="button" class="btn btn-primary shadow px-5" onclick="return Login()">登录</button>
 						</form>
 					</div>
 				</div>
@@ -81,19 +81,19 @@
 				if ($(this).val().toLowerCase() !== $('.code').children('input').val().toLowerCase()) {
 					alert('验证码不正确')
 				} else {
-					alert('验证通过')
+					
 				}
 			})
 			function Login(){
 				var bol=true;
 				var username=$("input[name='username']").val();
-				var passowrd=$("input[name='passowrd']").val();
+				var password=$("input[name='password']").val();
 				var yzm=$("input[name='yzm']").val();
 				if(username==""){
 					alert("账户不能为空");
 					return false;
 				}
-				if(passowrd==""){
+				if(password==""){
 					alert("密码不能为空");
 					return false;
 				}
@@ -102,6 +102,22 @@
 					return false;
 					$("#yzm").val("");	
 				}
+				$.ajax({
+					url:"[[@{/queryByNameAndPwd}]]",
+					type:"post",
+					data:{
+						username:username,
+						password:password
+					},
+					success:function(res){
+						if(res=="F"){
+							alert("账号或密码错误");
+						}else if(res=="T"){
+							location.href="/index";							
+						}
+					}
+				});
+				
 				return bol;
 			}
 		</script>

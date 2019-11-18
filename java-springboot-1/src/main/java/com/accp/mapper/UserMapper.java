@@ -4,6 +4,7 @@ import com.accp.domain.User;
 import com.accp.domain.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 public interface UserMapper {
     int countByExample(UserExample example);
@@ -16,7 +17,7 @@ public interface UserMapper {
 
     int insertSelective(User record);
 
-    List<User> selectByExample(UserExample example);
+    User selectByExample(UserExample example);
 
     User selectByPrimaryKey(Integer userid);
 
@@ -27,4 +28,5 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+    
 }

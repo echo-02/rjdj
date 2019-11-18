@@ -122,7 +122,8 @@
 				</ul>
 			</div>
 			<!-- 右侧主体 -->
-			<div class="page-holder w-100 d-flex flex-wrap">
+			<div id="shopContent">
+			   	<div class="page-holder w-100 d-flex flex-wrap">
 				<div class="container-fluid px-xl-5">
 					<!-- 自己的页面内容 -->
 					<div class="shop-content">
@@ -142,8 +143,8 @@
 								<th>操作</th>
 							</thead>
 							<tbody>
-								<tr>
-									<td>001</td>
+								<tr v-for="s in shop">
+									<td>{{s.emid}}</td>
 									<td>1111</td>
 									<td>豆花妈妈</td>
 									<td>小二</td>
@@ -165,6 +166,8 @@
 				</footer>
 			</div>
 		</div>
+			</div>
+		
 
 		<!--新增模态框-->
 		<div class="modal " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -275,6 +278,30 @@
 
 				}
 			}
+		</script>
+		<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+		<script type="text/javascript" th:src="@{/js/vue.js}"></script>
+		<script type="text/javascript">
+		   var shopVm=new Vue({
+			   el:'#shopContent',
+			   data(){
+				   return{
+					   shop:[]
+				   }
+			   },
+			   methods:{},
+			   created:function(){
+				   var t=this;
+				   $.ajax({
+					   url:"[[@{/queryAllShop}]]",
+					   success:function(res){
+						   alert(JSON.stringify(res));
+						   t.shop=res;
+					   }
+				   });
+			   }
+			   
+		   });
 		</script>
 	</body>
 
