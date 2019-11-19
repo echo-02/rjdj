@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface SupplierMapper {
+	int removeSupplier(Integer id);
+	
     int countByExample(SupplierExample example);
 
     int deleteByExample(SupplierExample example);

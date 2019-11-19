@@ -128,50 +128,42 @@
 						<div class="col-md-2">
 							<div class="input-group">
 								<input type="text" class="form-control" placeholder="查找" name="seachContext">
-								<button class="btn-default" type="button">Go!</button>
+								<button class="btn-default" type="button" id="seachBtn">Go!</button>
 							</div>
 						</div>
 						<button type="button" class="btn btn-primary col-md-2" data-toggle="modal" data-target="#supplierModel">添加供应商</button>
 					</div>
 					<div class="row">
 						<table class="table table-striped text-center">
-							<tr>
-								<td>序号</td>
-								<td>简称</td>
-								<td>公司名称</td>
-								<td>联系人</td>
-								<td>手机</td>
-								<td>电话</td>
-								<td>邮箱</td>
-								<td>地区</td>
-								<td>操作</td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>北大</td>
-								<td>北大青鸟</td>
-								<td>小徐</td>
-								<td>12345678911</td>
-								<td>0731-288****11</td>
-								<td>185********@qq.com</td>
-								<td>湖南省株洲市石峰区</td>
-								<td>
-									<button type="button" class="btn btn-info" onclick="showModel()">修改</button>
-								</td>
-							</tr>
-							<tr>
-								<td>1</td>
-								<td>北大</td>
-								<td>北大青鸟</td>
-								<td>小徐</td>
-								<td>12345678911</td>
-								<td>0731-288****11</td>
-								<td>185********@qq.com</td>
-								<td>湖南省株洲市石峰区</td>
-								<td>
-									<button type="button" class="btn btn-info" onclick="showModel()">修改</button>
-								</td>
-							</tr>
+							<thead>
+								<tr>
+									<td>序号</td>
+									<td>简称</td>
+									<td>公司名称</td>
+									<td>联系人</td>
+									<td>手机</td>
+									<td>电话</td>
+									<td>邮箱</td>
+									<td>地区</td>
+									<td>操作</td>
+								</tr>							
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>北大</td>
+									<td>北大青鸟</td>
+									<td>小徐</td>
+									<td>12345678911</td>
+									<td>0731-288****11</td>
+									<td>185********@qq.com</td>
+									<td>湖南省株洲市石峰区</td>
+									<td>
+										<button type="button" class="btn btn-info" onclick="showModel(id)">修改</button>
+										<button type="button" class="btn btn-info" onclick="delSupplier(id)">删除</button>
+									</td>
+								</tr>
+							</tbody>
 						</table>
 					</div>
 				</div>
@@ -195,50 +187,50 @@
 						<form class="form-inline">
 							<div class="row">
 								<div class="col-md-6 form-group">
-									<input type="hidden" name="">
+									<input type="hidden" name="sid">
+									<input type="hidden" name="status" value="0">
 									<label>公司名称：</label>
-									<input name="" class="form-control" />
+									<input name="sname" class="form-control" />
 								</div>
 								<div class="col-md-6 form-group">
 									<label>公司简称：</label>
-									<input name="" class="form-control" />
+									<input name="abbreviation" class="form-control" />
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label>联系人：</label>
-									<input name="" class="form-control" />
+									<input name="contacts" class="form-control" />
 								</div>
 								<div class="col-md-6 form-group">
 									<label>手机：</label>
-									<input name="" class="form-control" />
+									<input name="cellphone" class="form-control" />
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-6 form-group">
 									<label>邮箱：</label>
-									<input name="" class="form-control" />
+									<input name="email" class="form-control" />
 								</div>
 								<div class="col-md-6 form-group">
 									<label>电话：</label>
-									<input name="" class="form-control" />
+									<input name="phone" class="form-control" />
 								</div>
 							</div>
 							<div class="row">
 								<div class="form-group col-md-12">
-									<label>地址</label>
 									<div id="modelprovince"></div>
 								</div>
 								<div class="form-group col-md-12">
 									<label>街道：</label>
-									<input name="" class="form-control" />
+									<input name="street" class="form-control" />
 								</div>
 							</div>
 						</form>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						<button type="button" class="btn btn-primary" id="saveProType">保存</button>
+						<button type="button" class="btn btn-primary" id="saveProType" onclick="saveSupplier()">保存</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
@@ -254,8 +246,105 @@
 		<script type="text/javascript" src="js/jquery.provincesCity.js"></script>
 		<script type="text/javascript" src="js/provincesData.js"></script>
 		<script>
-			function showModel() {
+			$(function(){
+				getSuppliersByParam();
+				$("#seachprovince,#seachcity").change(function(){
+					let province=$("#seachprovince").val();
+					let city=$("#seachcity").val();;
+					getSuppliersByParam(province,city);
+				});
+				$("#seachBtn").click(function(){
+					let sname=$("[name=seachContext]").val();
+					getSuppliersByParam(null,null,sname);
+				});
+			});
+			/* 查询供应商 */
+			function getSuppliersByParam(province,city,sname){
+				$.getJSON("[[@{/supplier/getSuppliersByParam}]]",
+				{province:province,city:city,sname:sname},function(res){
+					/* console.info(res); */
+					$("tbody").empty();
+					$(res).each(function(i,obj){
+						let tr="<tr>"+
+							"<td>"+(i+1)+"</td>"+
+							"<td>"+obj.abbreviation+"</td>"+
+							"<td>"+obj.sname+"</td>"+
+							"<td>"+obj.contacts+"</td>"+
+							"<td>"+obj.cellphone+"</td>"+
+							"<td>"+obj.phone+"</td>"+
+							"<td>"+obj.email+"</td>"+
+							"<td>"+obj.province+obj.city+obj.region+"</td>"+
+							"<td>"+
+								"<button type=\"button\" class=\"btn btn-info\" onclick=\"showModel("+obj.sid+")\">修改</button>"+
+								"<button type=\"button\" class=\"btn btn-info\" onclick=\"delSupplier("+obj.sid+")\">删除</button>"+
+							"</td>"+
+						"</tr>";
+						$("tbody").append(tr);
+					});
+				});
+			}
+			/* 打开模态框，传入要修改的数据  */
+			function showModel(id) {
+				$.getJSON("[[@{/supplier/getSupplierByid}]]",{id:id},function(res){
+					console.info(res);
+					$('#supplierModel [name=sid]').val(res.sid);
+					$('#supplierModel [name=sname]').val(res.sname);
+					$('#supplierModel [name=abbreviation]').val(res.abbreviation);
+					$('#supplierModel [name=cellphone]').val(res.cellphone);
+					$('#supplierModel [name=contacts]').val(res.contacts);
+					$('#supplierModel [name=email]').val(res.email);
+					$('#supplierModel [name=phone]').val(res.phone);
+					$('#supplierModel [name=street]').val(res.street);
+					/* $('#modelprovince select:eq(0)').val(res.province);
+					$('#modelprovince select:eq(1)').val(res.city);
+					$('#modelprovince select:eq(2)').val(res.region); */
+				})
 				$('#supplierModel').modal('show')
+			}
+			/* 清空模态框信息 */
+			function clearModel(){
+				$('#supplierModel input').empty();
+			}
+			/* 删除 */
+			function delSupplier(id){
+				$.post("[[@{/supplier/removeSupplier}]]",{id:id},function(){
+					getSuppliersByParam();
+				});
+			}
+			/* 保存 */
+			function saveSupplier(){
+				let supplier={};
+				let f=false;
+				$('#supplierModel input').each(function(){
+					let name=$(this).attr("name");
+					let value=$(this).val();
+					if(name!="sid"){
+						if(value==""){
+							f=true;
+						}	
+					}
+					supplier[name]=value;
+				})
+				let province=$('#modelprovince select:eq(0)').val();
+				let city=$('#modelprovince select:eq(1)').val();
+				let region=$('#modelprovince select:eq(2)').val();
+				if(province=="请选择"||city=="请选择"||region=="请选择"
+				||province==""||city==""||region==""){
+					f=true;
+				}
+				supplier.province=province;
+				supplier.city=city;
+				supplier.region=region;
+				console.info(supplier);
+				if(f){
+					alert("请填写完整信息。");
+					return false;
+				}
+				$.post("[[@{/supplier/saveSupplier}]]",supplier,function(){
+					clearModel();
+					$('#supplierModel').modal('hide');
+					getSuppliersByParam();
+				})
 			}
 			/*调用插件*/
 			$(function() {
