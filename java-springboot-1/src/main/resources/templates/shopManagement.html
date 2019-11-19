@@ -26,7 +26,6 @@
 		<link rel="shortcut icon" href="img/favicon.png?3">
 
 		<link rel="stylesheet" href="css/shop.css" />
-		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css" />
 
 		<!-- Tweaks for older IEs-->
 		<!--[if lt IE 9]>
@@ -53,7 +52,7 @@
 				<a href="index.html" class="navbar-brand font-weight-bold text-uppercase text-base">日进斗金管理系统</a>
 				<ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
 					<li class="nav-item dropdown ml-auto">
-						<a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="img/avatar-6.jpg" alt="Jason Doe" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
+						<a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="" alt="Jason Doe" style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
 						<div aria-labelledby="userInfo" class="dropdown-menu">
 							<a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">Mark
 									Stephen</strong><small>Web Developer</small></a>
@@ -143,9 +142,11 @@
 								<th>操作</th>
 							</thead>
 							<tbody>
-								<tr v-for="s in shop">
-									<td>{{s.emid}}</td>
-									<td>1111</td>
+								<tr v-for="s in list">
+									<td>
+									   1
+									</td>
+									<td>admin</td>
 									<td>豆花妈妈</td>
 									<td>小二</td>
 									<td>王小二</td>
@@ -282,23 +283,26 @@
 		<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
 		<script type="text/javascript" th:src="@{/js/vue.js}"></script>
 		<script type="text/javascript">
+		   var ctxPath = "[[@{/}]]";
 		   var shopVm=new Vue({
 			   el:'#shopContent',
 			   data(){
 				   return{
-					   shop:[]
+					   list:{
+						   user:[]
+					   }
 				   }
 			   },
 			   methods:{},
 			   created:function(){
 				   var t=this;
 				   $.ajax({
-					   url:"[[@{/queryAllShop}]]",
+					   url:"[[@{/shop/queryAllShop}]]",
 					   success:function(res){
 						   alert(JSON.stringify(res));
-						   t.shop=res;
+						   t.list=res;
 					   }
-				   });
+				   }); 
 			   }
 			   
 		   });

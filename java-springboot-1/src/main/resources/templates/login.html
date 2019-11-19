@@ -74,16 +74,16 @@
 			/* 验证码js */
 			$(function() {
 				$('.code').createCode({
-					len: 6
+					len: 5
 				});
 			});
-			$('.input-code').blur(function() {
+			/* $('.input-code').blur(function() {
 				if ($(this).val().toLowerCase() !== $('.code').children('input').val().toLowerCase()) {
 					alert('验证码不正确')
 				} else {
 					
 				}
-			})
+			}) */
 			function Login(){
 				var bol=true;
 				var username=$("input[name='username']").val();
@@ -101,6 +101,11 @@
 					alert("验证码不能为空");
 					return false;
 					$("#yzm").val("");	
+				}
+				if (yzm.toLowerCase() !== $('.code').children('input').val().toLowerCase()) {
+					alert('验证码不正确');
+					return false;
+					$("#yzm").val("");
 				}
 				$.ajax({
 					url:"[[@{/queryByNameAndPwd}]]",
