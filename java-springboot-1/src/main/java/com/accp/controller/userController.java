@@ -1,5 +1,7 @@
 package com.accp.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.accp.domain.User;
 import com.accp.service.userService;
@@ -21,6 +24,7 @@ public class userController {
    @Autowired
    userService us;
    
+   //验证登录
    @RequestMapping("/queryByNameAndPwd")
    @ResponseBody
    public String queryNameAndPwd(String username,String password,Model model) {
@@ -49,14 +53,30 @@ public class userController {
 	    return attrs.getRequest(); 
    }
    
-   
-   @RequestMapping("/updateShop")
+   //修改用户信息
+   @RequestMapping("/updateUser")
    @ResponseBody
-   public String updateShop(User user) {
-	   System.out.println(user.getUserid());
-	   us.updateShop(user);
+   public String updateUser(User user) {
+	   System.out.println(user.getTrade());
+	   us.updateUser(user);
 	   return "success";
    }
-	  
+   
+   
+   //修改用户信息后根据userid再查一遍
+   @RequestMapping("/byUserId")
+   @ResponseBody
+   public User byUserId(Integer userid) {
+		/* System.out.println(userid); */
+	   return us.byUserId(userid);
+   }
+   
+   //文件上传用来修改头像
+   @RequestMapping("/uploadAjax")
+   @ResponseBody
+   public String uploadAjax(MultipartFile [] files,HttpSession session) {
+ 		return us.uploadAjax(files, session);
+   }  
+   
    }
     

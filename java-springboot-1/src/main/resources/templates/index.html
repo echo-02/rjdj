@@ -39,7 +39,7 @@
 				<a href="index.html" class="navbar-brand font-weight-bold text-uppercase text-base">日进斗金管理系统</a>
 				<ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
 					<li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown"
-						 aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img th:src="'/img/'+${session.user.userpic}" alt="Jason Doe"
+						 aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img  alt="Jason Doe"
 							 style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
 						<div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">Mark
 									Stephen</strong><small>Web Developer</small></a>
@@ -118,15 +118,20 @@
 					<div class="user-content" id="userContent">
 						<!--<img src="" style="width: 220px;height: 220px;border-radius: 5px;"/>-->
 						<div class="user-img">
-							<img th:src="'/img/'+${session.user.userpic}" style="width: 200px;height: 200px;" class="img-thumbnail" id="img">
-							<span>上传头像</span>
+							<img  style="width: 220px;height: 220px;" class="img-thumbnail" id="img">
+							<!-- <p style="margin-left:-47px ;"><input multiple name="files" type="file" ></p>
+							<p onclick="upLoad()" style="cursor: pointer; margin: -10px 0 0 53px;">上传头像</p> -->
+							<form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+								<p style="font: 16px '微软雅黑';"><input multiple name="files" type="file"></p>
+								<input style="font: 16px '微软雅黑';" type="button" value="修改头像">
+							</form>
 						</div>
-						<div class="user-content-i">
-							<p class>用户信息</p>
-							<p>行业：<input th:value="${session.user.trade}" name="trade" type="text" class="form-control-label" style="height: 30px;width: 200px;"/></p>
-							<p>账号：<input th:value=${session.user.username} name="username" type="text" class="form-control-label" style="height: 30px;width: 200px;"/></p>
-							<p>手机：<input th:value=${session.user.phone} name="phone" type="text" class="form-control-label" style="height: 30px;width: 200px;"/></p>
-							<p>密码：<input th:value=${session.user.password} name="password" type="password" class="form-control-label" style="height: 30px;width: 200px;"/><button class="btn btn-success" style="height:30px ;line-height: 8px; margin-left: 10px;" onclick="updateUser()">修改</button></p>	
+						<div class="user-content-i" style="margin-left:0px;">
+							<p>用户信息</p>
+							<p>行业：<input name="trade" type="text" class="form-control-label" style="height: 30px;width: 200px;"/></p>
+							<p>账号：<input name="username" type="text" class="form-control-label" style="height: 30px;width: 200px;"/></p>
+							<p>手机：<input name="phone" type="text" class="form-control-label" style="height: 30px;width: 200px;"/></p>
+							<p>密码：<input name="password" type="password" class="form-control-label" style="height: 30px;width: 200px;"/><button class="btn btn-success" style="height:30px ;line-height: 8px; margin-left: 10px;" onclick="updateUser()">修改</button></p>	
 						</div>
 					</div>
 
@@ -158,6 +163,10 @@
 		<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
 		<script type="text/javascript" th:src="@{/js/vue.js}"></script>
 		<script type="text/javascript">
+		   var ctxPath = "[[@{/}]]";
+		   $(function(){
+			    byid();
+		   })
 		   function updateUser(){
 			   var trade=$("[name='trade']").val();
 			   var username=$("[name='username']").val();
@@ -165,22 +174,57 @@
 			   var password=$("[name='password']").val();
 			   
 			   $.ajax({
-				   url:"[[@{/updateShop}]]",
+				   url:"[[@{/updateUser}]]",
 				   data:{
 					   userid:"[[${session.user.userid}]]",
 					   trade:trade,
 					   username:username,
 					   phone:phone,
-					   password:password,
-					   userpic:"[[${session.user.userpic}]]",
-					   positionid:"[[${session.user.positionid}]]"
+					   password:password,   
 				   },
 				   success:function(res){
-					   alert(res);
-					   location.href="/index"
+					  byid();
 				   }
 			   })
 		   }
+		   
+		   function byid(){
+			   $.ajax({
+				   url:"[[@{/byUserId}]]",
+				   data:{
+					   userid:"[[${session.user.userid}]]"
+				   },
+				   success:function(res){
+					   console.info(res)
+					   $("img").attr("src",ctxPath+res.userpic)
+					   $("[name='trade']").attr("value",res.trade);
+					   $("[name='username']").attr("value",res.username);
+					   $("[name='phone']").attr("value",res.phone);
+					   $("[name='password']").attr("value",res.password); 
+				   }
+			   });
+		   }
+		   
+		   
+		  $(function(){
+			$("[type=button]").click(function(){
+				var formData = new FormData($("form")[0]);
+				/* var files = $("[name=files]")[0].files;
+				for(var i=0;i<files.length;i++){
+					formData.append("files",files[i]);
+				} */
+				$.ajax({
+					url:"[[@{/uploadAjax}]]",
+					data:formData,
+					type:"post",
+					processData:false,
+					contentType:false,
+					success:function(result){
+						byid();
+					}
+				});
+			});			
+		})
 		</script>
 		
 	</body>

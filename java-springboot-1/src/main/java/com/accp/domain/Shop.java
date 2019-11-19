@@ -1,5 +1,7 @@
 package com.accp.domain;
 
+import java.util.List;
+
 public class Shop {
     private Integer shopid;
 
@@ -16,6 +18,26 @@ public class Shop {
     private String address;
 
     private Integer status;
+    
+    public List<Employee> getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(List<Employee> employee) {
+		this.employee = employee;
+	}
+
+	public List<User> getUser() {
+		return user;
+	}
+
+	public void setUser(List<User> user) {
+		this.user = user;
+	}
+
+	private List<Employee> employee;
+    
+    private List<User> user;
 
     public Integer getShopid() {
         return shopid;
