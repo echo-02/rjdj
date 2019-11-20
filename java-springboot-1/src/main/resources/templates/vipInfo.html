@@ -227,11 +227,11 @@
 				<div class="row" style="  margin-top: 15px;">
 					<div class="col-md-6">
 						手机
-						<input type="text" id="" value="" />
+						<input type="text" id="insertphone" value="" />
 					</div>
 					<div class="col-md-6">
 						名称
-						<input  type="text" id="" value="" />
+						<input  type="text" id="insertname" value="" />
 					</div>
 				</div>
 				
@@ -239,13 +239,13 @@
 				<div class="row" style="  margin-top: 15px;">
 					<div class="col-md-6">
 						等级
-						<select name="" >
+						<select name="" id="insertVipvlid" >
 							<option value="株洲">vip</option>
 						</select>
 					</div>
 					<div class="col-md-6">
 						密码
-						<input  type="text" id="" value="" />
+						<input  type="text" id="insertpassword" value="" />
 					</div>
 				</div>
 				
@@ -259,7 +259,7 @@
 					</div>
 					<div class="col-md-9">
 						街道
-						<input type="text" id="" value="" />
+						<input type="text" id="insertstreet" value="" />
 					</div>
 					
 				</div>
@@ -273,7 +273,7 @@
       
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">添加</button>
+        <button type="button" class="btn btn-primary" onclick="insertVip()">添加</button>
       </div>
     </div>
   </div>
@@ -301,11 +301,12 @@
 				<div class="row" style="  margin-top: 15px;">
 					<div class="col-md-6">
 						手机
-						<input type="text" id="" value="" />
+						<input type="text" id="updatephone" value="" />
+						<input type="hidden" id="updateid" value=""  />
 					</div>
 					<div class="col-md-6">
 						名称
-						<input  type="text" id="" value="" />
+						<input  type="text" id="updatename" value="" />
 					</div>
 				</div>
 				
@@ -313,13 +314,13 @@
 				<div class="row" style="  margin-top: 15px;">
 					<div class="col-md-6">
 						等级
-						<select name="">
+						<select name="" id="updateVipvlid">
 							<option value="株洲">vip</option>
 						</select>
 					</div>
 					<div class="col-md-6">
 						密码
-						<input  type="text" id="" value="" />
+						<input  type="text" id="updatepassword" value="" />
 					</div>
 				</div>
 				
@@ -333,7 +334,7 @@
 					</div>
 					<div class="col-md-9">
 						街道
-						<input type="text" id="" value="" />
+						<input type="text" id="updatestreet" value="" />
 					</div>
 					
 				</div>
@@ -345,7 +346,7 @@
         
 	   <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">修改</button>
+        <button type="button" class="btn btn-primary" onclick="updateVip()">修改</button>
       </div>
     </div>
   </div>
@@ -384,6 +385,9 @@
        		<script>
 			$(function(){
 				$("#province").ProvinceCity();
+				console.log($("#province").find("select:eq(0)").val());//查找三级联动
+				console.log($("#province").find("select:eq(1)").val());//查找三级联动
+				console.log($("#province").find("select:eq(2)").val());//查找三级联动
 				$("#province2").ProvinceCity();
 			});
 			
@@ -398,6 +402,38 @@
 						$("#vlid").html("");
 						$.each(res,function(i,obj){
 							$("#vlid").append("<option value="+obj.id+">"+obj.levelname+"</option>");
+						});
+					}
+				});
+			});
+			//查询所有vip等级信息(新增)
+				$(function(){
+				$.ajax({
+					url:"[[@{/selectViplevelexclude_1}]]",
+					type:"get",
+					data:{},
+					dataType:"json",
+					success:function(res){
+						$("#insertVipvlid").html("");
+						$.each(res,function(i,obj){
+							$("#insertVipvlid").append("<option value="+obj.id+">"+obj.levelname+"</option>");
+						});
+					}
+				});
+			});
+			
+			
+				//查询所有vip等级信息(修改)
+				$(function(){
+				$.ajax({
+					url:"[[@{/selectViplevelexclude_1}]]",
+					type:"get",
+					data:{},
+					dataType:"json",
+					success:function(res){
+						$("#updateVipvlid").html("");
+						$.each(res,function(i,obj){
+							$("#updateVipvlid").append("<option value="+obj.id+">"+obj.levelname+"</option>");
 						});
 					}
 				});
@@ -438,7 +474,7 @@
 							 		//添加table数据
 							 		
 							 		$("#tbd").append("<tr><td>"+(i+1)+"</td><td>"+obj.name+"</td><td>"+obj.phone+"</td><td>"+obj.vlid+"</td><td>1</td><td>1111</td>"
-										 	+"<td>"+obj.balance+"</td><td>"+obj.integral+"</td><td>-</td><td data-toggle='modal' data-target='#myModal2'>编辑</td></tr>");
+										 	+"<td>"+obj.balance+"</td><td>"+obj.integral+"</td><td>-</td><td data-toggle='modal' data-target='#myModal2' onclick='slectVipById("+obj.id+")'>编辑</td></tr>");
 							 	}
 							});
 							
@@ -460,7 +496,76 @@
 				
 			}
 			
-			
+		//新增会员
+		 function insertVip(){
+				$.ajax({
+					url:"[[@{/insertVip}]]",
+					type:"get",
+					data:{
+						phone:$("#insertphone").val(),
+						name:$("#insertname").val(),
+						vlid:$("#insertVipvlid").val(),
+						password:$("#insertpassword").val(),
+						province:$("#province").find("select:eq(0)").val(),
+						city:$("#province").find("select:eq(1)").val(),
+						region:$("#province").find("select:eq(2)").val(),
+						street:$("#insertstreet").val()
+					},
+					dataType:"json",
+					success:function(res){
+						alert(res.mes);
+					}
+					
+				});
+			} 
+		
+			//根据id查找会员
+			function slectVipById(id){
+				$.ajax({
+					url:"[[@{/selectVipById/}]]"+id,
+					type:"get",
+					data:{
+					
+					},
+					dataType:"json",
+					success:function(res){
+						$("#updateid").val(res.id);
+						$("#updatephone").val(res.phone);
+						$("#updatename").val(res.name);
+						$("#updateVipvlid").val(res.vlid);
+						$("#updatepassword").val(res.password);
+						//$("#province2").find("select:eq(1)").val(res.city.trim());
+						//$("#province2").find("select:eq(2)").val(res.region.trim());
+						//$("#province2").find("select:eq(0)").val(res.province.trim());
+					
+						$("#updatestreet").val(res.street);
+					}
+					
+				});
+			}
+			//编辑会员
+			 function updateVip(){
+				$.ajax({
+					url:"[[@{/updateVip}]]",
+					type:"get",
+					data:{
+						id:$("#updateid").val(),
+						phone:$("#updatephone").val(),
+						name:$("#updatename").val(),
+						vlid:$("#updateVipvlid").val(),
+						password:$("#updatepassword").val(),
+						province:$("#province2").find("select:eq(0)").val(),
+						city:$("#province2").find("select:eq(1)").val(),
+						region:$("#province2").find("select:eq(2)").val(),
+						street:$("#updatestreet").val()
+					},
+					dataType:"json",
+					success:function(res){
+						alert(res.mes);
+					}
+					
+				});
+			} 
 			</script>
 	</body>
 </html>

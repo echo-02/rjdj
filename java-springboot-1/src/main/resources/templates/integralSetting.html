@@ -145,11 +145,11 @@
 									积分抵扣
 								</div>
 								<div class="" style="padding-left: 20px;">
-									使用积分<input type="text"  value=""/>可抵扣<span style="color: red;">55</span>元
+									使用积分<input id="balance" type="text"  value=""/>可抵扣<span style="color: red;">1</span>元
 								</div>
 								
 								<div class="" style="padding-left: 400px;">		
-									<input type="button" class="btn btn-green col-md-offset-8" value="确定" />
+									<input type="button" class="btn btn-green col-md-offset-8" value="确定"  onclick="updateBlance()"/>
 								</div>
 							</div>
 					</div>
@@ -171,5 +171,44 @@
 		<script src="vendor/chart.js/Chart.min.js"></script>
 		<script src="js/js.cookie.min.js"></script>
 		<script src="js/front.js"></script>
+		
+		<script type="text/javascript">
+		
+		
+		
+		$(function(){
+			$.ajax({
+				url:"[[@{/selectBalance}]]",
+				type:"get",
+				data:{},
+				dataType:"json",
+				success:function(res){
+					$("#balance").val(res.balances);
+					if(res.balances!=0){
+						$("#chck").prop("checked",true);
+					}else{
+						$("#chck").prop("checked",false);
+					}
+				}
+			});
+		});
+		
+		function updateBlance(){
+			if(($("#balance").val()=="")){
+				alert("请输入");
+			}else{
+				$.ajax({
+					url:"[[@{/updateBalance/}]]"+$("#balance").val(),
+					type:"get",
+					data:{},
+					dataType:"json",
+					success:function(res){
+						alert(res.mes);
+					}
+				});
+			}
+			
+		}
+		</script>
 	</body>
 </html>

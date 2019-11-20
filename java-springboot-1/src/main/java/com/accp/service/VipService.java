@@ -57,4 +57,14 @@ public class VipService {
 		return pageinfo;
 		
 	}
+
+	public void insertVip(Vip vip) {
+		// TODO Auto-generated method stub
+		mapper.insert(vip);
+	}
+
+	public void updateVip(Vip vip) {
+		// TODO Auto-generated method stub
+		mapper.updateByPrimaryKey(vip);
+	}
 }

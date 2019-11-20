@@ -142,6 +142,7 @@
 						 	<th>升级规则</th>
 						 	<th>操作</th>
 						 </tr>
+						 <tbody id="tbd">
 						 <tr>
 						 	<td>1</td>
 						 	<td>小姐</td>
@@ -150,7 +151,7 @@
 						 	<td>修改|删除</td>
 						 	
 						 </tr>
-					
+						</tbody>
 						</table>
 					</div>
 				</div>
@@ -170,11 +171,12 @@
 				<div class="row" style="  margin-top: 15px;">
 					<div class="col-md-6">
 						等级名称
-						<input type="text" id="" value="" />
+						<input type="text" id="insertlevelname" value="" />	
+						<input type="hidden" id="insertid">
 					</div>
 					<div class="col-md-6">
 						优惠折扣
-						<input  type="text" id="" value="" />
+						<input  type="text" id="insertdiscount" value="" />
 					</div>
 				</div>
 				
@@ -196,7 +198,7 @@
 					<div class="row">
 					<div class="col-md-8">
 						1.当消费
-						<input type="text" name="" id="" value="" />
+						<input type="text" name="" id="insertupgrade" value="" />
 						自动升级到该等级	
 					</div>
 					<div class="col-md-8">
@@ -218,11 +220,14 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">添加</button>
+        <button type="button" class="btn btn-primary" onclick="addViplevel()">添加</button>
+         <button type="button" class="btn btn-primary" onclick="updateViplevel()">修改</button>
       </div>
     </div>
   </div>
 </div>
+
+
 				
 				
 				<footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
@@ -242,9 +247,8 @@
 		<script src="js/js.cookie.min.js"></script>
 		<script src="js/front.js"></script>
 		<!--  <script src="vendor/bootstrap/js/jquery-1.12.4.js"></script>-->
-        
-        	<script>
-			$(
+        <script type="text/javascript">
+		$(
 				function(){
 							setInterval(function(){
 						 /* function onClickHander($('#chck')){*/
@@ -259,9 +263,92 @@
 								},200);
 				}
 			);
+        </script>
+        	<script>
+	
 			
+			//查询等级
+			$(function(){
 			
+				$.ajax({
+					url:"[[@{/selectViplevelexclude_1}]]",
+					type:"get",
+					data:{},
+					dataType:"json",
+					success:function(res){
+						$("#tbd").html("");	
+					
+						$.each(res,function(i,obj){
+							$("#tbd").append(" <tr><td>"+(i+1)+"</td><td>"+obj.levelname+"</td><td>"+obj.discount+"</td><td>"+obj.upgrade+"</td>"+
+						 	"<td><a data-toggle='modal' data-target='#myModal' onclick='selectViplevelById("+obj.id+")'>修改</a>|<a onclick='deleteViplevelById("+obj.id+")'>删除</a></td></tr>");	
+							
+							});
+						
+					}
+				
+					});
+				
+			});
 			
+			//根据id删除等级
+		function deleteViplevelById(id){
+			$.ajax({
+				url:"[[@{/deleteViplevelById/}]]"+id,
+				type:"get",
+				data:{},
+				dataType:"json",
+				success:function(res){}
+				});
+			
+		}
+			//添加等级
+			function addViplevel(){
+				$.ajax({
+					url:"[[@{/insertViplevel}]]",
+					type:"get",
+					data:{
+						levelname:$("#insertlevelname").val(),
+						discount:$("#insertdiscount").val(),
+						upgrade:$("#insertupgrade").val(),
+						//status:$("#insertstatus").val()
+					},
+					dataType:"json",
+					success:function(res){}
+					});
+			}
+			
+			//查寻等级
+			function selectViplevelById(id){
+			$.ajax({
+							 	url:"[[@{/selectViplevelById/}]]"+id,
+							 	type:"get",
+							 	data:{},
+							 	dataType:"json",
+							 	success:function(res){
+							 		$("#insertid").val(res.id),
+							 		$("#insertlevelname").val(res.levelname),
+									$("#insertdiscount").val(res.discount),
+									$("#insertupgrade").val(res.upgrade)
+							 	}
+							});
+			}
+			
+			//修改等级
+			function updateViplevel(){
+				$.ajax({
+					url:"[[@{/updateViplevel}]]",
+					type:"get",
+					data:{
+						id:$("#insertid").val(),
+						levelname:$("#insertlevelname").val(),
+						discount:$("#insertdiscount").val(),
+						upgrade:$("#insertupgrade").val(),
+						//status:$("#insertstatus").val()
+					},
+					dataType:"json",
+					success:function(res){}
+					});
+			}
 		</script>
 	</body>
 </html>

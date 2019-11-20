@@ -30,8 +30,27 @@ public class ViplevelService {
 	//查询”全部等级“ 之外的  所有等级信息
 	public List<Viplevel> selectViplevelexclude_1() {
 		ViplevelExample exam = new ViplevelExample();
-		exam.createCriteria().andIdGreaterThan(1);
+		exam.createCriteria().andIdGreaterThan(1).andStatusNotEqualTo(0);
 		return mapper.selectByExample(exam);
 		
+	}
+	public void deleteViplevelById(int id) {
+		// TODO Auto-generated method stub
+		/*
+		 * ViplevelExample exam = new ViplevelExample();
+		 * exam.createCriteria().andIdEqualTo(id); Viplevel lv = new Viplevel();
+		 * lv.setStatus(1); mapper.updateByExample(lv, exam);
+		 */
+		mapper.updateViplevelStatus(id);
+	}
+	public void insertViplevel(Viplevel lv) {
+		// TODO Auto-generated method stub
+		lv.setStatus(1);
+		mapper.insert(lv);
+	}
+	public void updateViplevel(Viplevel lv) {
+		// TODO Auto-generated method stub
+		lv.setStatus(1);
+		mapper.updateByPrimaryKey(lv);
 	}
 }

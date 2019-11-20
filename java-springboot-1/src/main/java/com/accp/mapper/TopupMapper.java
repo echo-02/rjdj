@@ -27,4 +27,6 @@ public interface TopupMapper {
     int updateByPrimaryKeySelective(Topup record);
 
     int updateByPrimaryKey(Topup record);
+    
+    List<Topup> selectAllTopup(Topup t);
 }

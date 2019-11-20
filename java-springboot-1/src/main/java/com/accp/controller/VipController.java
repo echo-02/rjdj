@@ -1,6 +1,9 @@
 package com.accp.controller;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -54,4 +57,27 @@ public class VipController {
 	
 	//需要成交记录表的 按会员vipid查询 成交记录次数
 	
+	
+	//新增vip
+	@RequestMapping(value="/insertVip")
+	@ResponseBody
+	public Map<String,String> insertVip(Vip vip){
+		Map<String,String> map = new HashMap<>();
+		vip.setCheckin(new Date());
+		service.insertVip(vip);
+		map.put("mes", "success");
+		return map;
+		
+	}
+	//修改会员
+	@RequestMapping(value="/updateVip")
+	@ResponseBody
+	public Map<String,String> updateVip(Vip vip){
+		Map<String,String> map = new HashMap<>();
+		vip.setCheckin(new Date());
+		service.updateVip(vip);
+		map.put("mes", "success");
+		return map;
+		
+	}
 }

@@ -27,4 +27,6 @@ public interface ViplevelMapper {
     int updateByPrimaryKeySelective(Viplevel record);
 
     int updateByPrimaryKey(Viplevel record);
+
+	void updateViplevelStatus(int id);
 }

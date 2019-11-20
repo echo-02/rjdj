@@ -208,4 +208,12 @@
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!--修改状态  -->
+  <update id="updateViplevelStatus">
+  update viplevel
+  set status = 0
+  where id=#{0};
+  </update>
+  
 </mapper>

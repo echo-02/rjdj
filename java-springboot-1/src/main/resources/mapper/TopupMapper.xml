@@ -225,4 +225,26 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <!--充值抵扣  -->
+  <select id="selectAllTopup" resultType="com.accp.domain.Topup" parameterType="com.accp.domain.Topup">
+ 	 select * from
+	(select * from (select t.topdate,t.money,t.remark ,t.presenter,v.weixin,v.phone,v.balance,v.`name`,v.id
+	FROM topup t  
+	join  vip v 	
+	on t.vipid=v.id
+	<where>
+	<if test="topdate != null"> t.topdate &gt;= #{topdate,jdbcType=DATE} </if>
+	<if test="topdate2 != null">and t.topdate &lt;= #{topdate2,jdbcType=DATE} </if>
+	</where>
+	) as A) C
+	join
+			(select * from (
+			select SUM(r.money) total,r.vipid from record r GROUP BY r.vipid ) B ) D
+
+	on C.id = D.vipid 
+	<where>
+	<if test="name != null"> C.`name` like #{name,jdbcType=VARCHAR} </if>
+	</where>
+  </select>
 </mapper>

@@ -41,5 +41,25 @@ public class ViplevelController {
 		
 	}
 	
+	//删除等级
+	@RequestMapping(value="/deleteViplevelById/{id}")
+	@ResponseBody
+	public void deleteViplevelById(@PathVariable int id) {
+		service.deleteViplevelById(id);
+	}
+		
+	//添加等级
+	@RequestMapping(value="/insertViplevel")
+	@ResponseBody
+	public void deleteViplevelById(Viplevel lv) {
+		service.insertViplevel(lv);
+	}
+	//修改等级
+	@RequestMapping(value="/updateViplevel")
+	@ResponseBody
+	public void updateViplevelById(Viplevel lv) {
+		service.updateViplevel(lv);
+	}
+	
 
 }
