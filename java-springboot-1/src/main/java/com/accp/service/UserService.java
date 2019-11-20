@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.accp.domain.Employee;
 import com.accp.domain.Shop;
+import com.accp.domain.ShopExample;
 import com.accp.domain.User;
 import com.accp.domain.UserExample;
 import com.accp.mapper.EmployeeMapper;
@@ -20,10 +22,10 @@ import com.accp.mapper.UserMapper;
 
 @Service
 @Transactional
-public class userService {
+public class UserService {
    @Autowired
    UserMapper um;
-   
+
    public User queryNameAndPwd(String username,String password) {
 	   UserExample userExample=new UserExample();
 	   userExample.createCriteria().andPasswordEqualTo(password).andUsernameEqualTo(username);
@@ -66,6 +68,6 @@ public class userService {
 		um.updateByPrimaryKeySelective(u);
 		return "success";
    }
-   
+ 
   
 }

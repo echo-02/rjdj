@@ -18,8 +18,10 @@ public class Shop {
     private String address;
 
     private Integer status;
-    
-    public List<Employee> getEmployee() {
+
+	private List<Employee> employee;
+
+	public List<Employee> getEmployee() {
 		return employee;
 	}
 
@@ -27,19 +29,7 @@ public class Shop {
 		this.employee = employee;
 	}
 
-	public List<User> getUser() {
-		return user;
-	}
-
-	public void setUser(List<User> user) {
-		this.user = user;
-	}
-
-	private List<Employee> employee;
-    
-    private List<User> user;
-
-    public Integer getShopid() {
+	public Integer getShopid() {
         return shopid;
     }
 
