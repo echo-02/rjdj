@@ -1,5 +1,7 @@
 package com.accp.domain;
 
+import java.util.List;
+
 public class Goods {
     private Integer gid;
 
@@ -18,8 +20,38 @@ public class Goods {
     private Double price;
 
     private Integer status;
+    
+    private String pic;
+    
+    private List<Goodsinstance> goodsinstances;
+    
+    private String cfname;
 
-    public Integer getGid() {
+    public String getCfname() {
+		return cfname;
+	}
+
+	public void setCfname(String cfname) {
+		this.cfname = cfname;
+	}
+
+	public String getPic() {
+		return pic;
+	}
+
+	public void setPic(String pic) {
+		this.pic = pic;
+	}
+
+    public List<Goodsinstance> getGoodsinstances() {
+		return goodsinstances;
+	}
+
+	public void setGoodsinstances(List<Goodsinstance> goodsinstances) {
+		this.goodsinstances = goodsinstances;
+	}
+
+	public Integer getGid() {
         return gid;
     }
 

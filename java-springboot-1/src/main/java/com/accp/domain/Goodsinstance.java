@@ -10,8 +10,18 @@ public class Goodsinstance {
     private String sfdids;
 
     private Integer counts;
+    
+    private String spec;
 
-    public Integer getGiid() {
+    public String getSpec() {
+		return spec;
+	}
+
+	public void setSpec(String spec) {
+		this.spec = spec;
+	}
+
+	public Integer getGiid() {
         return giid;
     }
 

@@ -6,7 +6,11 @@
     <result column="gid" property="gid" jdbcType="INTEGER" />
     <result column="barcode" property="barcode" jdbcType="VARCHAR" />
     <result column="sfdids" property="sfdids" jdbcType="VARCHAR" />
-    <result column="counts" property="counts" jdbcType="INTEGER" />
+    <result column="gscounts" property="counts" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="BaseResultMapExtends" type="com.accp.domain.Goodsinstance"
+  extends="BaseResultMap">
+  	<result column="spec" property="spec" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >

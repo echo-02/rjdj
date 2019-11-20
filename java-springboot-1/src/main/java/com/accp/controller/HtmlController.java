@@ -3,6 +3,7 @@ package com.accp.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.accp.domain.User;
@@ -98,7 +99,8 @@ public class HtmlController {
 	 * @return
 	 */
 	@RequestMapping("/proUploading")
-	public String gotoproUploading() {
+	public String gotoproUploading(Integer gid,Model model) {
+		model.addAttribute("gid", gid);
 		return "proUploading";
 	}
 	/**

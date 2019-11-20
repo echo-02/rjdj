@@ -12,6 +12,42 @@
     <result column="price" property="price" jdbcType="DOUBLE" />
     <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
+  <!-- 衍生映射 -->
+  <resultMap id="BaseResultMapExtends" type="com.accp.domain.Goods"
+  extends="BaseResultMap">
+  	<result column="pic" property="pic" jdbcType="VARCHAR" />
+  	<result column="cfname" property="cfname" jdbcType="VARCHAR" />
+  	<collection property="goodsinstances" ofType="com.accp.domain.Goodsinstance">
+  		<id column="giid" property="giid" jdbcType="INTEGER" />
+	    <result column="gid" property="gid" jdbcType="INTEGER" />
+	    <result column="barcode" property="barcode" jdbcType="VARCHAR" />
+	    <result column="sfdids" property="sfdids" jdbcType="VARCHAR" />
+	    <result column="gscounts" property="counts" jdbcType="INTEGER" />
+	    <result column="spec" property="spec" jdbcType="VARCHAR" />
+  	</collection>
+  </resultMap>
+  <update id="removeGoods">
+  	UPDATE goods SET `status`=1 WHERE gid=#{gid}
+  </update>
+  <!-- 查询商品列表 -->
+  <select id="getGoods" resultMap="BaseResultMapExtends">
+  	SELECT  g.`gid` AS gid,g.`artno` AS artno,g.`gname` AS gname,g.`cfid` AS cfid,g.`brand` AS brand,
+	g.`cost` AS cost,g.`price` AS price,g.`counts` AS counts,
+	gs.`giid` AS giid,gs.`barcode` AS barcode,gs.`sfdids` AS sfdids,gs.`counts` AS gscounts,
+	cf.`cfname` AS cfname,
+	GROUP_CONCAT(test.sfdname) AS spec
+	FROM `goods` AS g INNER JOIN `goodsinstance` AS gs ON g.`gid`=gs.`gid`
+	INNER JOIN `classification` AS cf ON g.`cfid`=cf.`cfid` ,(SELECT * FROM `specificationdetails`) AS test
+	WHERE FIND_IN_SET(test.sfdid,gs.`sfdids`)
+	AND g.`status`=0
+	<if test="cfid != 0 and cfid != '' and cfid != null">
+		AND g.cfid= #{cfid}
+	</if>
+	<if test="gname != '' and gname != null ">
+		AND g.gname LIKE CONCAT('%',#{gname},'%')
+	</if>
+	GROUP BY gs.`giid`;
+  </select>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

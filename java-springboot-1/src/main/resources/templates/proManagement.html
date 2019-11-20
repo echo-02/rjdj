@@ -112,14 +112,14 @@
 					</div>
 					<div class="row">
 						<select class="form-control col-md-2" name="proType">
-							<option value="all">全部类别</option>
+							<option value="0">全部类别</option>
 							<option value="1">上衣</option>
 							<option value="2">裤子</option>
 						</select>
 						<div class="col-md-2">
 							<div class="input-group">
 								<input type="text" class="form-control" placeholder="查找" name="seachContext">
-								<button class="btn-default" type="button">Go!</button>
+								<button class="btn-default" type="button" id="seachBtn">Go!</button>
 							</div>
 						</div>
 						<div class="col-md-2">
@@ -129,52 +129,49 @@
 							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#proUpdatingModel">批量导入</button>
 						</div>
 						<div class="col-md-2">
-							<a href="proUploading.html" class="btn btn-primary" role="button">商品上传</a>
-						</div>
-						<div class="col-md-2">
-							<select class="form-control" name="shopId">
-								<option value="1">店铺1</option>
-								<option value="2">店铺2</option>
-							</select>
+							<a th:href="@{/proUploading}" class="btn btn-primary" role="button">商品上传</a>
 						</div>
 					</div>
 					<div class="row pre-scrollable">
 						<table class="table table-striped text-center">
-							<tr>
-								<td>选择</td>
-								<td>序号</td>
-								<td>类别</td>
-								<td>名称</td>
-								<td>货号/条码</td>
-								<td>规格</td>
-								<td>库存</td>
-								<td>销售价</td>
-								<td>成本价</td>
-								<td>操作</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" name="ck"></td>
-								<td>1</td>
-								<td>上衣</td>
-								<td>
-									<img src="img/avatar-1.jpg" alt="商品图片" class="img-rounded">
-									<span>皮大衣</span>
-								</td>
-								<td>
-									001/123456
-								</td>
-								<td>
-									颜色，尺码
-								</td>
-								<td>100</td>
-								<td>200.0</td>
-								<td>50.0</td>
-								<td>
-									<a href="proUploading.html" class="btn btn-primary" role="button">修改</a>
-									<a href="javascript:void(0)" class="btn btn-primary" role="button">下架</a>
-								</td>
-							</tr>
-
+							<thead>
+								<tr>
+									<td>选择</td>
+									<td>序号</td>
+									<td>类别</td>
+									<td>名称</td>
+									<td>货号</td>
+									<td>规格</td>
+									<td>库存</td>
+									<td>销售价</td>
+									<td>成本价</td>
+									<td>操作</td>
+								</tr>							
+							</thead>
+							<tbody>
+								<tr>
+									<td><input type="checkbox" name="ck"></td>
+									<td>1</td>
+									<td>上衣</td>
+									<td>
+										<img  src="img/avatar-1.jpg" alt="商品图片" class="img-rounded">
+										<span>皮大衣</span>
+									</td>
+									<td>
+										001
+									</td>
+									<td>
+										<p>规格</p>
+									</td>
+									<td>100</td>
+									<td>200.0</td>
+									<td>50.0</td>
+									<td>
+										<a th:href="@{/proUploading(gid=id)}" class="btn btn-primary" role="button">修改</a>
+										<a href="javascript:void(0)" class="btn btn-primary" role="button" onclick="removeGoods(id)">下架</a>
+									</td>
+								</tr>
+							</tbody>
 						</table>
 					</div>
 				</div>
@@ -223,5 +220,66 @@
 		<script src="vendor/chart.js/Chart.min.js"></script>
 		<script src="js/js.cookie.min.js"></script>
 		<script src="js/front.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				getGoods();
+				/* 商品类别下拉框 */
+				$.getJSON("[[@{/Classification/getProTypes}]]",function(res){
+					$("[name=proType]").empty();
+					let allop="<option value=\"0\">全部类别</option>";
+					$("[name=proType]").append(allop);
+					$.each(res,function(){
+						let op="<option value=\""+$(this)[0].cfid+"\">"+$(this)[0].cfname+"</option>";
+						$("[name=proType]").append(op);
+					});
+				});
+				$("[name=proType]").change(function(){
+					let cfid=$(this).val();
+					let gname=null;
+					getGoods(cfid,gname);
+				});
+				/* 查找按钮 */
+				$("#seachBtn").click(function(){
+					let gname=$("[name=seachContext]").val();
+					let cfid=null;
+					getGoods(cfid,gname);
+				});
+			});
+			function getGoods(cfid,gname){
+				$.getJSON("[[@{/goods/getGoods}]]",{cfid:cfid,gname:gname},function(res){
+					let ctxPath="[[@{/}]]";
+					$("tbody").empty();
+					for(let i=0;i<res.length;i++){
+						let tr="<tr>"+
+							"<td><input type=\"checkbox\" name=\"ck\"></td>"+
+							"<td>"+(i+1)+"</td>"+
+							"<td>"+res[i].cfname+"</td>"+
+							"<td>"+
+								"<img height=\"150px\" src=\""+ctxPath+res[i].pic+"\" alt=\"商品图片\" class=\"img-rounded\">"+
+								"<span>"+res[i].gname+"</span>"+
+							"</td>"+
+							"<td>"+res[i].artno+"</td>"+
+						"<td>";
+						if(res[i].goodsinstances.length==0){
+							tr+="<p>--</p>";
+						}else{
+							for(let j=0;j<res[i].goodsinstances.length;j++){
+								tr+="<p>"+res[i].goodsinstances[j].spec+"</p>";
+							}
+						}
+						tr+="</td>"+
+							"<td>"+res[i].counts+"</td>"+
+							"<td>"+res[i].price+"</td>"+
+							"<td>"+res[i].cost+"</td>"+
+							"<td>"+
+								"<a th:href=\"@{/proUploading(gid="+res[i].gid+")}\" class=\"btn btn-primary\" role=\"button\">修改</a>"+
+								"<a href=\"javascript:void(0)\" class=\"btn btn-primary\" role=\"button\" onclick=\"removeGoods("+res[i].gid+")\">下架</a>"+
+							"</td>"+
+						"</tr>";
+						$("tbody").append(tr);
+					}
+				});
+			}
+		</script>
 	</body>
 </html>

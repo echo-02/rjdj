@@ -6,6 +6,10 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface GoodsMapper {
+	List<Goods> getGoods(@Param("cfid") Integer cfid,@Param("gname") String gname);
+	
+	int removeGoods(Integer gid);
+	
     int countByExample(GoodsExample example);
 
     int deleteByExample(GoodsExample example);
