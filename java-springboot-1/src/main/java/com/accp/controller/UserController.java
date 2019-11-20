@@ -1,7 +1,5 @@
 package com.accp.controller;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +15,12 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.accp.domain.User;
-import com.accp.service.userService;
+import com.accp.service.UserService;
 
 @Controller
-public class userController {
+public class UserController {
    @Autowired
-   userService us;
+   UserService us;
    
    //验证登录
    @RequestMapping("/queryByNameAndPwd")
@@ -34,6 +32,7 @@ public class userController {
 	  }else {
 		  HttpSession session=getSession();
 		  session.setAttribute("user", user);
+		  session.setMaxInactiveInterval(-1);
 		  System.out.println(user);
 		  return "T";
 	  }
@@ -67,7 +66,6 @@ public class userController {
    @RequestMapping("/byUserId")
    @ResponseBody
    public User byUserId(Integer userid) {
-		/* System.out.println(userid); */
 	   return us.byUserId(userid);
    }
    
@@ -77,6 +75,9 @@ public class userController {
    public String uploadAjax(MultipartFile [] files,HttpSession session) {
  		return us.uploadAjax(files, session);
    }  
+   
+ 
+   
    
    }
     

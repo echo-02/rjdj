@@ -23,7 +23,6 @@
 		<link rel="stylesheet" href="css/custom.css">
 		<!-- Favicon-->
 		<link rel="shortcut icon" href="img/favicon.png?3">
-		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css" />
 		<style type="text/css">
 			*{
 				padding: 0;
@@ -135,7 +134,8 @@
 			<div class="page-holder w-100 d-flex flex-wrap">
 				<div class="container-fluid px-xl-5">
 					<!-- 自己的页面内容 -->
-					<div class="position-content" style="margin-top: 30px;">
+					<div id="poistionContent">
+					   <div class="position-content" style="margin-top: 30px;">
 						<span style="font-family: '微软雅黑';font-size: 20px;">职位权限</span>
 						<button class="btn btn-success" style="float: right;position: relative;top: -10px;" data-toggle="modal" data-target="#myModal">添加职位</button>
 						<!-- 模态框（Modal） -->
@@ -148,15 +148,19 @@
 							<th>操作</th>
 						</thead>
 						<tbody>
-							<tr>
-								<td>1</td>
-								<td>店长</td>
+							<tr v-for="p in position">
+								<td>{{p.positionid}}</td>
+								<td>{{p.positionname}}</td>
 								<td data-toggle="modal" data-target="#myModal1">编辑</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
-
+					</div>
+					
+                
+                
+                
 				<!--新增模态框-->
 				<div class="modal " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
@@ -435,6 +439,46 @@
 					</div>
 					<!-- /.modal -->
 				</div>
+				
+				
+				<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+		        <script type="text/javascript" th:src="@{/js/vue.js}"></script>
+		        <script type="text/javascript">
+		            var positionVm=new Vue({
+		            	el:'#poistionContent',
+		            	data(){
+		            		return{
+		            			position:[]
+		            		}
+		            	},
+		            	methods:{
+		            		
+		            	},
+		            	created:function(){
+		            		//查询用户头像
+		            		$.ajax({
+				    			url:"[[@{/byUserId}]]",
+				    			data:{
+				    				userid:"[[${session.user.userid}]]"
+				    			},
+				    			success:function(res){
+				    				console.log(res);
+				    				$("img").attr("src",res.userpic);
+				    			}
+				    		});
+		            		
+		            		var t=this;
+		            		$.ajax({
+		            			url:"[[@{/position/queryAllPosition}]]",
+		            			success:function(res){
+		            				t.position=res;
+		            			}
+		            		});
+		            	}
+		            });
+		            
+		           
+		        </script>
 	</body>
 
 </html>

@@ -1,5 +1,7 @@
 package com.accp.domain;
 
+import java.util.List;
+
 public class User {
     private Integer userid;
 
@@ -15,7 +17,7 @@ public class User {
 
     private Integer positionid;
 
-    public Integer getUserid() {
+	public Integer getUserid() {
         return userid;
     }
 
