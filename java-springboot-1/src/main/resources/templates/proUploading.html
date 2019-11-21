@@ -123,14 +123,17 @@
 			<div class="page-holder w-100 d-flex flex-wrap">
 				<div class="container-fluid px-xl-5">
 					<!-- 自己的页面内容 -->
-					<form id="proForm" action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
+					<form id="proForm" th:action="@{/goods/saveGoods}" method="post" 
+					onsubmit="return formSubmit()"
+					enctype="multipart/form-data" class="form-horizontal">
 						<div class="row">
 							<div class="col-md-6">
 								<input id="fileUp" name="pics" type="file" multiple class="file-loading" accept="image/*" />
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input type="hidden" name="">
+									<input type="hidden" name="gid" th:value="${gid}">
+									<input type="hidden" name="status" value="0">
 									<label class="col-sm-2 control-label">商品货号</label>
 									<div class="col-sm-10">
 										<input type="text" class="form-control" name="artno">
@@ -190,7 +193,7 @@
 								</div>
 							</div>
 							<div>
-								<p>库存总数：<input name="counts" readonly="readonly">件</p>
+								<p>库存总数：<input name="counts" readonly="readonly" type="text">件</p>
 								<table class="table-bordered">
 									<thead>
 										<tr>
@@ -230,11 +233,43 @@
 					showColor();
 					showSize();
 					showProTypes();
+					showProByGid();
 				})
+				/* 提交验证 */
+				function formSubmit(){
+					let f=true;
+					let count=$("[name=counts]").val();
+					let files=$("[name=pics]").val();
+					if(files==""){
+						f=false;
+						alert("请上传图片")
+					}
+					if(count==""){
+						f=false;
+						alert("请选择商品规格")
+					}
+					return f;
+				}
+				/* 修改信息渲染 */
+				function showProByGid(){
+					let gid=$("[name=gid]").val();
+					if(gid==""){
+						return;
+					}else{
+						$.getJSON("[[@{/goods/getGoodsBygid}]]",{gid:gid},function(res){
+							console.info(res);
+							$("[name=artno]").val(res.artno);
+							$("[name=brand]").val(res.brand);
+							$("[name=cfid]").val(res.cfid);
+							$("[name=cost]").val(res.cost);
+							$("[name=gname]").val(res.gname);
+							$("[name=price]").val(res.price);
+						})
+					}
+				}
 				/* 类别渲染 */
 				function showProTypes(){
 					$.getJSON("[[@{/Classification/getProTypes}]]",function(res){
-						console.info(res);
 						$("[name=cfid]").empty();
 						$.each(res,function(){
 							let op="<option value=\""+this.cfid+"\">"+this.cfname+"</option>";
@@ -401,7 +436,7 @@
 					language: 'zh',
 					showCaption: false,
 					showUpload: false,
-					showRemove: false,
+					showRemove: true,
 					showPreview: true,
 					overwriteInitial: false,
 					initialPreviewShowDelete: false,

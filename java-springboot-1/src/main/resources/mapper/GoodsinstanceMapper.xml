@@ -12,6 +12,14 @@
   extends="BaseResultMap">
   	<result column="spec" property="spec" jdbcType="VARCHAR" />
   </resultMap>
+  <!-- 批量新增 -->
+  <insert id="addEach">
+    INSERT INTO goodsinstance (`gid`, `sfdids`, `barcode`,`counts`)
+VALUES
+  <foreach collection="list" item="gs" separator=",">
+    (#{gid}, #{gs.sfdids}, #{gs.barcode},#{gs.counts})
+  </foreach>
+  </insert>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

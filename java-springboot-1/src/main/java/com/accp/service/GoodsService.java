@@ -1,7 +1,10 @@
 package com.accp.service;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.accp.domain.Goods;
+import com.accp.domain.Goodsinstance;
+import com.accp.domain.GoodsinstanceExample;
 import com.accp.domain.Goodspic;
 import com.accp.domain.GoodspicExample;
 import com.accp.mapper.GoodsMapper;
@@ -36,7 +41,7 @@ public class GoodsService {
 		for (Goods goods2 : goods) {
 			GoodspicExample goodspicExample=new GoodspicExample();
 			goodspicExample.createCriteria().andGidEqualTo(goods2.getGid());
-			if(goodspicMapper.selectByExample(goodspicExample)!=null) {
+			if(goodspicMapper.selectByExample(goodspicExample)!=null&&goodspicMapper.selectByExample(goodspicExample).size()>0) {
 				Goodspic goodspic=goodspicMapper.selectByExample(goodspicExample).get(0);
 				goods2.setPic(goodspic.getPicname());
 			}
@@ -64,17 +69,66 @@ public class GoodsService {
 	}
 	/**
 	 * 保存商品
+	 * @param goods 商品
+	 * @param files 图片
 	 * @return
 	 */
-	public int saveGoods(Goods goods,MultipartFile [] files) {
+	public int saveGoods(Goods goods,MultipartFile [] pics) {
 		int i=0;
 		//判断商品是否已存在
 		if(goods.getGid()==null) {
 			//新增
-			
+			i=goodsMapper.insertSelective(goods);
+			saveGoodsXQ(goods, pics);
 		}else {
 			//修改
+			i=goodsMapper.updateByPrimaryKeySelective(goods);
+			saveGoodsXQ(goods, pics);
 		}
 		return i;
+	}
+	/**
+	 * 保存商品详情
+	 * @param goods 商品
+	 * @param files 图片
+	 */
+	private void saveGoodsXQ(Goods goods, MultipartFile[] pics) {
+		GoodsinstanceExample goodsinstanceExample=new GoodsinstanceExample();
+		goodsinstanceExample.createCriteria().andGidEqualTo(goods.getGid());
+		goodsinstanceMapper.deleteByExample(goodsinstanceExample);
+		List<Goodsinstance> goodsinstances=goods.getGoodsinstances();
+		if(goodsinstances!=null&&goodsinstances.size()>0) {
+			goodsinstanceMapper.addEach(goodsinstances, goods.getGid());
+		}
+		GoodspicExample goodspicExample=new GoodspicExample();
+		goodspicExample.createCriteria().andGidEqualTo(goods.getGid());
+		goodspicMapper.deleteByExample(goodspicExample);
+		//图片上传
+		String path="/D:/images";
+		File directory = new File(path);
+		if(!directory.exists()) {
+			directory.mkdirs();
+		}
+		if(pics!=null&&pics.length>0) {
+			for(MultipartFile l : pics) {
+				String fileName=UUID.randomUUID().toString();
+				fileName+=l.getOriginalFilename().substring(l.getOriginalFilename().lastIndexOf("."));
+				String url = path+"\\"+fileName;
+				File f = new File(url);
+				try {
+					l.transferTo(f);
+				} catch (IllegalStateException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				Goodspic goodspic=new Goodspic();
+				goodspic.setGid(goods.getGid());
+				goodspic.setPicname(fileName);
+				goodspicMapper.insertSelective(goodspic);
+			}
+		}
 	}
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.accp.domain.Goods;
 import com.accp.domain.Specificationdetails;
@@ -59,5 +60,16 @@ public class GoodsController {
 	@ResponseBody
 	public List<Specificationdetails> getSpeDetailsBySfid(Integer sfid) {
 		return specificationService.getSpeDetailsBySfid(sfid);
+	}
+	/**
+	 * 保存商品
+	 * @param goods 商品
+	 * @param files 图片
+	 * @return
+	 */
+	@RequestMapping("/saveGoods")
+	public String saveGoods(Goods goods,MultipartFile [] pics) {
+		goodsService.saveGoods(goods, pics);
+		return "redirect:/proManagement";
 	}
 }
