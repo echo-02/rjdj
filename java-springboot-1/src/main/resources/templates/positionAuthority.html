@@ -151,11 +151,11 @@
 							<tr v-for="p in position">
 								<td>{{p.positionid}}</td>
 								<td>{{p.positionname}}</td>
-								<td data-toggle="modal" data-target="#myModal1">编辑</td>
+								<td data-toggle="modal" data-target="#myModal1" onclick="updatePosition(p.positionid)">编辑</td>
 							</tr>
 						</tbody>
 					</table>
-				</div>
+				
 					</div>
 					
                 
@@ -174,7 +174,7 @@
 								<form role="form">
 									<div class="form-group">
 										<label for="name">职位名称：</label>
-										<input type="text" class="form-control" id="name" placeholder="" style="width: 220px;">
+										<input type="text" class="form-control" id="name" placeholder="" style="width: 220px;" name="positionname">
 									</div>
 
 									<div class="form-group">
@@ -292,7 +292,7 @@
 							</div>
 							<div class="modal-footer" style="width: 700px;">
 								<button type="button" class="btn btn-default" data-dismiss="modal" style="background: white;color: black;" id="btn">取消</button>
-								<button type="button" class="btn btn-success">确定</button>
+								<button type="button" class="btn btn-success" onclick="addPosition()">确定</button>
 							</div>
 						</div>
 						<!-- /.modal-content -->
@@ -431,7 +431,7 @@
 							</div>
 							<div class="modal-footer" style="width: 700px;">
 								<button type="button" class="btn btn-default" data-dismiss="modal" style="background: white;color: black;">取消</button>
-								<button type="button" class="btn btn-danger">删除</button>
+								<button type="button" class="btn btn-danger" onclick="removePosition()">删除</button>
 								<button type="button" class="btn btn-success">确定</button>
 							</div>
 						</div>
@@ -439,7 +439,7 @@
 					</div>
 					<!-- /.modal -->
 				</div>
-				
+				</div>
 				
 				<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
 		        <script type="text/javascript" th:src="@{/js/vue.js}"></script>
@@ -456,7 +456,7 @@
 		            	},
 		            	created:function(){
 		            		//查询用户头像
-		            		$.ajax({
+		            		/*$.ajax({
 				    			url:"[[@{/byUserId}]]",
 				    			data:{
 				    				userid:"[[${session.user.userid}]]"
@@ -465,7 +465,7 @@
 				    				console.log(res);
 				    				$("img").attr("src",res.userpic);
 				    			}
-				    		});
+				    		});*/
 		            		
 		            		var t=this;
 		            		$.ajax({
@@ -477,6 +477,36 @@
 		            	}
 		            });
 		            
+		            //添加职位
+		            function addPosition(){
+            			var positionname=$("[name='positionname']").val();
+            			$.ajax({
+            				url:"[[@{/position/addPosition}]]",
+            				data:{
+            					positionname:positionname
+            				},
+            				success:function(res){
+            					alert(res);
+            					location.href="/positionAuthority"
+            				}
+            			});
+            		}
+		            
+		            //删除职位
+		            function removePosition(){
+		            	if(confirm("确实要删除吗?")){
+		            		
+		            	}
+		            }
+		            
+		            
+		            //修改职位
+		            function updatePosition(positionid){
+		            	alert(positionid);
+		            	$.ajax({
+		            		
+		            	});
+		            }
 		           
 		        </script>
 	</body>

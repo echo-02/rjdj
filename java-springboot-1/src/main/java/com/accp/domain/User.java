@@ -16,6 +16,16 @@ public class User {
     private String trade;
 
     private Integer positionid;
+    
+    private List<Shop> shop;
+
+	public List<Shop> getShop() {
+		return shop;
+	}
+
+	public void setShop(List<Shop> shop) {
+		this.shop = shop;
+	}
 
 	public Integer getUserid() {
         return userid;

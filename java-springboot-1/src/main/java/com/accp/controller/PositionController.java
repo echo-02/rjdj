@@ -27,4 +27,10 @@ public class PositionController {
     	return ps.queryAllPosition();
     }
 	
+	@RequestMapping("/addPosition")
+	@ResponseBody
+	public String addPosition(Position p) {
+		 ps.addPosition(p);
+		 return "success";
+	}
 }
