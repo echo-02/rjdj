@@ -142,18 +142,19 @@
 								<th>操作</th>
 							</thead>
 							<tbody>
-								<tr>
+								<tr v-for="s,index in shop">
 									<td>
-									   1
+									   {{index+1}}
 									</td>
-									<td>admin</td>
-									<td>豆花妈妈</td>
-									<td>小二</td>
-									<td>王小二</td>
-									<td>10086</td>
-									<td>110</td>
-									<td>株洲市石峰区井龙街道4栋</td>
-									<td onclick="edit()" data-toggle="modal" data-target="#editModal">编辑</td>
+									
+									<td>{{s.username}}</td>
+									<td>{{s.shopname}}</td>
+									<td>{{s.count}}</td>
+									<td>{{s.contacts}}</td>
+									<td>{{s.phone}}</td>
+									<td>{{s.cellphone}}</td>
+									<td>{{s.address}}</td>
+									<td data-toggle="modal" data-target="#editModal" @click="updateShop(s.shopid)">编辑</td>
 								</tr>
 							</tbody>
 						</table>
@@ -167,7 +168,7 @@
 				</footer>
 			</div>
 		</div>
-			</div>
+			
 		
 
 		<!--新增模态框-->
@@ -182,32 +183,28 @@
 					<div class="modal-body">
 						<form role="form">
 							<div class="form-group">
-								<label for="name">账号</label>
-								<input type="text" class="form-control" id="name" placeholder="请输入账号" name="username">
-							</div>
-							<div class="form-group">
 								<label for="name">店名</label>
-								<input type="text" class="form-control" id="name" placeholder="请输入店名">
-							</div>
-							<div class="form-group">
-								<label for="name">员工</label>
-								<input type="text" class="form-control" id="name" placeholder="请输入员工">
+								<input type="text" class="form-control" id="name" placeholder="请输入店名" name="shopname">
 							</div>
 							<div class="form-group">
 								<label for="name">联系人</label>
-								<input type="text" class="form-control" id="name" placeholder="请输入联系人">
+								<input type="text" class="form-control" id="name" placeholder="请输入联系人" name="contacts">
 							</div>
 							<div class="form-group">
 								<label for="name">手机</label>
-								<input type="text" class="form-control" id="name" placeholder="请输入手机">
+								<input type="text" class="form-control" id="name" placeholder="请输入手机" name="cellphone">
 							</div>
 							<div class="form-group">
 								<label for="name">电话</label>
-								<input type="text" class="form-control" id="name" placeholder="请输入电话">
+								<input type="text" class="form-control" id="name" placeholder="请输入电话" name="phone">
 							</div>
 							<div class="form-group">
 								<label for="name">地址</label>
-								<input type="text" class="form-control" id="name" placeholder="请输入地址">
+								<input type="text" class="form-control" id="name" placeholder="请输入地址" name="address">
+							</div>
+							<div class="form-group" style="display:none;">
+								<label for="name">状态</label>
+								<input type="hidden" class="form-control" id="name" placeholder="请输入地址" name="status" value="0">
 							</div>
 						</form>
 					</div>
@@ -232,53 +229,90 @@
 					</div>
 					<div class="modal-body">
 						<form role="form">
-							<div class="form-group">
-								<label for="name">账号</label>
-								<input type="text" class="form-control" id="name" placeholder="">
+							<div class="form-group" style="display:none;">
+								<label for="name">shopid</label>
+								<input type="text" class="form-control" placeholder="" id="shopid">
 							</div>
 							<div class="form-group">
 								<label for="name">店名</label>
-								<input type="text" class="form-control" id="name" placeholder="">
-							</div>
-							<div class="form-group">
-								<label for="name">员工</label>
-								<input type="text" class="form-control" id="name" placeholder="">
+								<input type="text" class="form-control" placeholder="请输入店名" id="shopname">
 							</div>
 							<div class="form-group">
 								<label for="name">联系人</label>
-								<input type="text" class="form-control" id="name" placeholder="">
+								<input type="text" class="form-control" placeholder="请输入联系人" id="contacts">
 							</div>
 							<div class="form-group">
 								<label for="name">手机</label>
-								<input type="text" class="form-control" id="name" placeholder="">
+								<input type="text" class="form-control" placeholder="请输入手机" id="cellphone">
 							</div>
 							<div class="form-group">
 								<label for="name">电话</label>
-								<input type="text" class="form-control" id="name" placeholder="">
+								<input type="text" class="form-control" placeholder="请输入电话" id="phone">
 							</div>
 							<div class="form-group">
 								<label for="name">地址</label>
-								<input type="text" class="form-control" id="name" placeholder="">
+								<input type="text" class="form-control"  placeholder="请输入地址" id="address">
+							</div>
+							<div class="form-group" style="display:none;">
+								<label for="name">状态</label>
+								<input type="hidden" class="form-control"  placeholder="请输入地址" id="status" value="0">
 							</div>
 						</form>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal" style="background: white;color: black;">取消</button>
-						<button type="button" class="btn btn-danger" onclick="del()">删除</button>
-						<button type="button" class="btn btn-success">保存</button>
+						<button type="button" class="btn btn-danger" onclick="delShop()" id="shopid">删除</button>
+						<button type="button" class="btn btn-success" onclick="updateShop()">保存</button>
 					</div>
 				</div>
 				<!-- /.modal-content -->
 			</div>
 			<!-- /.modal -->
 		</div>
-
+        </div>
 		<script type="text/javascript">
-			function del() {
+		     //删除门店
+			 function delShop() {
+		    	 
 				if(confirm("确认要删除该门店吗?")) {
-
+				   var shopid=$("#shopid").val();
+                   $.ajax({
+                	   url:"[[@{/shop/removeShop}]]",
+                	   data:{
+                		   shopid:shopid
+                	   },
+                	   success:function(res){
+                		   location.href="/shopManagement";
+                	   }
+                   });
 				}
-			}
+			 } 
+		     
+		     //修改门店
+		     function updateShop(){
+		    	 var shopid=$("#shopid").val();
+		    	 var shopname=$("#shopname").val();
+		    	 var contacts=$("#contacts").val();
+		    	 var cellphone=$("#cellphone").val();
+		    	 var phone=$("#phone").val();
+		    	 var address=$("#address").val();
+		    	 var status=$("#status").val();
+		    	 $.ajax({
+		    		 url:"[[@{/shop/updateShop}]]",
+		    		 data:{
+		    			 shopid:shopid,
+		    			 shopname:shopname,
+		    			 contacts:contacts,
+		    			 cellphone:cellphone,
+		    			 phone:phone,
+		    			 address:address,
+		    			 status:status
+		    		 },
+		    		 success:function(res){
+		    			 location.href="/shopManagement";
+		    		 }
+		    	 });
+		     }
 		</script>
 		<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
 		<script type="text/javascript" th:src="@{/js/vue.js}"></script>
@@ -288,21 +322,78 @@
 		    	data:{
 		    		shop:[]
 		    	},
-		    	methods:{},
+		    	methods:{
+		    		updateShop:function(shopid){
+		    		   $.ajax({
+		    			   url:"[[@{/shop/byShopId}]]",
+		    			   data:{
+		    				   shopid:shopid
+		    			   },
+		    			   success:function(res){
+		    				   console.log(res);
+		    				   $("#shopname").attr("value",res.shopname);
+		    				   $("#contacts").attr("value",res.contacts);
+		    				   $("#cellphone").attr("value",res.cellphone);
+		    				   $("#phone").attr("value",res.phone);
+		    				   $("#address").attr("value",res.address);
+		    				   $("#shopid").attr("value",res.shopid);
+		    			   }
+		    		   });	
+		    		}
+		    	},
 		    	created:function(){
-		    		//查询用户头像
+		    		//查询头像
+		    		$.ajax({
+		    			url:"[[@{/byUserId}]]",
+		    			data:{
+		    				userid:"[[${session.user.userid}]]"
+		    			},
+		    			success:function(res){
+		    				$("img").attr("src",res.userpic);
+		    			}
+		    		});
 		    		
 		    		//查询店铺信息
+		    		var t=this;
 		    		$.ajax({
-		    			url:"[[@{/shop/queryShop}]]",
+		    			url:"[[@{/shop/queryAllShop}]]",
+		    			data:{
+		    				userid:"[[${session.user.userid}]]"
+		    			},
 		    			success:function(res){
 		    				console.log(res);
+		    				t.shop=res;
 		    			}
 		    		});
 		    	}
 		    });
 		    
-		    
+		    //添加门店
+		    function addShop(){
+			    	var shopname=$("[name='shopname']").val();
+			    	var contacts=$("[name='contacts']").val();
+			    	var phone=$("[name='phone']").val();
+			    	var cellphone=$("[name='cellphone']").val();
+			    	var address=$("[name='address']").val();
+			    	var status=$("[name='status']").val();
+		    	$.ajax({
+		    		url:"[[@{/shop/addShop}]]",
+		    		data:{
+		    			shopname:shopname,
+		    			contacts:contacts,
+		    			phone:phone,
+		    			cellphone:cellphone,
+		    			address:address,
+		    			status:status
+		    		},
+		    		type:"post",
+		    		success:function(res){
+		    			alert(res);
+					    location.href="/shopManagement";
+		    		}
+		    	});
+		    }
+  
 		</script>
 	</body>
 

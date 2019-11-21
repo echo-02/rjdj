@@ -18,4 +18,8 @@ public class PositionService {
    public List<Position> queryAllPosition(){
 	   return pm.selectByExample(null);
    }
+   
+   public int addPosition(Position p) {
+	   return pm.insertSelective(p);
+   }
 }

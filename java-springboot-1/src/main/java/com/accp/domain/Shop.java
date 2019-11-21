@@ -18,6 +18,26 @@ public class Shop {
     private String address;
 
     private Integer status;
+    
+    private int count;
+    
+    private String username;
+    
+    public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
 
 	private List<Employee> employee;
 
