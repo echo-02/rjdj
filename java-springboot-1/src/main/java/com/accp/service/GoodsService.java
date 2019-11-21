@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.accp.domain.Goods;
 import com.accp.domain.Goodspic;
@@ -59,6 +60,21 @@ public class GoodsService {
 	public int removeGoods(Integer gid) {
 		int i=0;
 		i=goodsMapper.removeGoods(gid);
+		return i;
+	}
+	/**
+	 * 保存商品
+	 * @return
+	 */
+	public int saveGoods(Goods goods,MultipartFile [] files) {
+		int i=0;
+		//判断商品是否已存在
+		if(goods.getGid()==null) {
+			//新增
+			
+		}else {
+			//修改
+		}
 		return i;
 	}
 }

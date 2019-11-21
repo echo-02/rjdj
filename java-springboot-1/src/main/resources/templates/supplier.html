@@ -295,9 +295,12 @@
 					$('#supplierModel [name=email]').val(res.email);
 					$('#supplierModel [name=phone]').val(res.phone);
 					$('#supplierModel [name=street]').val(res.street);
-					/* $('#modelprovince select:eq(0)').val(res.province);
+					$('#modelprovince select:eq(0)').val(res.province);
+					$('#modelprovince select:eq(0)').change();
 					$('#modelprovince select:eq(1)').val(res.city);
-					$('#modelprovince select:eq(2)').val(res.region); */
+					$('#modelprovince select:eq(1)').change();
+					$('#modelprovince select:eq(2)').val(res.region);
+					$('#modelprovince select:eq(2)').change();
 				})
 				$('#supplierModel').modal('show')
 			}

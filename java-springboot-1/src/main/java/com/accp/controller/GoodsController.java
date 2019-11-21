@@ -8,13 +8,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.accp.domain.Goods;
+import com.accp.domain.Specificationdetails;
 import com.accp.service.GoodsService;
+import com.accp.service.SpecificationService;
 
 @Controller
 @RequestMapping("/goods")
 public class GoodsController {
 	@Autowired
 	private GoodsService goodsService;
+	@Autowired
+	private SpecificationService specificationService;
 	/**
 	 * 查询商品列表
 	 * @param cfid 类别编号
@@ -45,5 +49,15 @@ public class GoodsController {
 	@ResponseBody
 	public int removeGoods(Integer gid) {
 		return goodsService.removeGoods(gid);
+	}
+	/**
+	 * 按父类规格查询
+	 * @param sfid
+	 * @return
+	 */
+	@RequestMapping("/getSpeDetailsBySfid")
+	@ResponseBody
+	public List<Specificationdetails> getSpeDetailsBySfid(Integer sfid) {
+		return specificationService.getSpeDetailsBySfid(sfid);
 	}
 }

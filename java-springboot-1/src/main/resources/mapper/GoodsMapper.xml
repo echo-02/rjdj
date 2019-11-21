@@ -147,7 +147,7 @@
       #{counts,jdbcType=INTEGER}, #{cfid,jdbcType=INTEGER}, #{brand,jdbcType=VARCHAR}, 
       #{cost,jdbcType=DOUBLE}, #{price,jdbcType=DOUBLE}, #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.accp.domain.Goods" >
+  <insert id="insertSelective" parameterType="com.accp.domain.Goods" keyProperty="gid" useGeneratedKeys="true">
     insert into goods
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="gid != null" >

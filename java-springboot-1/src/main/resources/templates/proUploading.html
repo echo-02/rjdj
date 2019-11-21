@@ -123,127 +123,89 @@
 			<div class="page-holder w-100 d-flex flex-wrap">
 				<div class="container-fluid px-xl-5">
 					<!-- 自己的页面内容 -->
-					<form action="#" method="post" enctype="multipart/form-data">
+					<form id="proForm" action="#" method="post" enctype="multipart/form-data" class="form-horizontal">
 						<div class="row">
 							<div class="col-md-6">
-								<input id="fileUp" name="" type="file" multiple class="file-loading" accept="image/*" />
+								<input id="fileUp" name="pics" type="file" multiple class="file-loading" accept="image/*" />
 							</div>
 							<div class="col-md-6">
-								<form class="form-horizontal">
-									<div class="form-group">
-										<label class="col-sm-2 control-label">商品货号</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" name="">
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-sm-2 control-label">商品品牌</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" name="">
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-sm-2 control-label">商品名称</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" name="">
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-sm-2 control-label">出售价</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" name="">
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-sm-2 control-label">成本价</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" name="">
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="col-sm-2 control-label">商品类别</label>
-										<div class="col-sm-10">
-											<select class="form-control" name="">
-												<option value="1">上衣</option>
-												<option value="2">裤子</option>
-											</select>
-										</div>
-									</div>
-								</form>
-								<div class="row">
-									<p class="col-md-2">商品颜色</p>
-									<div class="col-md-8">
-										<ul class="list-inline procolors">
-											<li>
-												<input type="checkbox" name="solorck" />
-												<img src="#" />
-												<span class="procolor" sfdId="1">黑色</span>
-											</li>
-											<li>
-												<input type="checkbox" name="solorck" />
-												<img src="#" />
-												<span class="procolor" sfdId="2">白色</span>
-											</li>
-											<li>
-												<input type="checkbox" name="solorck" />
-												<img src="#" />
-												<span class="procolor" sfdId="3">紫色</span>
-											</li>
-											<li>
-												<input type="checkbox" name="solorck" />
-												<img src="#" />
-												<span class="procolor" sfdId="4">灰色</span>
-											</li>
-										</ul>
+								<div class="form-group">
+									<input type="hidden" name="">
+									<label class="col-sm-2 control-label">商品货号</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="artno">
 									</div>
 								</div>
-								<div class="row">
-									<p class="col-md-2">商品尺码</p>
-									<div class="col-md-8">
-										<ul class="list-inline prosizes">
-											<li>
-												<span sfdId="5">均码</span>
-											</li>
-											<li>
-												<span sfdId="6">S</span>
-											</li>
-											<li>
-												<span sfdId="7">M</span>
-											</li>
-											<li>
-												<span sfdId="8">L</span>
-											</li>
-										</ul>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">商品品牌</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="brand">
 									</div>
 								</div>
-								<div>
-									<p>库存总数：<span id="sumNums"></span>件</p>
-									<table class="table-bordered">
-										<thead>
-											<tr>
-												<td>尺码/颜色</td>
-												<td>数量</td>
-												<td>条形码</td>
-											</tr>
-										</thead>
-										<tbody id="prodels">
-											<tr>
-												<td class="sfdids">
-													<input type="hidden" name="gd[0].ids" />
-													尺码/颜色
-												</td>
-												<td>
-													<input type="number" name="gd[0].num" />
-												</td>
-												<td>
-													<input readonly="readonly" name="gd[0].code" />
-												</td>
-											</tr>
-										</tbody>
-									</table>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">商品名称</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="gname">
+									</div>
 								</div>
-								<input type="submit" class="btn btn-success" value="保存" />
+								<div class="form-group">
+									<label class="col-sm-2 control-label">出售价</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="price">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">成本价</label>
+									<div class="col-sm-10">
+										<input type="text" class="form-control" name="cost">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-2 control-label">商品类别</label>
+									<div class="col-sm-10">
+										<select class="form-control" name="cfid">
+											
+										</select>
+									</div>
+								</div>
+							<div class="row">
+								<p class="col-md-2">商品颜色</p>
+								<div class="col-md-8">
+									<ul class="list-inline procolors">
+										<li>
+											<input type="checkbox" name="solorck" />
+											<span class="procolor" sfdId="1">黑色</span>
+										</li>
+									</ul>
+								</div>
 							</div>
+							<div class="row">
+								<p class="col-md-2">商品尺码</p>
+								<div class="col-md-8">
+									<ul class="list-inline prosizes">
+										<li>
+											<span sfdId="5">均码</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<div>
+								<p>库存总数：<input name="counts" readonly="readonly">件</p>
+								<table class="table-bordered">
+									<thead>
+										<tr>
+											<td>尺码/颜色</td>
+											<td>数量</td>
+											<td>条形码</td>
+										</tr>
+									</thead>
+									<tbody id="prodels">
+							
+									</tbody>
+								</table>
+							</div>
+							<input type="submit" class="btn btn-success" value="保存" />
+						</div>
 						</div>
 					</form>
 					<footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
@@ -264,14 +226,174 @@
 			<script src="js/fileinput.js"></script>
 			<script src="js/zh.js"></script>
 			<script>
-				$(".prosizes span").click(function() {
-					$(this).addClass("ckactive");
-					cearte();
-				});
+				$(function(){
+					showColor();
+					showSize();
+					showProTypes();
+				})
+				/* 类别渲染 */
+				function showProTypes(){
+					$.getJSON("[[@{/Classification/getProTypes}]]",function(res){
+						console.info(res);
+						$("[name=cfid]").empty();
+						$.each(res,function(){
+							let op="<option value=\""+this.cfid+"\">"+this.cfname+"</option>";
+							$("[name=cfid]").append(op);
+						})
+					})
+				}
+				/* 颜色渲染 */
+				function showColor(){
+					$.getJSON("[[@{/goods/getSpeDetailsBySfid}]]",{sfid:1},function(res){
+						$(".procolors").empty();
+						$.each(res,function(){
+							let li="<li>"+
+								"<input type=\"checkbox\" name=\"solorck\" />"+
+								"<span class=\"procolor\" sfdId=\""+this.sfdid+"\">"+this.sfdname+"</span>"+
+							"</li>";
+							$(".procolors").append(li);
+							$("[name=solorck]").on("click",function() {
+								createdIn();
+							});
+						});
+					});	
+				}
+				/* 尺寸渲染 */
+				function showSize(){
+					$.getJSON("[[@{/goods/getSpeDetailsBySfid}]]",{sfid:2},function(res){
+						$(".prosizes").empty();
+						$.each(res,function(){
+							let li="<li>"+
+								"<span sfdId=\""+this.sfdid+"\">"+this.sfdname+"</span>"+
+							"</li>";
+							$(".prosizes").append(li);
+							$(".prosizes span").on("click",function() {
+								$(this).addClass("ckactive");
+								createdIn();
+							});
+						});
+					});	
+				}
 				/* 规格计算 */
-				function cearte() {
-					
-					
+				function createdIn() {
+					let colors=$("[name=solorck]:checked");
+					let sizes=$(".prosizes .ckactive");
+					$("#prodels").empty();
+					$("[name=counts]").val("");
+					/* 只有尺寸没有颜色 */
+					if(colors.length==0&&sizes.length!=0){
+						$.each(sizes,function(i,obj){
+							/* 生成条形码 */
+							let barcode=genID(3);
+							/* 获取规格编号 */
+							let sfdId=$(obj).attr("sfdId");
+							/* 获取规格名称 */
+							let sfname=$(obj).html();
+							/* 生成详情 */
+							let tr="<tr>"+
+								"<td>"+
+									"<input type=\"hidden\" name=\"goodsinstances["+i+"].sfdids\" value=\""+sfdId+"\"/>"+
+									sfname+
+								"</td>"+
+								"<td>"+
+									"<input type=\"number\" name=\"goodsinstances["+i+"].counts\" min=\"0\"/>"+
+								"</td>"+
+								"<td>"+
+									"<input readonly=\"readonly\" name=\"goodsinstances["+i+"].barcode\" value=\""+barcode+"\" />"+
+								"</td>"+
+							"</tr>";
+							$("#prodels").append(tr);							
+							$("#prodels [type=number]").on("change",function(){
+								let count=0;
+								$("#prodels [type=number]").each(function(){
+									count=Number($(this).val())+Number(count);
+								});
+								$("[name=counts]").val(count);
+							});
+						})
+					}
+					/* 只有颜色没有尺寸  */
+					else if(sizes.length==0&&colors.length!=0){
+						$.each(colors,function(i,obj){
+							/* 生成条形码 */
+							let barcode=genID(3);
+							/* 获取规格编号 */
+							let sfdId=$(obj).next().attr("sfdId");
+							/* 获取规格名称 */
+							let sfname=$(obj).next().html();
+							/* 生成详情 */
+							let tr="<tr>"+
+								"<td>"+
+									"<input type=\"hidden\" name=\"goodsinstances["+i+"].sfdids\" value=\""+sfdId+"\"/>"+
+									sfname+
+								"</td>"+
+								"<td>"+
+									"<input type=\"number\" name=\"goodsinstances["+i+"].counts\" min=\"0\" />"+
+								"</td>"+
+								"<td>"+
+									"<input readonly=\"readonly\" name=\"goodsinstances["+i+"].barcode\" value=\""+barcode+"\" />"+
+								"</td>"+
+							"</tr>";
+							$("#prodels").append(tr);							
+							$("#prodels [type=number]").on("change",function(){
+								let count=0;
+								$("#prodels [type=number]").each(function(){
+									count=Number($(this).val())+Number(count);
+								});
+								$("[name=counts]").val(count);
+							});
+						})
+					}
+					/* 两者都有 */
+					else{
+						/* 循环尺寸 */
+						/* 下标 */
+						let index=0
+						$.each(sizes,function(i,obj){
+							/* 获取规格编号 */
+							let sizesfdId=$(obj).attr("sfdId");
+							/* 获取规格名称 */
+							let sizesfname=$(obj).html();
+							/* 循环颜色 */
+							$.each(colors,function(j,obi){
+								/* 生成条形码 */
+								let barcode=genID(3);
+								/* 获取规格编号 */
+								let colorsfdId=$(obi).next().attr("sfdId");
+								/* 获取规格名称 */
+								let colorsfname=$(obi).next().html();
+								/* 拼接信息 */
+								let sfdId=sizesfdId+","+colorsfdId;
+								let sfname=sizesfname+"/"+colorsfname;
+								/* 生成详情 */
+								let tr="<tr>"+
+									"<td>"+
+										"<input type=\"hidden\" name=\"goodsinstances["+index+"].sfdids\" value=\""+sfdId+"\"/>"+
+										sfname+
+									"</td>"+
+									"<td>"+
+										"<input type=\"number\" name=\"goodsinstances["+index+"].counts\"  min=\"0\"/>"+
+									"</td>"+
+									"<td>"+
+										"<input readonly=\"readonly\" name=\"goodsinstances["+index+"].barcode\" value=\""+barcode+"\" />"+
+									"</td>"+
+								"</tr>";
+								index++;
+								$("#prodels").append(tr);							
+								$("#prodels [type=number]").on("change",function(){
+									let count=0;
+									$("#prodels [type=number]").each(function(){
+										count=Number($(this).val())+Number(count);
+									});
+									$("[name=counts]").val(count);
+								});
+							})		
+						})
+					}
+				}
+				/* 生成唯一条形码 */
+				function genID(length){
+					return Number(Math.random().toString().substr(3,length) + Date.now());
 				}
 				/* 文件上传设置 */
 				$("#fileUp").fileinput({
@@ -290,7 +412,7 @@
 							height: "500px"
 						}
 					},
-					browseClass: "btn btn-primary"
+					browseClass: "btn btn-primary",
 				});
 			</script>
 	</body>
