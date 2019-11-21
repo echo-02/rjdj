@@ -1,5 +1,6 @@
 package com.accp.mapper;
 
+import com.accp.domain.Record;
 import com.accp.domain.Vip;
 import com.accp.domain.VipExample;
 import java.util.List;
@@ -27,4 +28,6 @@ public interface VipMapper {
     int updateByPrimaryKeySelective(Vip record);
 
     int updateByPrimaryKey(Vip record);
+
+	Record selectVipMandC(int id);
 }

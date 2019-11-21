@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.accp.domain.Record;
 import com.accp.domain.Vip;
 import com.accp.domain.VipExample;
 import com.accp.mapper.VipMapper;
@@ -70,5 +71,10 @@ public class VipService {
 	public void updateVip(Vip vip) {
 		// TODO Auto-generated method stub
 		mapper.updateByPrimaryKey(vip);
+	}
+
+	public Record selectVipMandC(int id) {
+		// TODO Auto-generated method stub
+		return mapper.selectVipMandC(id);
 	}
 }
