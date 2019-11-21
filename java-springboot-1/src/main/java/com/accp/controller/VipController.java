@@ -63,7 +63,7 @@ public class VipController {
 	@ResponseBody
 	public Map<String,String> insertVip(Vip vip){
 		Map<String,String> map = new HashMap<>();
-		vip.setCheckin(new Date());
+		
 		service.insertVip(vip);
 		map.put("mes", "success");
 		return map;
@@ -74,7 +74,7 @@ public class VipController {
 	@ResponseBody
 	public Map<String,String> updateVip(Vip vip){
 		Map<String,String> map = new HashMap<>();
-		vip.setCheckin(new Date());
+		//vip.setCheckin(new Date());
 		service.updateVip(vip);
 		map.put("mes", "success");
 		return map;

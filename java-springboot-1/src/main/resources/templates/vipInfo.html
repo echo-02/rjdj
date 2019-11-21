@@ -534,9 +534,12 @@
 						$("#updatename").val(res.name);
 						$("#updateVipvlid").val(res.vlid);
 						$("#updatepassword").val(res.password);
-						//$("#province2").find("select:eq(1)").val(res.city.trim());
-						//$("#province2").find("select:eq(2)").val(res.region.trim());
-						//$("#province2").find("select:eq(0)").val(res.province.trim());
+						$("#province2").find("select:eq(0)").val(res.province.trim());
+						$("#province2").find("select:eq(0)").change();
+						$("#province2").find("select:eq(1)").val(res.city.trim());
+						$("#province2").find("select:eq(1)").change();
+						$("#province2").find("select:eq(2)").val(res.region.trim());
+						$("#province2").find("select:eq(2)").change();
 					
 						$("#updatestreet").val(res.street);
 					}

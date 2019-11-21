@@ -1,5 +1,6 @@
 package com.accp.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,9 @@ public class VipService {
 
 	public void insertVip(Vip vip) {
 		// TODO Auto-generated method stub
+		vip.setBalance(0.0);
+		vip.setIntegral(0);
+		vip.setCheckin(new Date());
 		mapper.insert(vip);
 	}
 

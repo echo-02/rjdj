@@ -27,4 +27,9 @@ public interface RecordMapper {
     int updateByPrimaryKeySelective(Record record);
 
     int updateByPrimaryKey(Record record);
+    //条件查询record
+	List<Record> selectAllRecord(Record t);
+	//条件查询record 添加了商品信息
+	List<Record> selectAllRecordByP(Record t);
+	
 }

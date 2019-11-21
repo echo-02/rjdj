@@ -2,9 +2,14 @@ package com.accp.domain;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Record {
     private Integer id;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date tradedate;
 
     private Integer vipid;
@@ -14,6 +19,17 @@ public class Record {
     private String payment;
 
     private String remark;
+    
+    private String name;//新增会员名称
+    
+    private String phone;//会员电话
+    
+    private Date tradedate2; //范围时间查询
+    
+    private Integer numbers; //成交记录详情表的数量
+    
+    private String gname;//合并goods表 的 商品名称
+    
 
     public Integer getId() {
         return id;
@@ -62,4 +78,44 @@ public class Record {
     public void setRemark(String remark) {
         this.remark = remark;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public Date getTradedate2() {
+		return tradedate2;
+	}
+
+	public void setTradedate2(Date tradedate2) {
+		this.tradedate2 = tradedate2;
+	}
+
+	public Integer getNumbers() {
+		return numbers;
+	}
+
+	public void setNumbers(Integer numbers) {
+		this.numbers = numbers;
+	}
+
+	public String getGname() {
+		return gname;
+	}
+
+	public void setGname(String gname) {
+		this.gname = gname;
+	}
 }
