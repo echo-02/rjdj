@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface GoodsinstanceMapper {
+	int addEach(@Param("list") List<Goodsinstance> goodsinstances,@Param("gid") Integer gid);
+	
     int countByExample(GoodsinstanceExample example);
 
     int deleteByExample(GoodsinstanceExample example);
