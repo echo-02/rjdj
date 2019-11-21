@@ -335,4 +335,8 @@
       checkin = #{checkin,jdbcType=DATE}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectVipMandC" parameterType="int" resultType="com.accp.domain.Record">
+  select vipid,money,numbers from(select Sum(r.money) money, COUNT(r.vipid) numbers,r.vipid  from  record r  GROUP BY(vipid) ) R  left join vip v
+on v.id=r.vipid where v.id=#{id}
+  </select>
 </mapper>

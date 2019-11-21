@@ -234,8 +234,8 @@
 	join  vip v 	
 	on t.vipid=v.id
 	<where>
-	<if test="topdate != null"> t.topdate &gt;= #{topdate,jdbcType=DATE} </if>
-	<if test="topdate2 != null">and t.topdate &lt;= #{topdate2,jdbcType=DATE} </if>
+	<if test="topdate != null and topdate2 != null"> t.topdate between #{topdate,jdbcType=DATE} and  #{topdate2,jdbcType=DATE}</if>
+	
 	</where>
 	) as A) C
 	join
@@ -244,7 +244,7 @@
 
 	on C.id = D.vipid 
 	<where>
-	<if test="name != null"> C.`name` like #{name,jdbcType=VARCHAR} </if>
+	<if test="name != null"> C.`name` like  CONCAT('%',#{name,jdbcType=VARCHAR},'%') </if>
 	</where>
   </select>
 </mapper>

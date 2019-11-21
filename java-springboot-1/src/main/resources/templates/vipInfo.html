@@ -137,7 +137,7 @@
 										        <button type="submit" class="btn btn-default">导入会员</button>
 										</div>
 										<div class="col-sm-2">									        										          								        
-										        <button type="submit" class="btn btn-default" onclick="">导出会员</button>
+										        <button type="submit" class="btn btn-default" onclick="exportExcel()">导出会员</button>
 										</div>
 										<div class="col-sm-2">
 											<!--onclick="javascript:showWindowDialog('addvip.html','新增会员');"-->
@@ -469,16 +469,36 @@
 							 	type:"get",
 							 	data:{},
 							 	dataType:"json",
-							 	success:function(res){
-							 		obj.vlid=res.levelname //把会员等级id改为等级名称
+							 	success:function(res2){
+							 	/* 	obj.vlid=res2.levelname //把会员等级id改为等级名称
 							 		//添加table数据
 							 		
 							 		$("#tbd").append("<tr><td>"+(i+1)+"</td><td>"+obj.name+"</td><td>"+obj.phone+"</td><td>"+obj.vlid+"</td><td>1</td><td>1111</td>"
-										 	+"<td>"+obj.balance+"</td><td>"+obj.integral+"</td><td>-</td><td data-toggle='modal' data-target='#myModal2' onclick='slectVipById("+obj.id+")'>编辑</td></tr>");
+										 	+"<td>"+obj.balance+"</td><td>"+obj.integral+"</td><td>-</td><td data-toggle='modal' data-target='#myModal2' onclick='slectVipById("+obj.id+")'>编辑</td></tr>"); */
+							 		$.ajax({
+									 	url:"[[@{/selectVipMandC}]]"+"/"+obj.id,
+									 	type:"get",
+									 	data:{},
+									 	dataType:"json",
+									 	success:function(res3){
+									 		obj.vlid=res2.levelname //把会员等级id改为等级名称
+									 		//添加table数据
+									 		console.log(res3);
+									 		
+									 		$("#tbd").append("<tr><td>"+(i+1)+"</td><td>"+obj.name+"</td><td>"+obj.phone+"</td><td>"+obj.vlid+"</td><td>"+res3.numbers+"</td><td>"+res3.money+"</td>"
+												 	+"<td>"+obj.balance+"</td><td>"+obj.integral+"</td><td>-</td><td data-toggle='modal' data-target='#myModal2' onclick='slectVipById("+obj.id+")'>编辑</td></tr>");
+									 		
+									 	}
+									});
+							 	
 							 	}
 							});
 							
 								//查询对应的vip等级
+								
+								//查询成交次数成交金额
+							
+								
 						
 						});
 					}
@@ -534,9 +554,12 @@
 						$("#updatename").val(res.name);
 						$("#updateVipvlid").val(res.vlid);
 						$("#updatepassword").val(res.password);
-						//$("#province2").find("select:eq(1)").val(res.city.trim());
-						//$("#province2").find("select:eq(2)").val(res.region.trim());
-						//$("#province2").find("select:eq(0)").val(res.province.trim());
+						$("#province2").find("select:eq(0)").val(res.province.trim());
+						$("#province2").find("select:eq(0)").change();
+						$("#province2").find("select:eq(1)").val(res.city.trim());
+						$("#province2").find("select:eq(1)").change();
+						$("#province2").find("select:eq(2)").val(res.region.trim());
+						$("#province2").find("select:eq(2)").change();
 					
 						$("#updatestreet").val(res.street);
 					}
@@ -566,6 +589,10 @@
 					
 				});
 			} 
+			
+			function exportExcel(){
+				window.location.href="[[@{/exportExcel}]]";
+			}
 			</script>
 	</body>
 </html>

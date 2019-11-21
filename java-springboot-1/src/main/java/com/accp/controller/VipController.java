@@ -1,18 +1,31 @@
 package com.accp.controller;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.accp.domain.Record;
 import com.accp.domain.Vip;
 import com.accp.service.VipService;
+import com.accp.service.ViplevelService;
 import com.github.pagehelper.PageInfo;
 
 @Controller
@@ -21,6 +34,8 @@ public class VipController {
 
 	@Autowired
 	private VipService service;
+	
+	private ViplevelService lvservice;
 	
 	//查询所有Vip
 	@RequestMapping(value="/selectAllVip")
@@ -63,7 +78,7 @@ public class VipController {
 	@ResponseBody
 	public Map<String,String> insertVip(Vip vip){
 		Map<String,String> map = new HashMap<>();
-		vip.setCheckin(new Date());
+		
 		service.insertVip(vip);
 		map.put("mes", "success");
 		return map;
@@ -74,10 +89,108 @@ public class VipController {
 	@ResponseBody
 	public Map<String,String> updateVip(Vip vip){
 		Map<String,String> map = new HashMap<>();
-		vip.setCheckin(new Date());
+		//vip.setCheckin(new Date());
 		service.updateVip(vip);
 		map.put("mes", "success");
 		return map;
 		
 	}
+	
+	//查询附属消息
+	@RequestMapping(value="/selectVipMandC/{id}")
+	@ResponseBody
+	public Record selectVipMandC(@PathVariable int id){
+	
+		 
+		 if(null==service.selectVipMandC(id)) {
+			 Record rc =new Record();
+			 rc.setMoney(0.0);;
+			 rc.setNumbers(0);
+			 return  rc;
+		 }else {
+				Record rc;
+			 rc=service.selectVipMandC(id);
+			 return rc;
+		 }
+	}
+	
+	//导出文件
+	/*
+	@RequestMapping(value="exportExcel")
+	public ResponseEntity<byte []> exportExcel(){
+		//需要导入的信息从数据库查询出来
+		Vip vip = new Vip();
+		vip.setVlid(1);
+		vip.setName("hyj");
+		List<Vip> list= service.selectVipByExample(vip);
+		//导出信息
+		Workbook wb = new XSSFWorkbook();
+		Sheet sheet = wb.createSheet();
+		
+		//表头
+		Row titleRow = sheet.createRow(0);
+		titleRow.createCell(0).setCellValue("姓名");
+		titleRow.createCell(1).setCellValue("手机");
+		titleRow.createCell(2).setCellValue("等级");
+		titleRow.createCell(3).setCellValue("成交次数");
+		titleRow.createCell(4).setCellValue("成交金额");
+		titleRow.createCell(5).setCellValue("余额");
+		titleRow.createCell(6).setCellValue("积分");
+		//主体数据
+		for(int i=0;i<list.size();i++) {
+			Vip vip2 = new Vip();
+			vip2=list.get(i);
+			
+			Row row = sheet.createRow(i+1);
+			Cell nameCell = row.createCell(0);
+			nameCell.setCellValue(vip2.getName());
+			Cell phoneCell = row.createCell(1);
+			phoneCell.setCellValue(vip2.getPhone());
+			//查等级
+			String lv=(lvservice.selectViplevelById(vip2.getVlid())).getLevelname();
+			//String lv="白金会员";
+			Cell lvidCell = row.createCell(2);
+			lvidCell.setCellValue(lv);
+			
+			//查次数 和查消费
+			 if(null==service.selectVipMandC(vip2.getId())) {
+				 Record rc =new Record();
+				 rc.setMoney(0.0);;
+				 rc.setNumbers(0);
+				 Cell countCell = row.createCell(3);
+				countCell.setCellValue(rc.getNumbers());
+				Cell moneyCell = row.createCell(4);
+				moneyCell.setCellValue(rc.getMoney());
+			 }else {
+				 Record rc =new Record();
+				 rc=service.selectVipMandC(vip2.getId());
+				 Cell countCell = row.createCell(3);
+					countCell.setCellValue(rc.getNumbers());
+					Cell moneyCell = row.createCell(4);
+					moneyCell.setCellValue(rc.getMoney());
+			 }
+			
+			Cell balanceCell = row.createCell(5);
+			balanceCell.setCellValue(vip2.getBalance());
+			Cell presentCell = row.createCell(6);
+			presentCell.setCellValue(vip2.getIntegral());
+			
+		}
+		
+		HttpHeaders headers = new HttpHeaders();
+		ByteArrayOutputStream bot = new ByteArrayOutputStream();
+		try {
+			wb.write(bot);
+			headers.setContentDispositionFormData("attachment", new String("导出会员信息.xlsx".getBytes("utf-8"),"iso-8859-1"));
+			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return new ResponseEntity<byte []>(bot.toByteArray(),headers,HttpStatus.OK);
+		
+	}
+	*/
+	
 }

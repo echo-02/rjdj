@@ -225,4 +225,37 @@
       remark = #{remark,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+ <!--  按订单 -->
+  <select id="selectAllRecord" parameterType="com.accp.domain.Record" resultType="com.accp.domain.Record">
+  select * from
+(select * from (select r.id ,v.`name` ,v.phone ,r.tradedate   ,r.payment   ,r.money   from record r 
+join vip v on r.vipid = v.id <where>
+	<if test="tradedate != null and tradedate2 != null"> r.tradedate between #{tradedate,jdbcType=DATE} and  #{tradedate2,jdbcType=DATE}</if>
+	
+	</where>) A )B
+join
+(select * from (select rs.numbers ,rs.rid   from recordinstance rs )C)D
+on B.id = D.rid <where>
+	<if test="name != null"> B.`name` like  CONCAT('%',#{name,jdbcType=VARCHAR},'%') </if>
+	</where>
+   </select>
+   
+<!-- 按商品 -->
+   <select id="selectAllRecordByP" parameterType="com.accp.domain.Record" resultType="com.accp.domain.Record">
+   select * from
+(select * from (select r.id ,v.`name` ,v.phone ,r.tradedate   ,r.payment   ,r.money   from record r 
+join vip v on r.vipid = v.id <where>
+	<if test="tradedate != null and tradedate2 != null"> r.tradedate between #{tradedate,jdbcType=DATE} and  #{tradedate2,jdbcType=DATE}</if>
+	
+	</where>) A )B
+join
+(
+select * from (select * from (select rs.numbers ,rs.rid,rs.gid rsgid  from recordinstance rs )C join
+goods g on C.rsgid=g.gid ) Z
+)X
+on B.id=X.rid <where>
+	<if test="name != null"> B.`name` like  CONCAT('%',#{name,jdbcType=VARCHAR},'%') </if>
+	</where>
+   </select>
+
 </mapper>

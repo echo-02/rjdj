@@ -1,11 +1,13 @@
 package com.accp.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.accp.domain.Record;
 import com.accp.domain.Vip;
 import com.accp.domain.VipExample;
 import com.accp.mapper.VipMapper;
@@ -60,11 +62,19 @@ public class VipService {
 
 	public void insertVip(Vip vip) {
 		// TODO Auto-generated method stub
+		vip.setBalance(0.0);
+		vip.setIntegral(0);
+		vip.setCheckin(new Date());
 		mapper.insert(vip);
 	}
 
 	public void updateVip(Vip vip) {
 		// TODO Auto-generated method stub
 		mapper.updateByPrimaryKey(vip);
+	}
+
+	public Record selectVipMandC(int id) {
+		// TODO Auto-generated method stub
+		return mapper.selectVipMandC(id);
 	}
 }

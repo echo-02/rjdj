@@ -231,17 +231,27 @@
        <div class="row">
        	<div class="col-md-6">
        		充值账号
-       		<input type="text" id="" value="" />
+       		<input type="text" id="id" value="" />
        	</div>
        	<div class="col-md-6">
        		充值金额
-       		<input type="text" id="" value="" />
+       		<input type="text" id="money" value="" />
+       	</div>
+       </div>
+       <div class="row">
+       	<div class="col-md-6">
+       		赠送积分
+       		<input type="text" id="presenter" value="" />
+       	</div>
+       	<div class="col-md-6">
+       		充值备注
+       		<input type="text" id="remark" value="" />
        	</div>
        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">充值</button>
+        <button type="button" class="btn btn-primary" onclick="insertTopup()">充值</button>
       </div>
     </div>
   </div>
@@ -294,7 +304,7 @@ function selectTopupBypage(pageNum){
 		type:"get",
 		data:{
 			pageNum:pageNum,
-			pageSize:2,
+			pageSize:15,
 			time:$("#test10").val(),
 			name:$("#name").val()
 		},
@@ -328,6 +338,23 @@ function topage(){
 
 function gopage(pageNum){
 	selectTopupBypage(pageNum);
+}
+//充值
+function insertTopup(){
+	$.ajax({
+		url:"[[@{/insertTopup}]]",
+		type:"get",
+		data:{
+			vipid:$("#id").val(),
+			money:$("#money").val(),
+			presenter:$("#presenter").val(),
+				remark:$("#remark").val()
+		},
+		dataType:"json",
+		success:function(res){
+			alert(res.mes);
+		}
+	});
 }
 </script>
 	</body>
