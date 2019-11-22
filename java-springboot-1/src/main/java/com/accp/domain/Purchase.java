@@ -3,7 +3,7 @@ package com.accp.domain;
 import java.util.Date;
 
 public class Purchase {
-    private Integer id;
+    private String id;
 
     private Date deliverydate;
 
@@ -17,11 +17,11 @@ public class Purchase {
 
     private Integer status;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
