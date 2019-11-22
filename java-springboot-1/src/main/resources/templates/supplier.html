@@ -286,7 +286,7 @@
 			/* 打开模态框，传入要修改的数据  */
 			function showModel(id) {
 				$.getJSON("[[@{/supplier/getSupplierByid}]]",{id:id},function(res){
-					console.info(res);
+					/* console.info(res); */
 					$('#supplierModel [name=sid]').val(res.sid);
 					$('#supplierModel [name=sname]').val(res.sname);
 					$('#supplierModel [name=abbreviation]').val(res.abbreviation);
@@ -338,7 +338,7 @@
 				supplier.province=province;
 				supplier.city=city;
 				supplier.region=region;
-				console.info(supplier);
+				/* console.info(supplier); */
 				if(f){
 					alert("请填写完整信息。");
 					return false;

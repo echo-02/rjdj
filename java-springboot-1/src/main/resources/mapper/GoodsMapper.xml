@@ -26,6 +26,39 @@
 	    <result column="spec" property="spec" jdbcType="VARCHAR" />
   	</collection>
   </resultMap>
+  <!-- 查询被改变数量的商品编号 -->
+  <select id="getChangedIds" resultType="java.lang.Integer">
+  	SELECT goods.gid FROM `goods`,`goodsinstance` WHERE `goods`.`gid`=`goodsinstance`.`gid` AND 
+  	giid IN 
+  	<foreach item="item" index="index" collection="list"
+      open="(" separator="," close=")">
+        #{item}
+  	</foreach>
+  	GROUP BY goods.`gid`
+  </select>
+  <!-- 更新商品库存 -->
+  <update id="updateCount">
+  	UPDATE `goods` SET counts=(SELECT SUM(counts) FROM `goodsinstance` WHERE 
+  	gid=`goodsinstance`.`gid` AND gid=#{gid}) WHERE gid=#{gid}
+  </update>
+  <!-- 按商品详情编号集合查询 -->
+  <select id="getGoodsBygiids" resultMap="BaseResultMapExtends">
+  	SELECT  g.`gid` AS gid,g.`artno` AS artno,g.`gname` AS gname,g.`cfid` AS cfid,g.`brand` AS brand,
+	g.`cost` AS cost,g.`price` AS price,g.`counts` AS counts,
+	gs.`giid` AS giid,gs.`barcode` AS barcode,gs.`sfdids` AS sfdids,gs.`counts` AS gscounts,
+	cf.`cfname` AS cfname,
+	GROUP_CONCAT(test.sfdname) AS spec
+	FROM `goods` AS g INNER JOIN `goodsinstance` AS gs ON g.`gid`=gs.`gid`
+	INNER JOIN `classification` AS cf ON g.`cfid`=cf.`cfid` ,
+	(SELECT * FROM `specificationdetails`) AS test
+	WHERE FIND_IN_SET(test.sfdid,gs.`sfdids`)
+	AND g.`status`=0 AND gs.`giid` IN 
+	<foreach item="item" index="index" collection="list"
+      open="(" separator="," close=")">
+        #{item}
+  	</foreach>
+	GROUP BY gs.`giid`;
+  </select>
   <update id="removeGoods">
   	UPDATE goods SET `status`=1 WHERE gid=#{gid}
   </update>

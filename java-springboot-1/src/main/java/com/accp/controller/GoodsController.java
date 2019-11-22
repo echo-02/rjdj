@@ -1,5 +1,6 @@
 package com.accp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,22 @@ public class GoodsController {
 	private GoodsService goodsService;
 	@Autowired
 	private SpecificationService specificationService;
+	/**
+	 * 根据商品详情编号查询信息
+	 * @param list
+	 * @return
+	 */
+	@RequestMapping("/getGoodsBygiids")
+	@ResponseBody
+	public List<Goods> getGoodsBygiids(String giids) {
+		List<Integer> list=new ArrayList<Integer>();
+		String[] giid =giids.split(",");
+		for (String string : giid) {
+			Integer id=Integer.parseInt(string);
+			list.add(id);
+		}
+		return goodsService.getGoodsBygiids(list);
+	}
 	/**
 	 * 查询商品列表
 	 * @param cfid 类别编号

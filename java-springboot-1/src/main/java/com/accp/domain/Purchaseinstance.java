@@ -14,8 +14,28 @@ public class Purchaseinstance {
     private Double cost;
 
     private Integer gid;
+    
+    private String gname;
+    
+    private String spec;
 
-    public Integer getId() {
+    public String getGname() {
+		return gname;
+	}
+
+	public void setGname(String gname) {
+		this.gname = gname;
+	}
+
+	public String getSpec() {
+		return spec;
+	}
+
+	public void setSpec(String spec) {
+		this.spec = spec;
+	}
+
+	public Integer getId() {
         return id;
     }
 

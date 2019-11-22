@@ -12,6 +12,10 @@
   extends="BaseResultMap">
   	<result column="spec" property="spec" jdbcType="VARCHAR" />
   </resultMap>
+  <!-- 修改商品详情数量 -->
+  <update id="changeXQNum">
+  	UPDATE `goodsinstance` SET counts=counts+#{num} WHERE giid=#{giid}
+  </update>
   <!-- 批量新增 -->
   <insert id="addEach">
     INSERT INTO goodsinstance (`gid`, `sfdids`, `barcode`,`counts`)
