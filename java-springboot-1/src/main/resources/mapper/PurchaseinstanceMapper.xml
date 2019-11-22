@@ -10,6 +10,15 @@
     <result column="cost" property="cost" jdbcType="DOUBLE" />
     <result column="gid" property="gid" jdbcType="INTEGER" />
   </resultMap>
+  <!-- 批量新增 -->
+  <insert id="addEach">
+    INSERT INTO purchaseinstance (pid, barcode, 
+      artno, numbers, cost, gid)
+	VALUES
+  	<foreach collection="list" item="pi" separator=",">
+    (#{pid}, #{pi.barcode}, #{pi.artno},#{pi.numbers}, #{pi.cost}, #{pi.gid})
+  	</foreach>
+  </insert>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >

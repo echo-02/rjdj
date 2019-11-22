@@ -1,10 +1,17 @@
 package com.accp.domain;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Purchase {
     private String id;
-
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date deliverydate;
 
     private Integer sid;
@@ -16,8 +23,38 @@ public class Purchase {
     private String remark;
 
     private Integer status;
+    
+    private String sname;
+    
+    private List<Purchaseinstance> purchases;
+    
+    private Integer nums;
 
-    public String getId() {
+    public String getSname() {
+		return sname;
+	}
+
+	public void setSname(String sname) {
+		this.sname = sname;
+	}
+
+	public List<Purchaseinstance> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(List<Purchaseinstance> purchases) {
+		this.purchases = purchases;
+	}
+
+	public Integer getNums() {
+		return nums;
+	}
+
+	public void setNums(Integer nums) {
+		this.nums = nums;
+	}
+
+	public String getId() {
         return id;
     }
 

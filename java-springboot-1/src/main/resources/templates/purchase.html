@@ -121,7 +121,7 @@
 						</div>
 						<div class="col-md-2">
 							<div class="input-group">
-								<input type="text" class="form-control" placeholder="查找" name="seachContext">
+								<input type="text" class="form-control" placeholder="按供应商查找" name="seachContext">
 								<button class="btn-default" type="button">Go!</button>
 							</div>
 						</div>
@@ -164,27 +164,26 @@
 							<form class="form-inline">
 								<div class="form-group">
 									<label>单号</label>
-									<input class="form-control" name="" />
+									<input class="form-control" name="id" />
 								</div>
 								<div class="form-group">
 									<label>交期</label>
-									<input class="form-control" type="date" name="" />
+									<input class="form-control" type="date" name="deliverydate" />
 								</div>
 								<div class="form-group">
 									<label>供应商</label>
-									<select class="form-control">
-										<option>供应商1</option>
-										<option>供应商1</option>
+									<select class="form-control" name="sid">
+										<option value="1">供应商1</option>
 									</select>
 								</div>
 								<div class="form-group">
 									<label>制表人</label>
-									<input class="form-control" name="" />
+									<input class="form-control" name="lister" />
 								</div>
 							</form>
 							<div class="form-group">
 								<label>备注</label>
-								<input class="form-control" name="" />
+								<textarea rows="5" cols="100" name="remark" class="form-control"></textarea>
 							</div>
 						</div>
 						<div>
@@ -201,9 +200,9 @@
 									</tr>
 								</thead>
 								<tbody id="newpurdels">
-									<tr>
-										<td>0001</td>
-										<td>123484</td>
+									<!-- <tr gid="1">
+										<td class="atrno">0001</td>
+										<td class="barcode">123484</td>
 										<td>皮大衣</td>
 										<td>--</td>
 										<td>
@@ -215,22 +214,7 @@
 										<td>
 											<span class="money"></span>
 										</td>
-									</tr>
-									<tr>
-										<td>0001</td>
-										<td>123484</td>
-										<td>皮大衣</td>
-										<td>--</td>
-										<td>
-											<span class="price">50.0</span>
-										</td>
-										<td>
-											<input name="nums" type="number" onchange="getSum()" min="0" />
-										</td>
-										<td>
-											<span class="money"></span>
-										</td>
-									</tr>
+									</tr> -->
 								</tbody>
 							</table>
 							<p>合计<span id="nums" class="text-red"></span>件，金额<span id="sums" class="text-red"></span></p>
@@ -279,7 +263,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						<button type="button" class="btn btn-primary" id="saveProType">确认</button>
+						<button type="button" class="btn btn-primary" id="ckPurchase">确认</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
@@ -291,41 +275,35 @@
 						<h4 class="modal-title">添加货物</h4>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					</div>
-					<div class="modal-body text-center">
-						<table class="table table-info">
-							<tr>
-								<td>选择</td>
-								<td>货号/条码</td>
-								<td>商品</td>
-								<td>规格</td>
-								<td>单价</td>
-								<td>库存</td>
-							</tr>
-							<tr>
-								<td>
-									<input type="checkbox" name="ck" />
-								</td>
-								<td>001/123548</td>
-								<td>皮大衣</td>
-								<td>--</td>
-								<td>50.0</td>
-								<td>50</td>
-							</tr>
-							<tr>
-								<td>
-									<input type="checkbox" name="ck" />
-								</td>
-								<td>001/123548</td>
-								<td>皮大衣</td>
-								<td>--</td>
-								<td>50.0</td>
-								<td>50</td>
-							</tr>
+					<div class="modal-body text-center pre-scrollable">
+						<table class="table table-info ">
+							<thead>
+								<tr>
+									<td>选择</td>
+									<td>货号/条码</td>
+									<td>商品</td>
+									<td>规格</td>
+									<td>单价</td>
+									<td>库存</td>
+								</tr>							
+							</thead>
+							<tbody id="goodsInfo">
+								<!-- <tr>
+									<td>
+										<input type="checkbox" name="ck" giid="1"/>
+									</td>
+									<td>001/123548</td>
+									<td>皮大衣</td>
+									<td>--</td>
+									<td>50.0</td>
+									<td>50</td>
+								</tr>	 -->						
+							</tbody>
 						</table>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-						<button type="button" class="btn btn-primary" id="saveProType1">确认</button>
+						<button type="button" class="btn btn-primary" id="saveCkPro">确认</button>
 					</div>
 				</div><!-- /.modal-content -->
 			</div><!-- /.modal-dialog -->
@@ -339,17 +317,136 @@
 		<script src="js/js.cookie.min.js"></script>
 		<script src="js/front.js"></script>
 		<script>
+			$(function(){
+				showGoods();
+				showSupplier();
+				/* 保存选中的商品 */
+				$("#saveCkPro").click(function(){
+					let giids="-1";
+					if($("#goodsInfo [name=ck]:checked").length==0){
+						alert("请选择商品");
+						return false;
+					}
+					$("#goodsInfo [name=ck]:checked").each(function(){
+						giids+=","+($(this).attr("giid"));
+					});
+					$("#addproModel").modal('hide');
+					$.getJSON("[[@{/goods/getGoodsBygiids}]]",{giids:giids},function(res){
+						/* console.info(res); */
+						$("#newpurdels").empty();
+						$.each(res,function(i,obj){
+							$.each(obj.goodsinstances,function(){
+									let tr="<tr gid=\""+this.giid+"\">"+
+									"<td class=\"atrno\">"+obj.artno+"</td>"+
+									"<td class=\"barcode\">"+this.barcode+"</td>"+
+									"<td>"+obj.gname+"</td>"+
+									"<td>"+this.spec+"</td>"+
+									"<td>"+
+										"<span class=\"price\">"+obj.cost+"</span>"+
+									"</td>"+
+									"<td>"+
+										"<input name=\"nums\" type=\"number\" onchange=\"getSum()\" min=\"0\" />"+
+									"</td>"+
+									"<td>"+
+										"<span class=\"money\"></span>"+
+									"</td>"+
+								"</tr>";
+								$("#newpurdels").append(tr);
+							})
+						})
+					});
+				})
+			});
+			/* 供应商渲染 */
+			function showSupplier(){
+				$.getJSON("[[@{/supplier/getSuppliersByParam}]]",function(res){
+					/* console.info(res); */
+					$("[name=sid]").empty();
+					$.each(res,function(){
+						let op="<option value=\""+this.sid+"\">"+this.sname+"</option>";
+						$("[name=sid]").append(op);
+					})
+				});
+			}
+			/* 商品渲染 */
+			function showGoods(){
+				$.getJSON("[[@{/goods/getGoods}]]",function(res){
+					/* console.info(res); */
+					$("#goodsInfo").empty();
+					$.each(res,function(i,obj){
+						$.each(obj.goodsinstances,function(j,obi){
+							let tr="<tr>"+
+								"<td>"+
+									"<input type=\"checkbox\" name=\"ck\" giid=\""+obi.giid+"\"/>"+
+								"</td>"+
+								"<td>"+obj.artno+"/"+obi.barcode+"</td>"+
+								"<td>"+obj.cfname+"</td>"+
+								"<td>"+obi.spec+"</td>"+
+								"<td>"+obj.cost+"</td>"+
+								"<td>"+obi.counts+"</td>"+
+							"</tr>;"
+							$("#goodsInfo").append(tr);
+						})
+					})
+				})
+			}
+			/* 清空新增信息 */
+			function clearPur(){
+				$("[name=id]").val("");
+				$("[name=deliverydate]").val("");
+				$("[name=lister]").val("");
+				$("[name=remark]").val("");
+				$("#newpurdels").empty();
+			}
+			/* 打开新增 */
 			function openaddpur() {
 				$(".purhead").hide();
 				$(".purcontent").hide();
 				$(".addpur").show();
 			};
+			/* 关闭新增 */
 			function canceladd() {
+				clearPur();
 				$(".purhead").show();
 				$(".purcontent").show();
 				$(".addpur").hide();
 			};
+			/* 保存新增 */
 			function addpur() {
+				let purchase={};
+				let purchases=[];
+				let f=false;
+				$("#newpurdels tr").each(function(){
+					let purchasein={};
+					purchasein.barcode=$(this).find(".barcode").html();
+					purchasein.artno=$(this).find(".atrno").html();
+					purchasein.numbers=$(this).find("[name=nums]").val();
+					purchasein.cost=$(this).find(".price").html();
+					purchasein.gid=$(this).attr("gid");
+					purchases.push(purchasein);
+				});
+				purchase.id=$("[name=id]").val();
+				purchase.deliverydate=$("[name=deliverydate]").val();
+				purchase.sid=$("[name=sid]").val();
+				purchase.lister=$("[name=lister]").val();
+				purchase.money=$("#sums").html();
+				purchase.remark=$("[name=remark]").val();
+				purchase.status=0;
+				purchase.purchases=purchases;
+				if(purchase.id==""||purchase.deliverydate==""||
+						purchase.lister==""){
+					f=true;
+				}
+				$.each(purchase.purchases,function(){
+					if(this.numbers==""){
+						f=true;
+					}
+				})
+				if(f){
+					alert("请完善信息");
+					return false;
+				}
+				clearPur();
 				$(".purhead").show();
 				$(".purcontent").show();
 				$(".addpur").hide();

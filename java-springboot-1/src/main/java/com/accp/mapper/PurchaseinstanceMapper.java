@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface PurchaseinstanceMapper {
+	int addEach(@Param("list") List<Purchaseinstance> list,@Param("pid") String pid);
+	
     int countByExample(PurchaseinstanceExample example);
 
     int deleteByExample(PurchaseinstanceExample example);

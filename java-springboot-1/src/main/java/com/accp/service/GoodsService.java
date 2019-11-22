@@ -30,6 +30,14 @@ public class GoodsService {
 	@Autowired
 	private GoodsinstanceMapper goodsinstanceMapper;
 	/**
+	 * 根据商品详情编号查询信息
+	 * @param list
+	 * @return
+	 */
+	public List<Goods> getGoodsBygiids(List<Integer> list) {
+		return goodsMapper.getGoodsBygiids(list);
+	}
+	/**
 	 * 查询商品列表
 	 * @param cfid 类别编号
 	 * @param gname 商品名称
