@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.accp.mapper.PurchaseMapper" >
   <resultMap id="BaseResultMap" type="com.accp.domain.Purchase" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="deliverydate" property="deliverydate" jdbcType="DATE" />
     <result column="sid" property="sid" jdbcType="INTEGER" />
     <result column="lister" property="lister" jdbcType="VARCHAR" />
@@ -85,15 +85,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from purchase
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from purchase
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.accp.domain.PurchaseExample" >
     delete from purchase
@@ -105,7 +105,7 @@
     insert into purchase (id, deliverydate, sid, 
       lister, money, remark, 
       status)
-    values (#{id,jdbcType=INTEGER}, #{deliverydate,jdbcType=DATE}, #{sid,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=VARCHAR}, #{deliverydate,jdbcType=DATE}, #{sid,jdbcType=INTEGER}, 
       #{lister,jdbcType=VARCHAR}, #{money,jdbcType=DOUBLE}, #{remark,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER})
   </insert>
@@ -136,7 +136,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=VARCHAR},
       </if>
       <if test="deliverydate != null" >
         #{deliverydate,jdbcType=DATE},
@@ -168,7 +168,7 @@
     update purchase
     <set >
       <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=VARCHAR},
       </if>
       <if test="record.deliverydate != null" >
         deliverydate = #{record.deliverydate,jdbcType=DATE},
@@ -195,7 +195,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update purchase
-    set id = #{record.id,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=VARCHAR},
       deliverydate = #{record.deliverydate,jdbcType=DATE},
       sid = #{record.sid,jdbcType=INTEGER},
       lister = #{record.lister,jdbcType=VARCHAR},
@@ -228,7 +228,7 @@
         status = #{status,jdbcType=INTEGER},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.accp.domain.Purchase" >
     update purchase
@@ -238,6 +238,6 @@
       money = #{money,jdbcType=DOUBLE},
       remark = #{remark,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

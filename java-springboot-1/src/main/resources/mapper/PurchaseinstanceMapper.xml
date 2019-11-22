@@ -3,7 +3,7 @@
 <mapper namespace="com.accp.mapper.PurchaseinstanceMapper" >
   <resultMap id="BaseResultMap" type="com.accp.domain.Purchaseinstance" >
     <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="pid" property="pid" jdbcType="INTEGER" />
+    <result column="pid" property="pid" jdbcType="VARCHAR" />
     <result column="barcode" property="barcode" jdbcType="VARCHAR" />
     <result column="artno" property="artno" jdbcType="VARCHAR" />
     <result column="numbers" property="numbers" jdbcType="INTEGER" />
@@ -105,7 +105,7 @@
     insert into purchaseinstance (id, pid, barcode, 
       artno, numbers, cost, 
       gid)
-    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{barcode,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{pid,jdbcType=VARCHAR}, #{barcode,jdbcType=VARCHAR}, 
       #{artno,jdbcType=VARCHAR}, #{numbers,jdbcType=INTEGER}, #{cost,jdbcType=DOUBLE}, 
       #{gid,jdbcType=INTEGER})
   </insert>
@@ -139,7 +139,7 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="pid != null" >
-        #{pid,jdbcType=INTEGER},
+        #{pid,jdbcType=VARCHAR},
       </if>
       <if test="barcode != null" >
         #{barcode,jdbcType=VARCHAR},
@@ -171,7 +171,7 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.pid != null" >
-        pid = #{record.pid,jdbcType=INTEGER},
+        pid = #{record.pid,jdbcType=VARCHAR},
       </if>
       <if test="record.barcode != null" >
         barcode = #{record.barcode,jdbcType=VARCHAR},
@@ -196,7 +196,7 @@
   <update id="updateByExample" parameterType="map" >
     update purchaseinstance
     set id = #{record.id,jdbcType=INTEGER},
-      pid = #{record.pid,jdbcType=INTEGER},
+      pid = #{record.pid,jdbcType=VARCHAR},
       barcode = #{record.barcode,jdbcType=VARCHAR},
       artno = #{record.artno,jdbcType=VARCHAR},
       numbers = #{record.numbers,jdbcType=INTEGER},
@@ -210,7 +210,7 @@
     update purchaseinstance
     <set >
       <if test="pid != null" >
-        pid = #{pid,jdbcType=INTEGER},
+        pid = #{pid,jdbcType=VARCHAR},
       </if>
       <if test="barcode != null" >
         barcode = #{barcode,jdbcType=VARCHAR},
@@ -232,7 +232,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.accp.domain.Purchaseinstance" >
     update purchaseinstance
-    set pid = #{pid,jdbcType=INTEGER},
+    set pid = #{pid,jdbcType=VARCHAR},
       barcode = #{barcode,jdbcType=VARCHAR},
       artno = #{artno,jdbcType=VARCHAR},
       numbers = #{numbers,jdbcType=INTEGER},

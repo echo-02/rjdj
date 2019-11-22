@@ -3,7 +3,7 @@ package com.accp.domain;
 public class Purchaseinstance {
     private Integer id;
 
-    private Integer pid;
+    private String pid;
 
     private String barcode;
 
@@ -23,11 +23,11 @@ public class Purchaseinstance {
         this.id = id;
     }
 
-    public Integer getPid() {
+    public String getPid() {
         return pid;
     }
 
-    public void setPid(Integer pid) {
+    public void setPid(String pid) {
         this.pid = pid;
     }
 
