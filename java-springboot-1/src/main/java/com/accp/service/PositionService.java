@@ -22,4 +22,12 @@ public class PositionService {
    public int addPosition(Position p) {
 	   return pm.insertSelective(p);
    }
+   
+   public Position byPositionId(Integer positionid) {
+	   return pm.selectByPrimaryKey(positionid); 
+   }
+   
+   public int delPosition(Integer positionid) {
+	   return pm.deleteByPrimaryKey(positionid);
+   }
 }

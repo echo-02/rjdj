@@ -19,7 +19,7 @@ public class Shop {
 
     private Integer status;
     
-    private int count;
+    private Integer count;
     
     private String username;
     
@@ -31,11 +31,12 @@ public class Shop {
 		this.username = username;
 	}
 
-	public int getCount() {
+	public Integer getCount() {
 		return count;
 	}
 
-	public void setCount(int count) {
+	public void setCount(Integer count) {
+		System.out.println(count);
 		this.count = count;
 	}
 

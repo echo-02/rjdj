@@ -1,5 +1,6 @@
 package com.accp.mapper;
 
+import com.accp.domain.Position;
 import com.accp.domain.Shop;
 import com.accp.domain.ShopExample;
 import com.accp.domain.User;
@@ -32,11 +33,17 @@ public interface ShopMapper {
 
     int updateByPrimaryKey(Shop record);
     
-    @Select("select s.*,(select count(*) from `employee` e where s.`shopid`=e.`shopid`) as count,\n" + 
-    		"(select `username` from `user` u where u.`userid`=s.`userid`) as username from `shop` s\n" + 
-    		"where s.`userid`=#{userid}")
+    @Select("SELECT s.*,(SELECT COUNT(*) FROM `employee` e WHERE s.`shopid`=e.`shopid`) AS COUNT,\n" + 
+    		"(SELECT `username` FROM `user` u WHERE u.`userid`=s.`userid`) AS username FROM `shop` s \n" + 
+    		"WHERE s.`userid`=#{userid}")
     List<Shop> queryShop(Integer userid);
     
     @Select("SELECT * FROM `shop` WHERE `shopname`=#{shopname}")
     Shop queryShopName(String shopname);
+    
+    @Select("SELECT * FROM `shop`")
+    List<Shop> queryshop();
+    
+    @Select("SELECT * FROM `position` WHERE `positionid`!=1")
+    List<Position> queryPosition();
 }

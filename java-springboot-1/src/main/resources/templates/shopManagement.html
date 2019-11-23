@@ -273,8 +273,7 @@
 		<script type="text/javascript">
 		     //删除门店
 			 function delShop() {
-		    	 
-				if(confirm("确认要删除该门店吗?")) {
+				if(confirm("确认要删除这家门店吗?")) {
 				   var shopid=$("#shopid").val();
                    $.ajax({
                 	   url:"[[@{/shop/removeShop}]]",
