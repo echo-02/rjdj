@@ -10,6 +10,20 @@
     <result column="cost" property="cost" jdbcType="DOUBLE" />
     <result column="gid" property="gid" jdbcType="INTEGER" />
   </resultMap>
+  <resultMap id="BaseResultMapExtends" type="com.accp.domain.Purchaseinstance"
+  extends="BaseResultMap">
+  	<result column="gname" property="gname" jdbcType="VARCHAR" />
+  	<result column="spec" property="spec" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="getPurinsByPid" resultMap="BaseResultMapExtends">
+  	SELECT p.`artno`,p.`barcode`,p.`cost`,p.`numbers`,g.`gname`,GROUP_CONCAT(test.sfdname) AS spec
+	FROM `goods` AS g INNER JOIN `goodsinstance` AS gs ON g.`gid`=gs.`gid`
+	INNER JOIN `purchaseinstance` AS p ON p.`gid`=gs.`giid`,
+	(SELECT * FROM `specificationdetails`) AS test
+	WHERE FIND_IN_SET(test.sfdid,gs.`sfdids`)
+	AND p.`pid`=#{pid}
+	GROUP BY p.`gid`,p.`artno`,p.`barcode`,p.`cost`,p.`numbers`
+  </select>
   <!-- 批量新增 -->
   <insert id="addEach">
     INSERT INTO purchaseinstance (pid, barcode, 

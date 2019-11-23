@@ -3,6 +3,7 @@ package com.accp.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +51,49 @@ public class PurchaseService {
 		for (Integer integer : gids) {
 			goodsMapper.updateCount(integer);
 		}
+		return i;
+	}
+	/**
+	 * 判断采购单号是否存在
+	 * @param pid
+	 * @return
+	 */
+	public boolean ckPid(String pid) {
+		boolean f=false;
+		Purchase purchase=purchaseMapper.selectByPrimaryKey(pid);
+		if(purchase!=null) {
+			f=true;
+		}
+		return f;
+	}
+	/**
+	 * 查询采购单列表
+	 * @param startseachtime
+	 * @param endseachtime
+	 * @return
+	 */
+	public List<Purchase> getPurchase(String startseachtime,String endseachtime,String sname) {
+		return purchaseMapper.getPurchase(startseachtime, endseachtime,sname);
+	}
+	/**
+	 * 查询采购单详情
+	 * @param pid
+	 * @return
+	 */
+	public List<Purchaseinstance> getPurinsByPid(String pid) {
+		return purchaseinstanceMapper.getPurinsByPid(pid);
+	}
+	/**
+	 * 审核采购单
+	 * @param id
+	 * @return
+	 */
+	public int checkPurchase(String id) {
+		int i=0;
+		Purchase purchase=new Purchase();
+		purchase.setId(id);
+		purchase.setStatus(1);
+		i=purchaseMapper.updateByPrimaryKeySelective(purchase);
 		return i;
 	}
 }

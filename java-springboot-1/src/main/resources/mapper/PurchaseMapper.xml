@@ -25,6 +25,22 @@
     	<result column="gid" property="gid" jdbcType="INTEGER" />
   	</collection>
   </resultMap>
+  <select id="getPurchase" resultMap="BaseResultMapExtends">
+  	SELECT p.`id` AS id,p.`deliverydate`,s.`sname` AS sname,p.`money`,p.`status`,
+	p.`remark`,SUM(pi.`numbers`) AS nums
+	FROM `purchase` AS p,`purchaseinstance` AS PI,`supplier` AS s
+	WHERE p.`id`=pi.`pid`
+	<if test="startseachtime != '' and startseachtime != null">
+		AND p.`deliverydate` &gt;= #{startseachtime}
+	</if>
+	<if test="endseachtime != '' and endseachtime != null ">
+		AND p.`deliverydate` &lt;= #{endseachtime}
+	</if>
+	<if test="sname != '' and sname != null ">
+		AND s.`sname` LIKE CONCAT('%',#{sname},'%')
+	</if>
+	AND p.`sid`=s.`sid` GROUP BY p.`id`
+  </select>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
