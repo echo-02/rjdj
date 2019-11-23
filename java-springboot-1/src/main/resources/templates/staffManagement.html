@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>店铺管理</title>
+		<title>员工管理</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="robots" content="all,follow">
@@ -13,8 +13,7 @@
 		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
 
 		<!-- Font Awesome CSS-->
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-		 crossorigin="anonymous">
+		<!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"> -->
 		<!-- Google fonts - Popppins for copy-->
 		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,800">
 		<!-- orion icons-->
@@ -47,7 +46,8 @@
 	</head>
 
 	<body>
-		<!-- 头部-->
+	<div id="StaffCtx">
+	   <!-- 头部-->
 		<header class="header">
 			<nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
 				<a href="#" class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead">
@@ -126,7 +126,8 @@
 				</ul>
 			</div>
 			<!-- 右侧主体 -->
-			<div class="page-holder w-100 d-flex flex-wrap">
+
+			   <div class="page-holder w-100 d-flex flex-wrap">
 				<div class="container-fluid px-xl-5">
 					<!-- 自己的页面内容 -->
 					<div class="shop-content">
@@ -135,29 +136,27 @@
 						<button class="btn btn-success" id="btn-success" data-toggle="modal" data-target="#myModal">添加员工</button>
 						<div class="content-i row">
 							<div class="form-horizontal">
-								<div class="clo-md-4">
-									<select class="form-control" οnchange="selectOnchang(this)">
-										<option>全部职位</option>
-										<option>待审核商家</option>
-										<option>未通过审核商家</option>
-										<option>已通过审核商家</option>
+								<div class="clo-md-4" style="margin-left: 10px;">
+									<select class="form-control" v-model="xx" @change="ob2()">
+										<option :value="0">全部职位</option>
+										<option :value="p.positionid" v-for="p in position">{{p.positionname}}</option>
+										
 									</select>
 								</div>
 							</div>
-							<div class="input-group col-lg-4">
+							<!-- <div class="input-group col-lg-4">
 								<input type="text" class="form-control" placeholder="查询" style="width: 160px;">
-								<span class="input-group-btn">
-									<button class="btn btn-default" type="button">Go!</button>
+								<span class="input-group-btn"> 
+									<button class="btn btn-default" type="button" style="position: relative;top: -37px;left: 240px;" @click="search()">Go!</button>
 								</span>
-							</div>
+							</div> -->
 							<!-- /input-group -->
-							<div class="form-horizontal col-lg-2">
+							<div class="form-horizontal col-lg-3" style="width:480px;margin-left: 750px;">
 								<div style="float: right;">
-									<select class="form-control" οnchange="selectOnchang(this)" style="height: 35px;">
-										<option>全部店铺</option>
-										<option>待审核商家</option>
-										<option>未通过审核商家</option>
-										<option>已通过审核商家</option>
+								<!-- οnchange="selectOnchang(this)" -->
+									<select class="form-control" style="height: 37px;" v-model="yy" @change="ob">
+										<option :value="0">全部店铺</option>
+										<option :value="s.shopid" v-for="s in shop">{{s.shopname}}</option>
 									</select>
 								</div>
 							</div>
@@ -176,14 +175,14 @@
 								<th>操作</th>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td>莱米琪</td>
-									<td>-</td>
-									<td>18274282692</td>
-									<td>总账号</td>
-									<td>1111</td>
-									<td onclick="edit()" data-toggle="modal" data-target="#editModal">编辑</td>
+								<tr v-for="s,index in staff">
+									<td>{{index+1}}</td>
+									<td>{{s.shopname}}</td>
+									<td>{{s.positionname}}</td>
+									<td>{{s.jobnum}}</td>
+									<td>{{s.emname}}</td>
+									<td>{{s.empwd}}</td>
+									<td @click="updateStaff(s.emid)" data-toggle="modal" data-target="#editModal">编辑</td>
 								</tr>
 							</tbody>
 						</table>
@@ -198,6 +197,10 @@
 			</div>
 		</div>
 
+			    
+			
+			
+
 		<!--新增模态框-->
 		<div class="modal " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog">
@@ -208,26 +211,25 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -11px;">&times;</button>
 					</div>
 					<div class="modal-body">
-						<p style="margin-top: 30px;">
+						<p style="margin-top: 15px;">
 							<span style="font-size: 16px;font-family: '微软雅黑';">店铺</span>
 							<div class="form-horizontal">
 								<div class="col-lg-2">
-									<select class="form-control" οnchange="selectOnchang(this)" style="height: 35px;width:180px;margin: -39px 0 0 27px;">
-										<option>请选择店铺</option>
-										<option>莱米奇</option>
-
+									<select class="form-control" οnchange="selectOnchang(this)" style="height: 35px;width:180px;margin: -39px 0 0 27px;" v-model="cc">
+										<option :value="0">请选择店铺</option>
+										<option :value="s.shopid" v-for="s in shop">{{s.shopname}}</option>
 									</select>
 								</div>
 							</div>
 						</p>
 						<div style="margin: -39px 0 0 250px;">
 							<p>
-								<span style="font-size: 16px;font-family: '微软雅黑';margin-top: 15px;position: relative;  top: 6px;">职位</span>
+								<span style="font-size: 16px;font-family: '微软雅黑';margin-top: 15px;position: relative;  top: -10px;">职位</span>
 								<div class="form-horizontal">
 									<div class="col-lg-2">
-										<select class="form-control" οnchange="selectOnchang(this)" style="height: 35px;width:180px;margin: -39px 0 0 27px;">
-											<option>请选择职位</option>
-											<option>店员</option>
+										<select class="form-control" οnchange="selectOnchang(this)" style="height: 35px;width:180px;margin: -52px 0 0 27px;" v-model="dd">
+											<option :value="0">请选择职位</option>
+											<option :value="p.positionid" v-for="p in position">{{p.positionname}}</option>
 
 										</select>
 									</div>
@@ -238,19 +240,19 @@
 					</div>
 					<div class="form-group">
 						<label for="exampleInputPassword1" style="font-size: 16px;font-family: '微软雅黑';margin-left: 15px;">工号</label>
-						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="" style="width: 180px;margin: -34px 0 0 57px;">
+						<input type="text" class="form-control" id="exampleInputPassword1" placeholder="" style="width: 180px;margin: -34px 0 0 57px;" name="jobnum">
 					</div>
 					<div class="form-group" style="margin: -43px 0 0 250px;">
-						<label for="exampleInputPassword1" style="font-size: 16px;font-family: '微软雅黑';margin-left: 15px;">姓名</label>
-						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="" style="width: 180px;margin: -34px 0 0 57px;">
+						<label for="exampleInputPassword1" style="font-size: 16px;font-family: '微软雅黑';margin:-6px 0 0 15px;">姓名</label>
+						<input type="text" class="form-control" id="exampleInputPassword1" placeholder="" style="width: 180px;margin: -32px 0 0 57px;" name="emname">
 					</div>
-					<div class="form-group" style="margin: 20px 0 40px 0;">
+					<div class="form-group" style="margin: 35px 0 40px 0;">
 						<label for="exampleInputPassword1" style="font-size: 16px;font-family: '微软雅黑';margin-left: 15px;">密码</label>
-						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="" style="width: 180px;margin: -34px 0 0 57px;">
+						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="" style="width: 180px;margin: -34px 0 0 57px;" name="empwd">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal" style="background: white;color: black;">取消</button>
-						<button type="button" class="btn btn-success">保存</button>
+						<button type="button" class="btn btn-success" @click="addPosition">保存</button>
 					</div>
 				</div>
 				<!-- /.modal-content -->
@@ -272,22 +274,19 @@
 							<span style="font-size: 16px;font-family: '微软雅黑';">店铺</span>
 							<div class="form-horizontal">
 								<div class="col-lg-2">
-									<select class="form-control" οnchange="selectOnchang(this)" style="height: 35px;width:180px;margin: -39px 0 0 27px;">
-										<option>请选择店铺</option>
-										<option>莱米奇</option>
-
+									<select class="form-control" οnchange="selectOnchang(this)" style="height: 35px;width:180px;margin: -39px 0 0 27px;" v-model="bb" id="shopxx">
+										<option :value="s.shopid" v-for="s in shop">{{s.shopname}}</option>
 									</select>
 								</div>
 							</div>
 						</p>
 						<div style="margin: -39px 0 0 250px;">
 							<p>
-								<span style="font-size: 16px;font-family: '微软雅黑';margin-top: 15px;position: relative;  top: 6px;">职位</span>
+								<span style="font-size: 16px;font-family: '微软雅黑';margin-top: 15px;position: relative;  top: -10px;">职位</span>
 								<div class="form-horizontal">
 									<div class="col-lg-2">
-										<select class="form-control" οnchange="selectOnchang(this)" style="height: 35px;width:180px;margin: -39px 0 0 27px;">
-											<option>请选择职位</option>
-											<option>店员</option>
+										<select class="form-control" οnchange="selectOnchang(this)" style="height: 35px;width:180px;margin: -52px 0 0 27px;" v-model="aa">
+											<option :value="p.positionid" v-for="p in position">{{p.positionname}}</option>
 
 										</select>
 									</div>
@@ -296,22 +295,28 @@
 						</div>
 
 					</div>
+					
+					<div class="form-group" style="display:none">
+						<label for="exampleInputPassword1" style="font-size: 16px;font-family: '微软雅黑';margin-left: 15px; ">工号</label>
+						<input type="text" class="form-control"  placeholder="" style="width: 180px;margin: -34px 0 0 57px;readonly=readonly" id="emid">
+					</div>
+					
 					<div class="form-group">
-						<label for="exampleInputPassword1" style="font-size: 16px;font-family: '微软雅黑';margin-left: 15px;">工号</label>
-						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="" style="width: 180px;margin: -34px 0 0 57px;">
+						<label for="exampleInputPassword1" style="font-size: 16px;font-family: '微软雅黑';margin-left: 15px; ">工号</label>
+						<input type="text" class="form-control"  placeholder="" style="width: 180px;margin: -34px 0 0 57px;readonly=readonly" id="jobnum">
 					</div>
 					<div class="form-group" style="margin: -43px 0 0 250px;">
-						<label for="exampleInputPassword1" style="font-size: 16px;font-family: '微软雅黑';margin-left: 15px;">姓名</label>
-						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="" style="width: 180px;margin: -34px 0 0 57px;">
+						<label for="exampleInputPassword1" style="font-size: 16px;font-family: '微软雅黑';margin:-6px 0 0 15px;">姓名</label>
+						<input type="text" class="form-control"  placeholder="" style="width: 180px;margin: -32px 0 0 57px;" id="emname">
 					</div>
-					<div class="form-group" style="margin: 20px 0 40px 0;">
+					<div class="form-group" style="margin: 35px 0 40px 0;">
 						<label for="exampleInputPassword1" style="font-size: 16px;font-family: '微软雅黑';margin-left: 15px;">密码</label>
-						<input type="password" class="form-control" id="exampleInputPassword1" placeholder="" style="width: 180px;margin: -34px 0 0 57px;">
+						<input type="password" class="form-control"  placeholder="" style="width: 180px;margin: -34px 0 0 57px;" id="empwd">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal" style="background: white;color: black;">取消</button>
-						<button type="button" class="btn btn-danger">删除</button>
-						<button type="button" class="btn btn-success">保存</button>
+						<button type="button" class="btn btn-danger" @click="removePosition">删除</button>
+						<button type="button" class="btn btn-success" @click="updatePosition">保存</button>
 					</div>
 				</div>
 				<!-- /.modal-content -->
@@ -319,24 +324,220 @@
 			<!-- /.modal -->
 		</div>
 		</div>
-		<!-- <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal" style="background: white;color: black;">取消</button>
-			<button type="button" class="btn btn-danger" onclick="del()">删除</button>
-			<button type="button" class="btn btn-success">保存</button>
-		</div> -->
 		</div>
 		<!-- /.modal-content -->
 		</div>
 		<!-- /.modal -->
 		</div>
-
+	</div>
+		
+		<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+		<script type="text/javascript" th:src="@{/js/vue.js}"></script>
 		<script type="text/javascript">
-			function del() {
-				if (confirm("确认要删除该名店吗?")) {
-
-				}
-			}
+		    var StaffVm=new Vue({
+		    	el:'#StaffCtx',
+		    	data(){
+		    		return {
+		    			staff:[],
+		    			position:[],
+		    			shop:[],
+		    		    xx:0,
+		    		    yy:0,
+		    		    aa:0,
+		    		    bb:0,
+		    		    cc:0,
+		    		    dd:0,
+		    		    searchName:""
+		    		    
+		    		}
+		    	},
+		    	methods:{
+		    		//查询所有员工
+		    		queryAllStaff:function(){
+		    			var t=this;
+		    			$.ajax({
+			    			url:"[[@{/Staff/queryAllStaff}]]",
+			    			success:function(res){
+			    				console.log(res);
+			    				t.staff=res;
+			    			}
+			    		});
+		    		},
+		    		//根据员工编号查询
+		    		updateStaff:function(emid){
+		    			var that=this;
+		    			$.ajax({
+		    				url:"[[@{/Staff/byEmid}]]",
+		    				data:{
+		    					emid:emid
+		    				},
+		    				success:function(res){
+		    					console.log(res);
+		    					that.bb=res.shopid;
+		    					that.aa=res.positionid;
+		    					$("#jobnum").attr("value",res.jobnum);
+		    					$("#emname").attr("value",res.emname);
+		    					$("#empwd").attr("value",res.empwd);
+		    					$("#emid").attr("value",res.emid);
+		    				}
+		    			});
+		    		},
+		    		//删除员工
+		    		removePosition:function(){
+		    			var jobnum=$("#jobnum").val();
+		    			if(confirm("确认要删除当前员工吗？")){
+		    				$.ajax({
+			    				url:"[[@{/Staff/removePosition}]]",
+			    				data:{
+			    					jobnum:jobnum
+			    				},
+			    				success:function(res){
+			    					location.href="/staffManagement"
+			    				}
+			    			});
+		    			}
+		    		},
+		    		//修改员工
+		    		updatePosition:function(){
+		    			var shopid=this.bb;
+		    			var positionid=this.aa;
+		    			var jobnum=$("#jobnum").val();
+		    			var emname=$("#emname").val();
+		    			var empwd=$("#empwd").val();
+		    			var emid=$("#emid").val();
+		    		    
+		    			/* alert(shopid+"+"+positionid+"+"+jobnum+"+"+username+"+"+password); */
+		    			$.ajax({
+		    				url:"[[@{/Staff/updatePosition}]]",
+		    				data:{
+		    					shopid:shopid,
+		    					positionid:positionid,
+		    					jobnum:jobnum,
+		    					emname:emname,
+		    					empwd:empwd,
+		    					emid:emid,
+		    					userid:"[[${session.user.userid}]]"
+		    					
+		    				},
+		    				success:function(res){
+		    					location.href="/staffManagement"
+		    				}
+		    			});
+		    			
+		    		},
+		    		//新增员工
+		    		addPosition:function(){
+		    			var shopid=this.cc;
+		    			var positionid=this.dd;
+		    			var jobnum=$("[name='jobnum']").val();
+		    			var emname=$("[name='emname']").val();
+		    			var empwd=$("[name='empwd']").val();
+		    			/* alert(shopid+"+"+positionid+"+"+jobnum+"+"+emname+"+"+empwd); */
+		    			$.ajax({
+		    				url:"[[@{/Staff/addPosition}]]",
+		    				data:{
+		    					shopid:shopid,
+		    					positionid:positionid,
+		    					jobnum:jobnum,
+		    					emname:emname,
+		    					empwd:empwd
+		    				},
+		    				success:function(res){
+		    					if(res=="T"){
+		    						location.href="/staffManagement"
+		    					}else{
+		    						alert("员工已存在，请重新添加");
+		    					}	
+		    				}
+		    			});
+		    		},
+		    		search:function(){
+		    			alert(1);
+		    		},
+		    		
+		    		//职位改变时
+		    		ob:function(){
+		    			var that=this;
+		    			var t=this.yy;
+		    			if(t=='0'){
+		    				$.ajax({
+				    			url:"[[@{/Staff/queryAllStaff}]]",
+				    			success:function(res){
+				    				console.log(res);
+				    				that.staff=res;
+				    			}
+				    		});
+		    			}else{
+		    			$.ajax({
+		    				url:"[[@{/Staff/byShopQuery}]]",
+		    				data:{
+		    					shopid:t
+		    				},
+		    				success:function(res){
+		    					console.log(res);
+		    					that.staff=res;
+		    					
+		    				}
+		    				
+		    			})
+		    			}
+		    		},
+		    		//店铺改变时
+		    		ob2:function(){
+		    			var that=this;
+		    			var t=this.xx;
+		    			if(t=='0'){
+		    				that.queryAllStaff();
+		    			}else{
+		    			$.ajax({
+		    				url:"[[@{/Staff/byPositionQuery}]]",
+		    				data:{
+		    					positionid:t
+		    				},
+		    				success:function(res){
+		    					that.staff=res;
+		    					console.log(res);
+		    				}
+		    				
+		    			})
+		    			}
+		    		}
+		    	
+		    	},
+		    	created:function(){
+		    		var t=this;		    		 
+		    		t.queryAllStaff();
+		    		
+		    		//查询头像
+		    		$.ajax({
+		    			url:"[[@{/byUserId}]]",
+		    			data:{
+		    				userid:"[[${session.user.userid}]]"
+		    			},
+		    			success:function(res){
+		    				$("img").attr("src",res.userpic);
+		    			}
+		    		});
+		    		
+		    		//查询所有店铺
+		    		$.ajax({
+		    			url:"[[@{/Staff/queryshop}]]",
+		    			success:function(res){
+		    				t.shop=res;
+		    				console.log(res);
+		    			}
+		    		});
+		    		//查询所有职位
+		    		$.ajax({
+		    			url:"[[@{/Staff/queryPosition}]]",
+		    			success:function(res){
+		    				t.position=res;
+		    				console.log(res);
+		    			}
+		    		});
+		    	},
+		    });
+		    
 		</script>
 	</body>
-
 </html>

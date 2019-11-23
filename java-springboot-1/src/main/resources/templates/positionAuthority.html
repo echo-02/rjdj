@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>店铺管理</title>
+		<title>职位权限</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="robots" content="all,follow">
@@ -148,10 +148,10 @@
 							<th>操作</th>
 						</thead>
 						<tbody>
-							<tr v-for="p in position">
-								<td>{{p.positionid}}</td>
+							<tr v-for="p,index in position">
+								<td>{{index+1}}</td>
 								<td>{{p.positionname}}</td>
-								<td data-toggle="modal" data-target="#myModal1" onclick="updatePosition(p.positionid)">编辑</td>
+								<td data-toggle="modal" data-target="#myModal1" @click="toUpdatePosition(p.positionid)">编辑</td>
 							</tr>
 						</tbody>
 					</table>
@@ -182,7 +182,7 @@
 										<div class="" style="margin-left: 50px;">
 											<p style="font-family: Consolas Consolas;font-size: 16px;">销售：
 												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 收银开单
+											        <input type="checkbox" id="inlineCheckbox1" value="option1" checked="checked"> 收银开单
 											    </label>
 												<label class="checkbox-inline">
 											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 编辑订单
@@ -313,7 +313,12 @@
 								<form role="form">
 									<div class="form-group">
 										<label for="name">职位名称：</label>
-										<input type="text" class="form-control" id="name" placeholder="" style="width: 220px;">
+										<input type="text" class="form-control" placeholder="" style="width: 220px;" id="positionname">
+									</div>
+									
+									<div class="form-group" style="display:none;">
+										<label for="name">职位名称：</label>
+										<input type="text" class="form-control" placeholder="" style="width: 220px;" id="positionid">
 									</div>
 
 									<div class="form-group">
@@ -452,11 +457,23 @@
 		            		}
 		            	},
 		            	methods:{
-		            		
+		            		toUpdatePosition:function(positionid){
+		            			$.ajax({
+		            				url:"[[@{/position/byPositionId}]]",
+		            				data:{
+		            					positionid:positionid
+		            				},
+		            				success:function(res){
+		            					$("#positionname").attr("value",res.positionname);
+		            					$("#positionid").attr("value",res.positionid);		
+		            				}
+		            			});
+		            			
+		            		}
 		            	},
 		            	created:function(){
 		            		//查询用户头像
-		            		/*$.ajax({
+		            		$.ajax({
 				    			url:"[[@{/byUserId}]]",
 				    			data:{
 				    				userid:"[[${session.user.userid}]]"
@@ -465,7 +482,7 @@
 				    				console.log(res);
 				    				$("img").attr("src",res.userpic);
 				    			}
-				    		});*/
+				    		});
 		            		
 		            		var t=this;
 		            		$.ajax({
@@ -485,8 +502,7 @@
             				data:{
             					positionname:positionname
             				},
-            				success:function(res){
-            					alert(res);
+            				success:function(res){	
             					location.href="/positionAuthority"
             				}
             			});
@@ -494,21 +510,19 @@
 		            
 		            //删除职位
 		            function removePosition(){
+		            	var positionid=$("#positionid").val();
 		            	if(confirm("确实要删除吗?")){
-		            		
+		            		$.ajax({
+		            			url:"[[@{/position/removePosition}]]",
+		            			data:{
+		            				positionid:positionid
+		            			},
+		            			success:function(res){		     
+		            				location.href="/positionAuthority"
+		            			}
+		            		});
 		            	}
 		            }
-		            
-		            
-		            //修改职位
-		            function updatePosition(positionid){
-		            	alert(positionid);
-		            	$.ajax({
-		            		
-		            	});
-		            }
-		           
 		        </script>
-	</body>
-
+	      </body>
 </html>

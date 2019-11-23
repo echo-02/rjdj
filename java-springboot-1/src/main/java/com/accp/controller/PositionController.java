@@ -27,10 +27,27 @@ public class PositionController {
     	return ps.queryAllPosition();
     }
 	
+	//添加职位
 	@RequestMapping("/addPosition")
 	@ResponseBody
 	public String addPosition(Position p) {
 		 ps.addPosition(p);
 		 return "success";
 	}
+	
+	//根据positionid查询信息
+	@RequestMapping("/byPositionId")
+	@ResponseBody
+	public Position byPositionId(Integer positionid) {
+		return ps.byPositionId(positionid);
+	}
+	
+	//删除职位
+	@RequestMapping("/removePosition")
+	@ResponseBody
+	public String removePosition(Integer positionid) {
+			ps.delPosition(positionid);
+			return "success";
+	}
+	
 }

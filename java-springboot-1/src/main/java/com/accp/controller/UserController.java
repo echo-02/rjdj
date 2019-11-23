@@ -76,7 +76,5 @@ public class UserController {
  		return us.uploadAjax(files, session);
    }  
    
- 
-   
    
    }
