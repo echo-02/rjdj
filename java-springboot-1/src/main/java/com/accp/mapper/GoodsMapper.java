@@ -19,7 +19,7 @@ public interface GoodsMapper {
 	 */
 	List<Integer> getChangedIds(List<Integer> list);
 	
-	List<Goods> getGoods(@Param("cfid") Integer cfid,@Param("gname") String gname);
+	List<Goods> getGoods(@Param("cfid") Integer cfid,@Param("gname") String gname,@Param("gids") List<Integer> gids);
 	
 	List<Goods> getGoodsBygiids(List<Integer> list);
 	

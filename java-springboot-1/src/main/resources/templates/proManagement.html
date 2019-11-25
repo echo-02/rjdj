@@ -123,7 +123,7 @@
 							</div>
 						</div>
 						<div class="col-md-2">
-							<button type="button" class="btn btn-default">导出商品</button>
+							<button type="button" id="pullOut" class="btn btn-default">导出商品</button>
 						</div>
 						<div class="col-md-2">
 							<button type="button" class="btn btn-default" data-toggle="modal" data-target="#proUpdatingModel">批量导入</button>
@@ -192,8 +192,11 @@
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					</div>
 					<div class="modal-body text-center">
-						<button type="button" class="btn btn-info col-md-5">Excel导入</button>
-						<a href="javascript:void(0)"><button type="button" class="btn btn-info col-md-5">下载范本</button></a>
+						<form action="#" id="excelForm" method="post" enctype="multipart/form-data">
+							<input type="file" name="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+						</form>
+						<button type="button" id="exBtn" class="btn btn-info col-md-5">Excel导入</button>
+						<a th:href="@{/goodsFile/downloadGoodsExcel}"><button type="button" class="btn btn-info col-md-5">下载范本</button></a>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -212,6 +215,38 @@
 		<script type="text/javascript">
 			$(function(){
 				getGoods();
+				/* 导出商品 */
+				$("#pullOut").click(function(){
+					if($("[name=ck]:checked").length>0){
+						let gids="-1";
+						$("[name=ck]:checked").each(function(){
+							let gid=$(this).attr("gid");
+							gids+=","+gid
+						})
+						window.location.href="[[@{/goodsFile/pullOut}]]?giids="+gids;
+					}else{
+						alert("请选择要导出的商品");
+					}
+				})
+				/* Excel上传 */
+				$("#exBtn").click(function(){
+					var formData = new FormData($("#excelForm")[0]);
+					if(formData.get("file").name==""){
+						alert("请选择文件")						
+						return;
+					}
+					$.ajax({
+						url:"[[@{/goodsFile/goodsFileUpload}]]",
+						data:formData,
+						type:"post",
+						processData:false,
+						contentType:false,
+						success:function(result){
+							getGoods();
+							$("#proUpdatingModel").modal('hide');
+						}
+					});
+				});
 				/* 商品类别下拉框 */
 				$.getJSON("[[@{/Classification/getProTypes}]]",function(res){
 					$("[name=proType]").empty();
@@ -239,13 +274,13 @@
 					getGoods();
 				});
 			}
-			function getGoods(cfid,gname){
-				$.getJSON("[[@{/goods/getGoods}]]",{cfid:cfid,gname:gname},function(res){
+			function getGoods(cfid,gname,gids){
+				$.getJSON("[[@{/goods/getGoods}]]",{cfid:cfid,gname:gname,gids:gids},function(res){
 					let ctxPath="[[@{/}]]";
 					$("tbody").empty();
 					$.each(res,function(i,obj){
 						let tr="<tr>"+
-							"<td><input type=\"checkbox\" name=\"ck\"></td>"+
+							"<td><input type=\"checkbox\" name=\"ck\" gid=\""+this.gid+"\"></td>"+
 							"<td>"+(i+1)+"</td>"+
 							"<td>"+this.cfname+"</td>"+
 							"<td>"+

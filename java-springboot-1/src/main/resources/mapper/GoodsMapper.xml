@@ -47,6 +47,7 @@
 	g.`cost` AS cost,g.`price` AS price,g.`counts` AS counts,
 	gs.`giid` AS giid,gs.`barcode` AS barcode,gs.`sfdids` AS sfdids,gs.`counts` AS gscounts,
 	cf.`cfname` AS cfname,
+	gs.`counts` AS gscounts,
 	GROUP_CONCAT(test.sfdname) AS spec
 	FROM `goods` AS g INNER JOIN `goodsinstance` AS gs ON g.`gid`=gs.`gid`
 	INNER JOIN `classification` AS cf ON g.`cfid`=cf.`cfid` ,
@@ -68,6 +69,7 @@
 	g.`cost` AS cost,g.`price` AS price,g.`counts` AS counts,
 	gs.`giid` AS giid,gs.`barcode` AS barcode,gs.`sfdids` AS sfdids,gs.`counts` AS gscounts,
 	cf.`cfname` AS cfname,
+	gs.`counts` AS gscounts,
 	GROUP_CONCAT(test.sfdname) AS spec
 	FROM `goods` AS g INNER JOIN `goodsinstance` AS gs ON g.`gid`=gs.`gid`
 	INNER JOIN `classification` AS cf ON g.`cfid`=cf.`cfid` ,(SELECT * FROM `specificationdetails`) AS test
@@ -78,6 +80,13 @@
 	</if>
 	<if test="gname != '' and gname != null ">
 		AND g.gname LIKE CONCAT('%',#{gname},'%')
+	</if>
+	<if test="null != gids and gids.size > 0">
+		AND g.`gid` IN
+		<foreach item="item" index="index" collection="gids"
+      		open="(" separator="," close=")">
+        	#{item}
+  		</foreach>
 	</if>
 	GROUP BY gs.`giid`;
   </select>

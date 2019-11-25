@@ -103,7 +103,7 @@
     values (#{sfdid,jdbcType=INTEGER}, #{sfid,jdbcType=INTEGER}, #{sfdname,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.accp.domain.Specificationdetails" >
+  <insert id="insertSelective" parameterType="com.accp.domain.Specificationdetails" keyProperty="sfdid" useGeneratedKeys="true">
     insert into specificationdetails
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="sfdid != null" >
