@@ -51,14 +51,16 @@ public class ViplevelController {
 	//添加等级
 	@RequestMapping(value="/insertViplevel")
 	@ResponseBody
-	public void deleteViplevelById(Viplevel lv) {
+	public String deleteViplevelById(Viplevel lv) {
 		service.insertViplevel(lv);
+		return "success";
 	}
 	//修改等级
 	@RequestMapping(value="/updateViplevel")
 	@ResponseBody
-	public void updateViplevelById(Viplevel lv) {
+	public String updateViplevelById(Viplevel lv) {
 		service.updateViplevel(lv);
+		return "success";
 	}
 	
 

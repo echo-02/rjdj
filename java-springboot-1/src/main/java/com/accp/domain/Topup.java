@@ -16,7 +16,7 @@ public class Topup {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date topdate;//日期
     
-    private Date topdate2;//后
+    private Date topdate2;//日期范围后
 
     private Integer presenter;//积分
 

@@ -112,11 +112,11 @@
 						<div class="container">
 							<div class="row">
 							<!--	顶部左-->
-								<div class="col-md-4" >
+								<div class="col-md-2" >
 									<span style="font-size: large;" >会员信息</span>
 								</div>
 								<!--顶部右-->
-								<div class="col-md-8" >
+								<div class="col-md-10" >
 									<div class="row">
 										<div class="col-sm-2">
 											<select class="btn btn-green" id="vlid">
@@ -134,7 +134,7 @@
 										        <button type="submit" class="btn btn-default" onclick="gopage(1)">Submit</button>
 										</div>
 										<div class="col-sm-2">									        										          								        
-										        <button type="submit" class="btn btn-default">导入会员</button>
+										        <button type="submit" class="btn btn-default" data-toggle="modal" data-target="#myModal3">导入会员</button>
 										</div>
 										<div class="col-sm-2">									        										          								        
 										        <button type="submit" class="btn btn-default" onclick="exportExcel()">导出会员</button>
@@ -207,7 +207,50 @@
 						</table>
 					</div>
 				</div>
+<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      	 <h4 class="modal-title" id="myModalLabel">会员导入</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+      
+			<div class="container" style="padding: 20px;">
 				
+				<div class="row" style="  margin-top: 15px;">
+					<div class="col-md-12">
+						<form th:action="@{/excelUpload}" method="post" enctype="multipart/form-data">
+							请选择文件：<input class="btn btn-green" name="file" type="file">
+							<input class="btn btn-green" style="margin-top: 10px" type="submit" value="上传excel">
+						</form>
+					</div>
+				</div>
+				<div class="row" style="  margin-top: 15px;">
+					<div class="col-md-12">
+							<a style="display: inline-block; width: 110px;height: 20px;" th:href="@{/download}"> 下载模板文件</a>
+					</div>
+				</div>
+				
+			
+			</div>
+			
+			
+      </div>
+            
+      
+
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+		<!--
+            	模态一
+            -->					
 				
 				
 				
@@ -221,7 +264,6 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
-      <form class="form-horizontal" >
 			<div class="container" style="padding: 20px;">
 				
 				<div class="row" style="  margin-top: 15px;">
@@ -245,7 +287,7 @@
 					</div>
 					<div class="col-md-6">
 						密码
-						<input  type="text" id="insertpassword" value="" />
+						<input  type="password" id="insertpassword" value="" />
 					</div>
 				</div>
 				
@@ -295,7 +337,6 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
-      <form class="form-horizontal" >
 			<div class="container" style="padding: 20px;">
 				
 				<div class="row" style="  margin-top: 15px;">
@@ -320,7 +361,7 @@
 					</div>
 					<div class="col-md-6">
 						密码
-						<input  type="text" id="updatepassword" value="" />
+						<input  type="password" id="updatepassword" value="" />
 					</div>
 				</div>
 				
@@ -455,13 +496,21 @@
 						name:$("#Vipname").val(),
 						vlid:$("#vlid").val(),
 						pageNum:pageNum,
-						pageSize:10
+						pageSize:2
 					},
 					dataType:"json",
 					success:function(res){
 						$("#tbd").html("");
 						//添加分页按钮
-						$("#tft").html("<tr><td></td><td></td><td></td><td></td><td>总页数:"+res.pages+"</td><td><input type='text' id='topage'></td><td onclick='topage()'>--></td><td><a onclick='gopage("+res.prePage+")'>上一页</a></td><td><a onclick='gopage("+res.nextPage+")'>下一页</a></td></tr>");
+						var Prepage=res.prePage;
+						if(Prepage==0){
+							Prepage=1;
+						}
+						 var Nextpage=res.nextPage;//当至最后一页时nextPage重新赋值为0
+						 /*if(Prepage==0){
+							Prepage=;
+						} */
+						$("#tft").html("<tr><td></td><td></td><td></td><td></td><td>总页数:"+res.pages+"</td><td><input type='text' id='topage'></td><td onclick='topage()'>--></td><td><a onclick='gopage("+Prepage+")'>上一页</a></td><td><a onclick='gopage("+Nextpage+")'>下一页</a></td></tr>");
 						$.each(res.list,function(i,obj){
 							//查询对应的vip等级
 							$.ajax({
@@ -534,6 +583,7 @@
 					dataType:"json",
 					success:function(res){
 						alert(res.mes);
+						window.location.href="[[@{/vipInfo}]]";
 					}
 					
 				});
@@ -585,14 +635,18 @@
 					dataType:"json",
 					success:function(res){
 						alert(res.mes);
+						window.location.href="[[@{/vipInfo}]]";
 					}
 					
 				});
 			} 
 			
 			function exportExcel(){
-				window.location.href="[[@{/exportExcel}]]";
+				name=$("#Vipname").val();
+				vlid=$("#vlid").val();
+				window.location.href="[[@{/exportExcel}]]?name="+name+"&vlid="+vlid;
 			}
+			
 			</script>
 	</body>
 </html>

@@ -4,6 +4,7 @@ import com.accp.domain.Viplevel;
 import com.accp.domain.ViplevelExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 public interface ViplevelMapper {
     int countByExample(ViplevelExample example);
@@ -29,4 +30,6 @@ public interface ViplevelMapper {
     int updateByPrimaryKey(Viplevel record);
 
 	void updateViplevelStatus(int id);
+	@Select("select id from viplevel where levelname = #{name} ")
+	Integer selectviplvidByname(String name);
 }

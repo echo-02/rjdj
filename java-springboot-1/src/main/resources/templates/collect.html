@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -32,7 +32,7 @@
 		<!--<link rel="stylesheet" type="text/css" href="http://libs.useso.com/js/font-awesome/4.2.0/css/font-awesome.min.css">-->
 		<link rel="stylesheet" type="text/css" href="css/style.css">
         
-       
+ 
 	</head>
 	<body>
 		<!-- 头部-->
@@ -114,145 +114,62 @@
 			<div class="page-holder w-100 d-flex flex-wrap">
 				<div class="container-fluid px-xl-5">
 					<!-- 自己的页面内容 -->
-					 
-													  
-						<div class="ct-pageWrapper">
+					
+			<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">购物车</a></li>
+    <li style="margin-left: 20px" role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">查看挂单</a></li>
+
+  </ul>
+
+  <!-- Tab panes -->
+<!--   标签页1 -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">
+    	
+    	<div class="row" style="margin-top: 10px;">
+			<div class="col-md-8">
+			</div>	
+			<div class="col-md-4">
+			<input type="button" class="btn btn-default" value="挂单" onclick="guadan()">
+			</div>
+		</div>	
+    
+    
+    <div class="ct-pageWrapper">
   <main>
 	<div class="container">
 	  <div class="row">
-                       <!--
-                       	作者：offline
-                       	时间：2019-11-15
-                       	描述：行
-                       -->
 		<div class="col-md-3">
-                              <!--
-                              	作者：offline
-                              	时间：2019-11-15
-                              	描述：左边购物车
-                              -->
 		  <div class="widget">
 			<h2 class="widget-header">购物车</h2>
 			<div class="ct-cart"></div>
 		  </div>
-		</div> <!--
-                              	作者：offline
-                              	时间：2019-11-15
-                              	描述：左边购物车
-                              -->
-		
+		</div>
 		<div class="col-md-9">
-                              <!--
-                              	作者：offline
-                              	时间：2019-11-15
-                              	描述：物品栏
-                              -->
-		  <div class="row">
-			<div class="col-sm-4">
-			  <div class="ct-product">
-				<div class="image"><img src="img/avata-1.jpg" alt=""></div>
-				<div class="inner"><a href="#" class="btn btn-motive ct-product-button"><i class="fa fa-shopping-cart"></i></a>
-					<h2 class="ct-product-name">Finetti ones</h2>
-				  <h2 class="ct-product-title">Box of macaroons</h2>
-				  <p class="ct-product-description">A very delicious macaroons ...</p><span class="ct-product-price">$19.99</span>
-				</div>
-			  </div>
-			</div>
-			
-			<div class="col-sm-4">
-			  <div class="ct-product">
-				<div class="image"><img src="images/product-02.jpg" alt=""></div>
-				<div class="inner"><a href="#" class="btn btn-motive ct-product-button"><i class="fa fa-shopping-cart"></i></a>
-					 <h2 class="ct-product-name">Finetti ones</h2>
-				  <h2 class="ct-product-title">Cherry Straws</h2>
-				  <p class="ct-product-description">A very delicious macaroons ...</p><span class="ct-product-price">$34.99</span>
-				</div>
-			  </div>
-			</div>
-			
-			<div class="col-sm-4">
-			  <div class="ct-product">
-				<div class="image"><img src="images/product-03.jpg" alt=""></div>
-				<div class="inner"><a href="#" class="btn btn-motive ct-product-button"><i class="fa fa-shopping-cart"></i></a>
-					 <h2 class="ct-product-name">Finetti ones</h2>
-				  <h2 class="ct-product-title">Coffee Macaroons</h2>
-				  <p class="ct-product-description">A very delicious macaroons ...</p><span class="ct-product-price">$59.99</span>
-				</div>
-			  </div>
-			</div>
-			
-			<div class="col-sm-4">
-			  <div class="ct-product">
-				<div class="image"><img src="images/product-04.jpg" alt=""></div>
-				<div class="inner"><a href="#" class="btn btn-motive ct-product-button"><i class="fa fa-shopping-cart"></i></a>
-					 <h2 class="ct-product-name">Finetti ones</h2>
-				  <h2 class="ct-product-title">Finetti ones</h2>
-				  <p class="ct-product-description">A very delicious macaroons ...</p><span class="ct-product-price">$9.99</span>
-				</div>
-			  </div>
-			</div>
-			
-			<div class="col-sm-4">
-			  <div class="ct-product">
-				<div class="image"><img src="images/product-05.jpg" alt=""></div>
-				<div class="inner"><a href="#" class="btn btn-motive ct-product-button"><i class="fa fa-shopping-cart"></i></a>
-					 <h2 class="ct-product-name">Finetti ones</h2>
-				  <h2 class="ct-product-title">Minty duo</h2>
-				  <p class="ct-product-description">A very delicious macaroons ...</p><span class="ct-product-price">$3.99</span>
-				</div>
-			  </div>
-			</div><div class="col-sm-4">
-			  <div class="ct-product">
-				<div class="image"><img src="images/product-05.jpg" alt=""></div>
-				<div class="inner"><a href="#" class="btn btn-motive ct-product-button"><i class="fa fa-shopping-cart"></i></a>
-					 <h2 class="ct-product-name">Finetti ones</h2>
-				  <h2 class="ct-product-title">Minty duo</h2>
-				  <p class="ct-product-description">A very delicious macaroons ...</p><span class="ct-product-price">$3.99</span>
-				</div>
-			  </div>
-			</div> 
-			
-		
-			
+		  <div class="row" id="tbd">
 		  </div>
 		</div>
-		  <!--
-                              	作者：offline
-                              	时间：2019-11-15
-                              	描述：物品栏
-                              -->
-	  </div> <!--
-                       	作者：offline
-                       	时间：2019-11-15
-                       	描述：行
-                       -->
+	  </div>
 	</div>
-  </main>
+  </main>				 
+	</div>	
+    
+   </div>
+<!--   标签页1 -->    
+    <!--   标签页2 -->
+    <div role="tabpanel" class="tab-pane" id="profile">
+    <ol id="olForguadan"></ol>
+    
+    </div>
+  <!--   标签页2 -->
+  </div>
 
-<script src="js/jquery-1.12.4.js"></script>
-<script src="js/shop.min.js"></script>
-<script>
-$('body').ctshop({
-  currency: '￥',
-  paypal: {
-	currency_code: 'UR'
-  }
-});
-
-$(function(){
-	
-});
-/*function gocheckout(){
-		alert($(".ct-cart-input").val());
-	}*/
-</script>
 </div>
-						
-						
-														
-															 
-													
 					
+				
 				</div><!-- 自己的页面内容 -->
 				<footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
 					<div class="container-fluid">
@@ -270,7 +187,219 @@ $(function(){
 		<script src="vendor/chart.js/Chart.min.js"></script>
 		<script src="js/js.cookie.min.js"></script>
 		<script src="js/front.js"></script>
+		<script src="js/shop.min.js"></script>
+		
+		<script>
+
+var orders=[/* {
+	"orderid":0,
+	"total":1,
+	"goods":[{
+		"goodid":0,//页面产生的li的id（添加可方便总金额的计算，以及数量的添加 ）
+		"goodname":"hyj",
+		"goodprice":0,
+		"goodnum":1}
+		],
+
+	
+} */];
+
+var path="[[@{/}]]";
+
+$(function(){
+getGoods();//ajax获取商品
+//getGoods();
+//fuzhi();
+/* eval('var c = $("main").ctshop({currency: "$",paypal: {currency_code: "EUR"}});');
+delete c; */
+/* 	   B=$("main").ctshop({
+  currency: '$',
+  paypal: {
+	currency_code: 'EUR'
+  }
+});   */ 
+//a=null; 
+// delete a;
+});
+
+function getGoods(){
+
+	//console.info(B);
+	$.ajax({
+		url:"[[@{/goods/getGoods}]]",
+		type:"get",
+		data:{},
+		dataType:"json",
+		success:function(res){
+			//$("#tbd").html("");
+			$.each(res,function(i,obj){
+				var len = res.length;//查询商品的长度
+				//console.info(len);
+				$("#tbd").append('<div id="ttt" class="col-sm-4">'
+				+'<div class="ct-product">'
+				+'<div class="image"><img src='+path+obj.pic+' alt=""></div><div class="inner">'//图片
+				+'<a  class="btn btn-motive ct-product-button"><i class="fa fa-shopping-cart"></i></a>'
+				+'<h2 class="ct-product-name">'+obj.gname+'</h2><h2 class="ct-product-title">'+obj.gid+'</h2>'//商品名称 ,//商品id
+				+'<p class="ct-product-description">A very delicious macaroons ...</p>'//商品描述
+				+'<span class="ct-product-price">$'+obj.price+'</span>'//商品价格
+				+'</div></div></div>');
+				if(i==(len-1)){
+					//fuzhi();
+ 			 	
+ 					
+ 					//eval('var c = $("main").ctshop({currency: "$",paypal: {currency_code: "EUR"}});');
+ 					//console.info(c); 
+ 					
+ 					 delete B;
+					  B=$("main").ctshop({
+						  currency: '$',
+						  paypal: {
+							currency_code: 'EUR'
+						  }
+						});
+ 				//	console.info(B);  
+ 					
+				}
+			})
+		}
+	});
+	
+}
+
+
+function fuzhi(){
+	
+	$("main").ctshop({
+		  currency: '$',
+		  paypal: {
+			currency_code: 'EUR'
+		  }
+		});
+	
+	// $("main").unbind();
+	// $(".ct-product-button").off();
+	 //$(".ct-product-button").unbind();	
+}
+//挂单
+function guadan(){
+	//$(".ct-cart")
+	$(".ct-cart-total").val();//购物车总金额；
+	$(".ct-cart ol ")//添加的商品无序表；
+	
+	console.info($(".ct-cart-total").html());
+	console.log($(".ct-cart ol li"));
+	
+	$(".ct-cart ol li ").each(function(index,ele){//循环获取商品id
+		console.log($(this).attr("data-id"));
+	});
+	$(".ct-cart ol li span.ct-cart-name").each(function(index,ele){//循环获取商品名
+		console.log($(this).html());
+	});
+	$(".ct-cart ol li span.ct-cart-price").each(function(index,ele){//循环获取商品价格
+		console.log($(this).html());
+	});
+	$(".ct-cart ol li input").each(function(index,ele){//循环获取商品个数
+		console.log($(this).val());
+	});
+	
+	console.info(orders);
+	
+	/* var orders=[{
+		"orderid":1,
+		"goods":[{
+			"goodid":1,
+			"goodsname":"hyj",
+			"goodprice":0,
+			"goodnum":1},
+			{}
+			],
+		
+	}]; */	
+	var order = {//构建订单对象
+			"orderid":orders.length,
+			"total":$(".ct-cart-total").html(),
+			"goods":[],
+			
+	};
+	
+	$(".ct-cart ol li ").each(function(index,ele){//添加至json对象
+
+		var good={//构建订单的商品对象
+				"goodid":$(this).attr("data-id"),
+				"goodname":$(this).find(".ct-cart-name").html(),
+				"goodprice":$(this).find(".ct-cart-price").html(),
+				"goodnum":$(this).find("input").val()	
+		};
 		
 		
+		
+		order.goods.push(good);//添加商品至订单
+		orders.push(order);//添加订单至订单车
+	
+			$("#olForguadan").html("");
+			for(var p in orders){//遍历json数组时，这么写p为索引，0,1
+				   //alert(orders[p].orderid);
+				   $("#olForguadan").append("<li onclick='fromOrdertoCar("+orders[p].orderid+")'>"+orders[p].orderid+"</li>");
+				}
+				
+				
+			
+		
+		
+		
+	});
+	
+	
+	console.info(orders);
+	alert(JSON.stringify(orders));
+}
+
+function gocheckout(){
+
+		
+ 	 	/* $(".ct-product-title").each(function(index,ele){ //全不商品名	
+ 	 		
+ 	 		//console.info(ele);
+ 	 		console.log($(this).html());
+ 	 		//alert($(this).html())
+ 	 	});	
+ 	 	$(".ct-cart-name").each(function(index,ele){
+ 	 		console.log($(this).html())
+			
+ 	 	});
+		//alert($(".ct-cart-input").val());
+		$(".ct-cart-input").each(function(index,ele){
+			console.log($(this).val());
+		}); */
+}
+//从挂单添加单至购物车
+function fromOrdertoCar(id){
+	for(var p in orders){//遍历json数组时，这么写p为索引，0,1
+		if(orders[p].orderid==id){
+			$(".ct-cart ol").html("");
+			for(var g in orders[p].goods){
+				console.info($(".ct-cart ol"));
+				$(".ct-cart ol").append("<li class='animated fadeIn' data-id='"+orders[p].goods[g].goodid+"'>"
+						+"<span class='ct-cart-name'>"+orders[p].goods[g].goodname+"</span>"
+						+"<span class='ct-cart-price'>"+orders[p].goods[g].goodprice+"</span>"
+						+"<input type='number' min='1' value='"+orders[p].goods[g].goodnum+"' class='ct-cart-input'>"
+						+"<button class='ct-cart-remove'>x</button></li>");	
+				
+			}
+			
+			
+		}
+	
+		}
+
+	
+}
+
+//产生dom对象到订单
+function addHtmlorder(){
+	
+}
+</script>
+		 
 	</body>
 </html>

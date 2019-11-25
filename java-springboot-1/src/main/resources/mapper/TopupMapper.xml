@@ -237,8 +237,8 @@
 	<if test="topdate != null and topdate2 != null"> t.topdate between #{topdate,jdbcType=DATE} and  #{topdate2,jdbcType=DATE}</if>
 	
 	</where>
-	) as A) C
-	join
+	) as A) C 
+	left join
 			(select * from (
 			select SUM(r.money) total,r.vipid from record r GROUP BY r.vipid ) B ) D
 
@@ -246,5 +246,6 @@
 	<where>
 	<if test="name != null"> C.`name` like  CONCAT('%',#{name,jdbcType=VARCHAR},'%') </if>
 	</where>
+	ORDER BY topdate DESC
   </select>
 </mapper>

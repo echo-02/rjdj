@@ -13,6 +13,8 @@ import com.github.pagehelper.PageInfo;
 public class RecordController {
 	@Autowired
 	private RecordService service;
+	
+	//按订单查询成记录（已分页）time 时间范围
 	@RequestMapping(value="/selectRecordBypage")
 	@ResponseBody
 	public PageInfo<Record> selectRecordBypage(int pageNum,int pageSize,Record r,String time){
@@ -20,7 +22,7 @@ public class RecordController {
 		return service.selectRecordBypage(pageNum, pageSize, r ,time,0);
 		
 	}
-	
+	//按商品查询成记录（已分页）
 	@RequestMapping(value="/selectRecordBypageByP")
 	@ResponseBody
 	public PageInfo<Record> selectRecordBypageByP(int pageNum,int pageSize ,Record r ,String time){
