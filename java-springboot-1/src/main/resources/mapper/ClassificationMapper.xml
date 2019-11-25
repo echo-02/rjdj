@@ -107,7 +107,7 @@
     values (#{cfid,jdbcType=INTEGER}, #{cfname,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.accp.domain.Classification" >
+  <insert id="insertSelective" parameterType="com.accp.domain.Classification" keyProperty="cfid" useGeneratedKeys="true">
     insert into classification
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="cfid != null" >

@@ -45,8 +45,15 @@ public class GoodsController {
 	 */
 	@RequestMapping("/getGoods")
 	@ResponseBody
-	public List<Goods> getGoods(Integer cfid,String gname) {
-		return goodsService.getGoods(cfid, gname);
+	public List<Goods> getGoods(Integer cfid,String gname,String gidsstr) {
+		List<Integer> gids=new ArrayList<Integer>();
+		if(gidsstr!=null) {
+			String[] gid=gidsstr.split(",");
+			for (String string : gid) {
+				gids.add(Integer.parseInt(string));
+			}			
+		}
+		return goodsService.getGoods(cfid, gname,gids);
 	}
 	/**
 	 * 按编号查询商品

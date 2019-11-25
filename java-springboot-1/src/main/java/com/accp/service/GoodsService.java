@@ -43,9 +43,9 @@ public class GoodsService {
 	 * @param gname 商品名称
 	 * @return
 	 */
-	public List<Goods> getGoods(Integer cfid,String gname) {
+	public List<Goods> getGoods(Integer cfid,String gname,List<Integer> gids) {
 		List<Goods> goods=new ArrayList<Goods>();
-		goods=goodsMapper.getGoods(cfid, gname);
+		goods=goodsMapper.getGoods(cfid, gname,gids);
 		for (Goods goods2 : goods) {
 			GoodspicExample goodspicExample=new GoodspicExample();
 			goodspicExample.createCriteria().andGidEqualTo(goods2.getGid());
