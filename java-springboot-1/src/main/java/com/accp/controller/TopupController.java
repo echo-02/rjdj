@@ -29,14 +29,14 @@ public class TopupController {
 
 	@Autowired
 	private TopupService service;
-
+	//查询所有充值记录
 	@RequestMapping(value = "/selectAllTopup")
 	@ResponseBody
 	public List<Topup> selectAllTopup(Topup t) {
 		return service.selectAllTopup(t);
 
 	}
-
+	//查询所有充值记录分页  time为时间范围
 	@RequestMapping(value = "/selectTopupBypage")
 	@ResponseBody
 	public PageInfo<Topup> selectTopupBypage(Integer pageNum, Integer pageSize, Topup t, String time)
@@ -58,7 +58,7 @@ public class TopupController {
 		return pageinfo;
 
 	}
-
+	//充值
 	@RequestMapping(value="/insertTopup")
 	@ResponseBody
 	 public Map<String,String> insertTopup(Topup t){ 
@@ -71,9 +71,5 @@ public class TopupController {
 	 }
 	 
 
-	@InitBinder
-	public void initBinder(WebDataBinder binder) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-	}
+	
 }

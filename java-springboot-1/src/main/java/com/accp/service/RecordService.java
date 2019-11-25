@@ -31,7 +31,7 @@ public class RecordService {
 				
 			}	
 		
-		//分页
+		//分页 status判断 是按什么查询
 		public PageInfo<Record> selectRecordBypage(int pageNum,int pageSize,Record r, String time,int status){
 
 			if (time != "" && time != null) {

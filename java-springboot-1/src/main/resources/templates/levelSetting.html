@@ -313,7 +313,12 @@
 						//status:$("#insertstatus").val()
 					},
 					dataType:"json",
-					success:function(res){}
+					success:function(res){
+						
+						alert(res);
+					window.location.href="[[@{/levelSetting}]]";
+					}
+					
 					});
 			}
 			
@@ -346,7 +351,12 @@
 						//status:$("#insertstatus").val()
 					},
 					dataType:"json",
-					success:function(res){}
+					success:function(res){
+						
+						alert(res);
+						window.location.href="[[@{/levelSetting}]]";
+						
+					}
 					});
 			}
 		</script>

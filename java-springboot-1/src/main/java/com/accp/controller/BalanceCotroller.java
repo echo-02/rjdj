@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.accp.domain.Balance;
 import com.accp.service.BalanceService;
-
+//积分抵扣页面业务
 @Controller
 public class BalanceCotroller {
 	

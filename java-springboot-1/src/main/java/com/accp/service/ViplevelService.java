@@ -53,4 +53,8 @@ public class ViplevelService {
 		lv.setStatus(1);
 		mapper.updateByPrimaryKey(lv);
 	}
+	//通过会员等级名查会员等级id
+	public Integer selectviplvidByname(String name) {
+		return mapper.selectviplvidByname(name);
+	}
 }

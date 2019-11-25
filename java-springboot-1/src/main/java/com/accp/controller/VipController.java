@@ -1,7 +1,10 @@
 package com.accp.controller;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +15,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.hibernate.validator.cfg.context.ReturnValueConstraintMappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,9 +25,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.accp.domain.Record;
 import com.accp.domain.Vip;
+import com.accp.domain.Viplevel;
 import com.accp.service.VipService;
 import com.accp.service.ViplevelService;
 import com.github.pagehelper.PageInfo;
@@ -34,7 +40,7 @@ public class VipController {
 
 	@Autowired
 	private VipService service;
-	
+	@Autowired
 	private ViplevelService lvservice;
 	
 	//查询所有Vip
@@ -115,14 +121,14 @@ public class VipController {
 	}
 	
 	//导出文件
-	/*
+	
 	@RequestMapping(value="exportExcel")
-	public ResponseEntity<byte []> exportExcel(){
+	public ResponseEntity<byte []> exportExcel(Vip v){
 		//需要导入的信息从数据库查询出来
-		Vip vip = new Vip();
-		vip.setVlid(1);
-		vip.setName("hyj");
-		List<Vip> list= service.selectVipByExample(vip);
+		
+	//	v.setVlid(1);
+		//v.setName("hyj");
+		List<Vip> list= service.selectVipByExample(v);
 		//导出信息
 		Workbook wb = new XSSFWorkbook();
 		Sheet sheet = wb.createSheet();
@@ -191,6 +197,80 @@ public class VipController {
 		return new ResponseEntity<byte []>(bot.toByteArray(),headers,HttpStatus.OK);
 		
 	}
-	*/
+	
+	//下载会员导入模板
+	@RequestMapping("/download")
+	@ResponseBody
+	public ResponseEntity<byte []>download(){
+		byte[] bytes = null;
+		HttpHeaders headers = null;
+		try {
+			FileInputStream is = new FileInputStream("C:/Users/HYJ/Pictures/moban.xlsx");
+			 bytes = new byte[is.available()];
+			is.read(bytes);
+			 headers = new HttpHeaders();
+			headers.setContentDispositionFormData("attachment", new String("会员导入模版.xlsx".getBytes("utf-8"),"iso-8859-1"));
+			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
+		
+	}
+	//导入会员
+	@RequestMapping(value="/excelUpload")
+	public String excelUpload(MultipartFile file) {
+		try {
+			Workbook wb = new XSSFWorkbook(file.getInputStream());
+			int sheets = wb.getNumberOfSheets();
+			for(int i=0;i<sheets;i++) {
+				Sheet sheet =wb.getSheetAt(i);
+				int rows =sheet.getPhysicalNumberOfRows();
+				for(int j=1;j<rows;j++) {
+					Row row =sheet.getRow(j);
+					Cell nameCell =row.getCell(0);
+					Cell nameCell1 =row.getCell(1);
+					Cell nameCell2 =row.getCell(2);
+					Cell nameCell3 =row.getCell(3);
+					Cell nameCell4 =row.getCell(4);
+					Cell nameCell5 =row.getCell(5);
+					Cell nameCell6 =row.getCell(6);
+					Cell nameCell7 =row.getCell(7);
+					Cell nameCell8 =row.getCell(8);
+					Vip vip = new Vip();
+					vip.setName(nameCell.getStringCellValue());
+					//vip.setPhone(String.valueOf(nameCell1.getNumericCellValue()));
+					//解决科学计数法
+					BigDecimal bdcm = new BigDecimal(nameCell1.getNumericCellValue());
+					bdcm.setScale(0, BigDecimal.ROUND_HALF_UP).toPlainString();
+					vip.setPhone(String.valueOf(bdcm));
+					vip.setProvince(nameCell2.getStringCellValue());
+					vip.setCity(nameCell3.getStringCellValue());
+					vip.setRegion(nameCell4.getStringCellValue());
+					vip.setStreet(nameCell5.getStringCellValue());
+					String viplvname=nameCell6.getStringCellValue();
+					if(null==lvservice.selectviplvidByname(viplvname)) {
+						vip.setVlid(3);
+					}else {
+						vip.setVlid(lvservice.selectviplvidByname(viplvname));
+					}
+					
+					vip.setBalance(nameCell7.getNumericCellValue());
+					vip.setIntegral((int) nameCell8.getNumericCellValue());
+					service.insertVip(vip);
+				}
+				
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "redirect:/vipInfo";
+		
+	}
+	
+	
 	
 }
