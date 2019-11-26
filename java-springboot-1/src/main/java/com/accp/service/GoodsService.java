@@ -30,6 +30,16 @@ public class GoodsService {
 	@Autowired
 	private GoodsinstanceMapper goodsinstanceMapper;
 	/**
+	 * 根据商品编号查询图片
+	 * @param gid
+	 * @return
+	 */
+	public List<Goodspic> getPicsByGid(Integer gid) {
+		GoodspicExample goodspicExample=new GoodspicExample();
+		goodspicExample.createCriteria().andGidEqualTo(gid);
+		return goodspicMapper.selectByExample(goodspicExample);
+	}
+	/**
 	 * 根据商品详情编号查询信息
 	 * @param list
 	 * @return
@@ -62,7 +72,9 @@ public class GoodsService {
 	 * @return
 	 */
 	public Goods getGoodsBygid(Integer gid) {
-		Goods goods=goodsMapper.selectByPrimaryKey(gid);
+		List<Integer> gids=new ArrayList<Integer>();
+		gids.add(gid);
+		Goods goods=goodsMapper.getGoods(null, null, gids).get(0);
 		return goods;
 	}
 	/**
