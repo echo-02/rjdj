@@ -229,12 +229,14 @@
 			<script src="js/fileinput.js"></script>
 			<script src="js/zh.js"></script>
 			<script>
+				var picArr=[];
 				$(function(){
 					showColor();
 					showSize();
 					showProTypes();
 					showProByGid();
 				})
+				
 				/* 提交验证 */
 				function formSubmit(){
 					let f=true;
@@ -254,16 +256,92 @@
 				function showProByGid(){
 					let gid=$("[name=gid]").val();
 					if(gid==""){
+						/* 文件上传设置 */
+						$("#fileUp").fileinput({
+							theme: 'zh',
+							language: 'zh',
+							showCaption: false,
+							showUpload: false,
+							showRemove: true,
+							showPreview: true,
+							overwriteInitial: false,
+							initialPreviewShowDelete: false,
+							showClose: false,
+							previewSetting: {
+								image: {
+									width: "500px",
+									height: "500px"
+								}
+							},
+							browseClass: "btn btn-primary",
+				            initialPreviewAsData: true,
+				            overwriteInitial: false
+						});
 						return;
 					}else{
 						$.getJSON("[[@{/goods/getGoodsBygid}]]",{gid:gid},function(res){
-							console.info(res);
+							/* console.info(res); */
 							$("[name=artno]").val(res.artno);
 							$("[name=brand]").val(res.brand);
 							$("[name=cfid]").val(res.cfid);
 							$("[name=cost]").val(res.cost);
 							$("[name=gname]").val(res.gname);
 							$("[name=price]").val(res.price);
+							$("[name=counts]").val(res.counts);
+							$("#prodels").empty();
+							$.each(res.goodsinstances,function(i,obj){
+								/* 生成详情 */
+								let tr="<tr>"+
+									"<td>"+
+										"<input type=\"hidden\" name=\"goodsinstances["+i+"].sfdids\" value=\""+obj.sfdids+"\"/>"+
+										obj.spec+
+									"</td>"+
+									"<td>"+
+										"<input type=\"number\" name=\"goodsinstances["+i+"].counts\" min=\"0\"/ value=\""+obj.counts+"\">"+
+									"</td>"+
+									"<td>"+
+										"<input readonly=\"readonly\" name=\"goodsinstances["+i+"].barcode\" value=\""+obj.barcode+"\" />"+
+									"</td>"+
+								"</tr>";
+								$("#prodels").append(tr);
+								$("#prodels [type=number]").on("change",function(){
+									let count=0;
+									$("#prodels [type=number]").each(function(){
+										count=Number($(this).val())+Number(count);
+									});
+									$("[name=counts]").val(count);
+								});
+							})
+						})
+						$.getJSON("[[@{/goods/getPicsByGid}]]",{gid:gid},function(res){
+							console.info(res);
+							let picPath="[[@{/}]]";
+							$.each(res,function(){
+								let url=picPath+this.picname
+								picArr.push(url);
+							})
+							console.info(picArr);
+							$("#fileUp").fileinput({
+								theme: 'zh',
+								language: 'zh',
+								showCaption: false,
+								showUpload: false,
+								showRemove: true,
+								showPreview: true,
+								overwriteInitial: false,
+								initialPreviewShowDelete: false,
+								showClose: false,
+								previewSetting: {
+									image: {
+										width: "500px",
+										height: "500px"
+									}
+								},
+								browseClass: "btn btn-primary",
+					            initialPreviewAsData: true,
+					            overwriteInitial: false,
+								initialPreview:picArr
+							});
 						})
 					}
 				}
@@ -337,7 +415,7 @@
 									"<input readonly=\"readonly\" name=\"goodsinstances["+i+"].barcode\" value=\""+barcode+"\" />"+
 								"</td>"+
 							"</tr>";
-							$("#prodels").append(tr);							
+							$("#prodels").append(tr);						
 							$("#prodels [type=number]").on("change",function(){
 								let count=0;
 								$("#prodels [type=number]").each(function(){
@@ -430,25 +508,7 @@
 				function genID(length){
 					return Number(Math.random().toString().substr(3,length) + Date.now());
 				}
-				/* 文件上传设置 */
-				$("#fileUp").fileinput({
-					theme: 'zh',
-					language: 'zh',
-					showCaption: false,
-					showUpload: false,
-					showRemove: true,
-					showPreview: true,
-					overwriteInitial: false,
-					initialPreviewShowDelete: false,
-					showClose: false,
-					previewSetting: {
-						image: {
-							width: "500px",
-							height: "500px"
-						}
-					},
-					browseClass: "btn btn-primary",
-				});
+				
 			</script>
 	</body>
 </html>

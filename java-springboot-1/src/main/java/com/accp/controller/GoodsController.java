@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.accp.domain.Goods;
+import com.accp.domain.Goodspic;
 import com.accp.domain.Specificationdetails;
 import com.accp.service.GoodsService;
 import com.accp.service.SpecificationService;
@@ -21,6 +22,16 @@ public class GoodsController {
 	private GoodsService goodsService;
 	@Autowired
 	private SpecificationService specificationService;
+	/**
+	 * 根据商品编号查询图片
+	 * @param gid
+	 * @return
+	 */
+	@RequestMapping("/getPicsByGid")
+	@ResponseBody
+	public List<Goodspic> getPicsByGid(Integer gid) {
+		return goodsService.getPicsByGid(gid);
+	}
 	/**
 	 * 根据商品详情编号查询信息
 	 * @param list
