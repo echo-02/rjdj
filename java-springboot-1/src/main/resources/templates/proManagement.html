@@ -270,9 +270,12 @@
 				});
 			});
 			function removeGoods(id){
-				$.post("[[@{/goods/removeGoods}]]",{gid:id},function(){
-					getGoods();
-				});
+				let r = confirm("请确认删除。");
+				if(r){
+					$.post("[[@{/goods/removeGoods}]]",{gid:id},function(){
+						getGoods();
+					});					
+				}
 			}
 			function getGoods(cfid,gname,gids){
 				$.getJSON("[[@{/goods/getGoods}]]",{cfid:cfid,gname:gname,gids:gids},function(res){

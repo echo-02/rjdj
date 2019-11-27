@@ -254,6 +254,7 @@
 				proType.status=status;
 				/* console.info(proType); */
 				$.post("[[@{/Classification/saveProType}]]",proType,function(){
+					$("#proTypeModel [name=cfname]").val("");
 					$("#proTypeModel").modal('hide');
 					getTypes();
 				});

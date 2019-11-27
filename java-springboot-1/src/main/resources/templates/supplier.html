@@ -310,9 +310,12 @@
 			}
 			/* 删除 */
 			function delSupplier(id){
-				$.post("[[@{/supplier/removeSupplier}]]",{id:id},function(){
-					getSuppliersByParam();
-				});
+				let r = confirm("请确认删除。");
+				if(r){
+					$.post("[[@{/supplier/removeSupplier}]]",{id:id},function(){
+						getSuppliersByParam();
+					});					
+				}
 			}
 			/* 保存 */
 			function saveSupplier(){
