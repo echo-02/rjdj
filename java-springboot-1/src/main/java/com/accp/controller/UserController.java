@@ -1,6 +1,5 @@
 package com.accp.controller;
 
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,10 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.accp.domain.User;
 import com.accp.service.UserService;
-
 @Controller
 public class UserController {
    @Autowired

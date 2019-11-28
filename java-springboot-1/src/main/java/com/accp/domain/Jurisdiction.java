@@ -1,5 +1,8 @@
 package com.accp.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Jurisdiction {
     private Integer jsid;
 
@@ -12,8 +15,18 @@ public class Jurisdiction {
     private String path;
 
     private String enname;
+    
+    private List<Jurisdiction> jus = new ArrayList<Jurisdiction>();
 
-    public Integer getJsid() {
+	public List<Jurisdiction> getJus() {
+		return jus;
+	}
+
+	public void setJus(List<Jurisdiction> jus) {
+		this.jus = jus;
+	}
+
+	public Integer getJsid() {
         return jsid;
     }
 

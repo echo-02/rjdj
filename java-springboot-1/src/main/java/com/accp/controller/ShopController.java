@@ -31,10 +31,12 @@ public class ShopController {
 	public String addShop(Shop shop,HttpSession seesion){
 		System.out.println(shop.getShopname());
 	    if(ss.queryShopName(shop.getShopname())!=null) {
-			return "店铺已存在，请重新添加";
+			return "F";
+		}else {
+			ss.addShop(shop,seesion);
+			return "T";
 		}
-		String e=ss.addShop(shop,seesion);
-		return e;
+		
 	}
 	
 	//根据shopid查询信息

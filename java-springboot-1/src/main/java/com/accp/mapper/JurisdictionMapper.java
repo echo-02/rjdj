@@ -6,6 +6,10 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface JurisdictionMapper {
+	List<Jurisdiction> findJurisdictionByParentId(@Param("parentId")Integer parentId,@Param("catalog")Integer catalog);
+	
+    List<Jurisdiction> findJurisdictionByPositionId(Integer positionid);
+	
     int countByExample(JurisdictionExample example);
 
     int deleteByExample(JurisdictionExample example);
