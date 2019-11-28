@@ -6,7 +6,7 @@ public class Jurisdictionset {
     private Integer positionid;
 
     private Integer jsid;
-
+    
     public Integer getId() {
         return id;
     }

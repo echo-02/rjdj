@@ -57,6 +57,7 @@ public class StaffService {
     }
     
     public int addPosition(Employee e) {
+    	e.setStatus(0);
     	return em.insertSelective(e);
     }
     

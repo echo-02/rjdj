@@ -80,6 +80,7 @@
       order by ${orderByClause}
     </if>
   </select>
+  
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -96,11 +97,11 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.accp.domain.Position" >
+  <insert id="insert" keyProperty="positionid" useGeneratedKeys="true" parameterType="com.accp.domain.Position" >
     insert into position (positionid, positionname)
     values (#{positionid,jdbcType=INTEGER}, #{positionname,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.accp.domain.Position" >
+  <insert id="insertSelective" keyProperty="positionid" useGeneratedKeys="true" parameterType="com.accp.domain.Position" >
     insert into position
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="positionid != null" >

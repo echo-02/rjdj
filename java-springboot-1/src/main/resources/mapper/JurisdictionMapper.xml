@@ -9,6 +9,24 @@
     <result column="path" property="path" jdbcType="VARCHAR" />
     <result column="enname" property="enname" jdbcType="VARCHAR" />
   </resultMap>
+  
+   <resultMap type="com.accp.domain.Jurisdiction" 
+  	id="BaseResultMapExtends" extends="BaseResultMap">
+  		<collection property="jus" column="jsid" select="findJurisdictionByParentId"></collection>
+  </resultMap>
+  
+  <select id="findJurisdictionByParentId" resultMap="BaseResultMapExtends">
+  	SELECT * FROM `jurisdiction` WHERE `parentid`=#{parentid}
+  </select>
+  
+  <select id="findJurisdictionByPositionId" 
+  	resultMap="BaseResultMapExtends">
+  	select j.* from `jurisdiction` j
+	inner join `jurisdictionset` js on j.`jsid`=js.`jsid`
+	inner join `position` p on js.`positionid`=p.`positionid`
+	where p.`positionid`=#{positionid}
+  </select>
+  
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -70,6 +88,9 @@
   <sql id="Base_Column_List" >
     jsid, parentid, jsname, catalog, path, enname
   </sql>
+  
+  
+  
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.accp.domain.JurisdictionExample" >
     select
     <if test="distinct" >

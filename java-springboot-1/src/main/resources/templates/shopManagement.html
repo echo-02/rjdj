@@ -387,8 +387,11 @@
 		    		},
 		    		type:"post",
 		    		success:function(res){
-		    			alert(res);
-					    location.href="/shopManagement";
+		    			if(res=="F"){
+		    				alert("店铺已存在，请重新添加");
+		    			}else{
+		    				location.href="/shopManagement";
+		    			}
 		    		}
 		    	});
 		    }

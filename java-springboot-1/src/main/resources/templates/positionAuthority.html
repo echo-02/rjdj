@@ -14,7 +14,7 @@
 		<!-- Font Awesome CSS-->
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 		<!-- Google fonts - Popppins for copy-->
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,800">
+		<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,800"> -->
 		<!-- orion icons-->
 		<link rel="stylesheet" href="css/orionicons.css">
 		<!-- theme stylesheet-->
@@ -156,11 +156,6 @@
 						</tbody>
 					</table>
 				
-					</div>
-					
-                
-                
-                
 				<!--新增模态框-->
 				<div class="modal " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					<div class="modal-dialog">
@@ -168,123 +163,29 @@
 							<div class="modal-header" style="width: 700px;">
 
 								<h4 class="modal-title" id="myModalLabel">添加职位</h4>
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -11px;">&times;</button>
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -11px;" >&times;</button>
 							</div>
 							<div class="modal-body" style="width: 700px;">
 								<form role="form">
 									<div class="form-group">
-										<label for="name">职位名称：</label>
-										<input type="text" class="form-control" id="name" placeholder="" style="width: 220px;" name="positionname">
+										<label for="name" style="font-size:18px" >职位名称：</label>
+										<input type="text" class="form-control" placeholder="" style="width: 220px;" v-model="pp.positionname" id="ppname">
 									</div>
 
 									<div class="form-group">
-										<label for="name">职位权限：</label>
+										<label for="name" style="font-size:18px">职位权限：</label>
 										<div class="" style="margin-left: 50px;">
-											<p style="font-family: Consolas Consolas;font-size: 16px;">销售：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1" checked="checked"> 收银开单
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 编辑订单
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 删除订单
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1"> 操作发货
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios4"  value="option2">查看订单
-											    </label>
-											</p>
-
-											<p style="font-family: Consolas Consolas;font-size: 16px;">报表：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 营收概况
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 热销商品
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 业绩排名
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 月损益表
-											    </label>
-
-											</p>
-											<p style="font-family: Consolas Consolas;font-size: 16px;">会员：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 增加会员
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 编辑会员
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 删除会员
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 会员充值
-											    </label>
-											</p>
-											<p style="font-family: Consolas Consolas;font-size: 16px;">商品：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 增加商品
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 编辑商品
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 删除商品
-											    </label>
-
-											</p>
-											<p style="font-family: Consolas Consolas;font-size: 16px;">库存：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 入仓单
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 出货单
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 调拨单
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 退货单
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios4"  value="option2">报损单
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios4"  value="option2">报点单
-											    </label>
-											</p>
-											<p style="font-family: Consolas Consolas;font-size: 16px;">采购：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 供应商
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 订货会
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 采购单
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 合同深刻
-											    </label>
-											</p>
-											<p style="font-family: Consolas Consolas;font-size: 16px;">店铺：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 店铺信息
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 职位权限
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 员工管理
-											    </label>
-
-											</p>
+										     <table style="font-size:17px;font-family:'微软雅黑'">
+										     <tr v-for="item in list" v-if="item.catalog==0">
+										        <td>{{item.jsname}}:
+										        	<span v-for="value in item.jus">
+										        	   <label class="checkbox-inline">
+											              <input type="checkbox" :value="value.jsid" v-model="pp.checked">{{value.jsname}}&nbsp;&nbsp;&nbsp;
+											           </label>
+										        	</span>
+										        </td>
+										     </tr>
+										   </table>
 										</div>
 
 									</div>
@@ -292,7 +193,7 @@
 							</div>
 							<div class="modal-footer" style="width: 700px;">
 								<button type="button" class="btn btn-default" data-dismiss="modal" style="background: white;color: black;" id="btn">取消</button>
-								<button type="button" class="btn btn-success" onclick="addPosition()">确定</button>
+								<button type="button" class="btn btn-success" @click="addPosition()">确定</button>
 							</div>
 						</div>
 						<!-- /.modal-content -->
@@ -312,132 +213,38 @@
 							<div class="modal-body" style="width: 700px;">
 								<form role="form">
 									<div class="form-group">
-										<label for="name">职位名称：</label>
+										<label for="name" style="font-size:18px">职位名称：</label>
 										<input type="text" class="form-control" placeholder="" style="width: 220px;" id="positionname">
 									</div>
 									
 									<div class="form-group" style="display:none;">
-										<label for="name">职位名称：</label>
+										<label for="name">职位id：</label>
 										<input type="text" class="form-control" placeholder="" style="width: 220px;" id="positionid">
 									</div>
 
-									<div class="form-group">
+									<div class="form-group" style="font-size:18px">
 										<label for="name">职位权限：</label>
 										<div class="" style="margin-left: 50px;">
-											<p style="font-family: Consolas Consolas;font-size: 16px;">销售：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 收银开单
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 编辑订单
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 删除订单
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 操作发货
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios4"  value="option2">查看订单
-											    </label>
-											</p>
-
-											<p style="font-family: Consolas Consolas;font-size: 16px;">报表：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 营收概况
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 热销商品
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 业绩排名
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 月损益表
-											    </label>
-
-											</p>
-											<p style="font-family: Consolas Consolas;font-size: 16px;">会员：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 增加会员
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 编辑会员
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 删除会员
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 会员充值
-											    </label>
-											</p>
-											<p style="font-family: Consolas Consolas;font-size: 16px;">商品：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 增加商品
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 编辑商品
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 删除商品
-											    </label>
-
-											</p>
-											<p style="font-family: Consolas Consolas;font-size: 16px;">库存：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 入仓单
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 出货单
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 调拨单
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 退货单
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios4"  value="option2">报损单
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios4"  value="option2">报点单
-											    </label>
-											</p>
-											<p style="font-family: Consolas Consolas;font-size: 16px;">采购：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 供应商
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 订货会
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 采购单
-											    </label>
-												<label class="radio-inline">
-											        <input type="checkbox" name="optionsRadiosinline" id="optionsRadios3" value="option1" > 合同深刻
-											    </label>
-											</p>
-											<p style="font-family: Consolas Consolas;font-size: 16px;">店铺：
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox1" value="option1"> 店铺信息
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox2" value="option2"> 职位权限
-											    </label>
-												<label class="checkbox-inline">
-											        <input type="checkbox" id="inlineCheckbox3" value="option3"> 员工管理
-											    </label>
-
-											</p>
+										      <table style="font-size:18px;font-family:'微软雅黑'">
+											     <tr v-for="item in list" v-if="item.catalog==0">
+											        <td>{{item.jsname}}:
+											        	<span v-for="value in item.jus">
+											        	   <label class="checkbox-inline">
+												              <input type="checkbox" v-model="pp.checked" :value="value.jsid">{{value.jsname}}&nbsp;&nbsp;&nbsp;
+												           </label>
+											        	</span>
+											        </td>
+											     </tr>
+										      </table>
 										</div>
 
 									</div>
 								</form>
 							</div>
 							<div class="modal-footer" style="width: 700px;">
-								<button type="button" class="btn btn-default" data-dismiss="modal" style="background: white;color: black;">取消</button>
-								<button type="button" class="btn btn-danger" onclick="removePosition()">删除</button>
-								<button type="button" class="btn btn-success">确定</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal" style="background: white;color: black;" @click="off">取消</button>
+								<!-- <button type="button" class="btn btn-danger" onclick="removePosition()">删除</button> -->
+								<button type="button" class="btn btn-success" @click="updatePosition()">确定</button>
 							</div>
 						</div>
 						<!-- /.modal-content -->
@@ -445,7 +252,7 @@
 					<!-- /.modal -->
 				</div>
 				</div>
-				
+				</div>
 				<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
 		        <script type="text/javascript" th:src="@{/js/vue.js}"></script>
 		        <script type="text/javascript">
@@ -453,11 +260,17 @@
 		            	el:'#poistionContent',
 		            	data(){
 		            		return{
-		            			position:[]
+		            			position:[],
+		            			list:[],
+		            			pp:{		            				
+		            				checked:[],
+		            				positionname:""
+		            			}	
 		            		}
 		            	},
 		            	methods:{
 		            		toUpdatePosition:function(positionid){
+		            			let that=this;
 		            			$.ajax({
 		            				url:"[[@{/position/byPositionId}]]",
 		            				data:{
@@ -465,12 +278,85 @@
 		            				},
 		            				success:function(res){
 		            					$("#positionname").attr("value",res.positionname);
-		            					$("#positionid").attr("value",res.positionid);		
+		            					$("#positionid").attr("value",res.positionid);
+		            				}
+		            			});
+		            			that.pp.checked=[];
+		            			$.ajax({
+		            				url:"[[@{/position/byJurisdictionset}]]",
+		            				data:{
+		            					positionid:positionid
+		            				},
+		            				success:function(res){
+		            					console.log(res);
+		            					$.each(res,function(){
+		            						that.pp.checked.push(this.jsid);		            						
+		            					});		
 		            				}
 		            			});
 		            			
+		            		},
+		            		//修改职位权限
+		            		updatePosition:function(){
+		            			var that=this;
+		            			var positionname=$("#positionname").val();
+		            			var positionid=$("#positionid").val();
+		            			console.log(positionname+"+"+positionid);
+		            			let checked=[];
+		            			let id=[];
+			            		$("#myModal1 input:checked").each(function(index){
+			            			 checked[index]=$(this).val();
+			            		});
+			            		
+			            		console.log(checked);
+			            		console.log(id);
+			            		that.pp.checked=[];
+			            		$.ajax({
+			            			   url:"[[@{/position/updatePosition}]]",
+			            			   data:{
+			            				   checked:checked,
+			            				   positionname:positionname,
+			            				   positionid:positionid
+			            				   
+			            			   },
+			            			   success:function(res){
+			            				   console.log(res);
+			            				   location.href="/positionAuthority";
+			            			   }
+			            		 });
+		            		},
+		            		off:function(){
+		            			var that=this;
+		            			that.pp.checked=[];
+		            		},
+		            		//添加职位
+		            		addPosition:function(){
+		            		   let checked=[];
+		            		   $("#myModal input:checked").each(function(index){
+		            			   checked[index]=$(this).val();
+		            		   })
+		            		   var ppname=$("#ppname").val();
+		            		   console.log(ppname);
+		            		   console.log(checked);
+		            		   $.ajax({
+		            			   url:"[[@{/position/addPosition}]]",
+		            			   data:{
+		            				   checked:checked,
+		            				   ppname:ppname
+		            			   },
+		            			   success:function(res){
+		            				   console.log(res);
+		            				   if(res=="F"){
+		            					   alert("当前职位已存在，请重新添加");
+		            				   }else if(res=="T"){
+		            					   location.href="/positionAuthority";
+		            				   }
+		            				   
+		            			   }
+		            		   });
 		            		}
 		            	},
+		            	
 		            	created:function(){
 		            		//查询用户头像
 		            		$.ajax({
@@ -483,7 +369,7 @@
 				    				$("img").attr("src",res.userpic);
 				    			}
 				    		});
-		            		
+		            		//查询全部职位
 		            		var t=this;
 		            		$.ajax({
 		            			url:"[[@{/position/queryAllPosition}]]",
@@ -491,37 +377,40 @@
 		            				t.position=res;
 		            			}
 		            		});
+		            		
+		            		//查询所有职位权限
+		            		$.ajax({
+		     					url:"[[@{/position/findModuleAll}]]",
+		     					dataType:"json",
+		     					success:function(result){
+		     						console.log(result);
+		     						t.list = result;	
+		     					}
+		     				});
+		            		
 		            	}
 		            });
-		            
-		            //添加职位
-		            function addPosition(){
-            			var positionname=$("[name='positionname']").val();
-            			$.ajax({
-            				url:"[[@{/position/addPosition}]]",
-            				data:{
-            					positionname:positionname
-            				},
-            				success:function(res){	
-            					location.href="/positionAuthority"
-            				}
-            			});
-            		}
+		            		         
 		            
 		            //删除职位
 		            function removePosition(){
 		            	var positionid=$("#positionid").val();
-		            	if(confirm("确实要删除吗?")){
-		            		$.ajax({
-		            			url:"[[@{/position/removePosition}]]",
-		            			data:{
-		            				positionid:positionid
-		            			},
-		            			success:function(res){		     
-		            				location.href="/positionAuthority"
-		            			}
-		            		});
+		            	if(positionid==1){
+		            		alert("系统管理员不能删除");
+		            	}else{
+		            		if(confirm("确认删除?")){
+			            		$.ajax({
+			            			url:"[[@{/position/removePosition}]]",
+			            			data:{
+			            				positionid:positionid
+			            			},
+			            			success:function(res){		     
+			            				location.href="/positionAuthority"
+			            			}
+			            		});
+			            	}
 		            	}
+		            	
 		            }
 		        </script>
 	      </body>
