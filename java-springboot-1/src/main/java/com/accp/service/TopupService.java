@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.accp.domain.Topup;
 import com.accp.domain.TopupExample;
 import com.accp.domain.Vip;
+import com.accp.domain.VipExample;
 import com.accp.mapper.TopupMapper;
 import com.accp.mapper.VipMapper;
 import com.github.pagehelper.PageHelper;
@@ -44,6 +45,11 @@ public class TopupService {
 	public void insertTopup(Topup t) {
 		//冲值表插入数据
 		t.setTopdate(new Date());
+		Vip vip = new Vip();
+		VipExample vipExample = new VipExample();
+		vipExample.createCriteria().andPhoneEqualTo(t.getPhone());
+		vip=vipMapper.selectByExample(vipExample).get(0);
+		t.setVipid(vip.getId());
 		mapper.insert(t);
 		//获取插入数据的viid和充值的金额，赠送的积分
 		Integer Tvipid = t.getVipid();//充值账户
@@ -51,8 +57,6 @@ public class TopupService {
 		Integer Tpresenter = t.getPresenter();
 		
 		//查询VIP的余额 级 积分 
-		Vip vip =new Vip();//当前VIP对象
-		vip= vipMapper.selectByPrimaryKey(Tvipid);
 		Double preBalance = vip.getBalance();//获取之前的余额
 		Integer prepresenter = vip.getIntegral();//积分
 		

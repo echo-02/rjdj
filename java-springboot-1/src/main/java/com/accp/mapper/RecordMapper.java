@@ -1,5 +1,6 @@
 package com.accp.mapper;
 
+import com.accp.domain.Goodsinstance;
 import com.accp.domain.Record;
 import com.accp.domain.RecordExample;
 import java.util.List;
@@ -31,5 +32,9 @@ public interface RecordMapper {
 	List<Record> selectAllRecord(Record t);
 	//条件查询record 添加了商品信息
 	List<Record> selectAllRecordByP(Record t);
+/*	<!-- 根据主键查询商品详表的信息 -->*/
+	Goodsinstance  selctGoodsinstsByID(Integer id);
+		
+	
 	
 }

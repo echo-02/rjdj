@@ -108,7 +108,7 @@
       #{money,jdbcType=DOUBLE}, #{payment,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.accp.domain.Record" >
+  <insert id="insertSelective" parameterType="com.accp.domain.Record" keyProperty="id" useGeneratedKeys="true" >
     insert into record
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -228,13 +228,13 @@
  <!--  按订单 -->
   <select id="selectAllRecord" parameterType="com.accp.domain.Record" resultType="com.accp.domain.Record">
   select * from
-(select * from (select r.id ,v.`name` ,v.phone ,r.tradedate   ,r.payment   ,r.money   from record r 
-join vip v on r.vipid = v.id <where>
+(select * from (select DISTINCT(r.id)  ,v.`name` ,v.phone ,r.tradedate   ,r.payment   ,r.money   from record r 
+left join vip v on r.vipid = v.id <where>
 	<if test="tradedate != null and tradedate2 != null"> r.tradedate between #{tradedate,jdbcType=DATE} and  #{tradedate2,jdbcType=DATE}</if>
 	
 	</where>) A )B
 join
-(select * from (select rs.numbers ,rs.rid   from recordinstance rs )C)D
+(select * from (select DISTINCT(rs.rid), COUNT(rs.numbers)  numbers    from recordinstance rs GROUP BY rs.rid  )C)D
 on B.id = D.rid <where>
 	<if test="name != null"> B.`name` like  CONCAT('%',#{name,jdbcType=VARCHAR},'%') </if>
 	</where>
@@ -243,14 +243,14 @@ on B.id = D.rid <where>
 <!-- 按商品 -->
    <select id="selectAllRecordByP" parameterType="com.accp.domain.Record" resultType="com.accp.domain.Record">
    select * from
-(select * from (select r.id ,v.`name` ,v.phone ,r.tradedate   ,r.payment   ,r.money   from record r 
-join vip v on r.vipid = v.id <where>
+(select * from (select r.id ,v.`name` ,v.phone ,r.tradedate   ,r.payment    from record r 
+left join vip v on r.vipid = v.id <where>
 	<if test="tradedate != null and tradedate2 != null"> r.tradedate between #{tradedate,jdbcType=DATE} and  #{tradedate2,jdbcType=DATE}</if>
 	
 	</where>) A )B
 join
 (
-select * from (select * from (select rs.numbers ,rs.rid,rs.gid rsgid  from recordinstance rs )C join
+select * from (select * from (select rs.numbers ,rs.rid,rs.gid rsgid ,(numbers*rs.price)  money   from recordinstance rs )C join
 goods g on C.rsgid=g.gid ) Z
 )X
 on B.id=X.rid <where>
@@ -258,4 +258,8 @@ on B.id=X.rid <where>
 	</where>
    </select>
 
+<!-- 根据主键查询商品详表的信息 -->
+	<select id="selctGoodsinstsByID" resultType="com.accp.domain.Goodsinstance">
+	select * from Goodsinstance where giid =#{0}
+	</select>
 </mapper>
