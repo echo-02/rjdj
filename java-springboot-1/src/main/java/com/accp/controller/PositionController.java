@@ -57,8 +57,7 @@ public class PositionController {
 			return "success";
 	}
 	
-	
-	
+
 
 	//根据positionid查询信息
 	@RequestMapping("/byPositionId")

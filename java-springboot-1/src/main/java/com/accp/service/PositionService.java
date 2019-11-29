@@ -57,8 +57,7 @@ public class PositionService {
 		   jurisdictionset.setJsid(Integer.parseInt(jsid));
 		   jsm.insertSelective(jurisdictionset);
 	   }
-	   return i;
-	   
+	   return i;   
    }
    
    public int insert(Position p) {
