@@ -160,15 +160,74 @@
    </div>
 <!--   标签页1 -->    
     <!--   标签页2 -->
-    <div role="tabpanel" class="tab-pane" id="profile">
-    <ol id="olForguadan"></ol>
+    <div role="tabpanel" class="tab-pane" id="profile" >
+    
+  <table class="table table-bordered table-hover">
+						 <tr>
+						 	<th>序号</th>
+						 	<th>总金额</th>
+						 	<th>商品</th>
+						 	<th>操作</th>
+						 </tr>
+						 <tbody id="olForguadan">
+							
+						 </tbody>
+						 <tfoot id="tft"></tfoot>
+						</table>
+    <!-- <ol id="olForguadan" style="display: block; "></ol> -->
     
     </div>
   <!--   标签页2 -->
   </div>
 
-</div>
-					
+</div><!-- 俩标签页 -->
+					<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+      	 <h4 class="modal-title" id="myModalLabel">会员添加</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+			<div class="container" style="padding: 20px;">
+				
+				<div class="row" style="  margin-top: 15px;">
+					<div class="col-md-6">
+						手机
+						<input type="text" id="vipphone" value="" />
+					</div>
+					<div class="col-md-6">
+						密码
+						<input  type="text" id="insertname" value="" />
+					</div>
+				</div>
+				
+				<div class="row" style="  margin-top: 15px;">
+					<div class="col-md-6">
+						支付方式
+						<select id="payway">
+						<option>网络支付</option>
+						<option>现金</option>
+						</select>
+					</div>
+					<!-- <div class="col-md-6">
+						密码
+						<input  type="text" id="insertname" value="" />
+					</div> -->
+				</div>
+			</div>
+			
+			
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="gocheckout()">结算</button>
+      </div>
+    </div>
+  </div>
+</div>				
 				
 				</div><!-- 自己的页面内容 -->
 				<footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
@@ -208,23 +267,10 @@ var path="[[@{/}]]";
 
 $(function(){
 getGoods();//ajax获取商品
-//getGoods();
-//fuzhi();
-/* eval('var c = $("main").ctshop({currency: "$",paypal: {currency_code: "EUR"}});');
-delete c; */
-/* 	   B=$("main").ctshop({
-  currency: '$',
-  paypal: {
-	currency_code: 'EUR'
-  }
-});   */ 
-//a=null; 
-// delete a;
+
 });
 
 function getGoods(){
-
-	//console.info(B);
 	$.ajax({
 		url:"[[@{/goods/getGoods}]]",
 		type:"get",
@@ -235,51 +281,55 @@ function getGoods(){
 			$.each(res,function(i,obj){
 				var len = res.length;//查询商品的长度
 				//console.info(len);
-				$("#tbd").append('<div id="ttt" class="col-sm-4">'
-				+'<div class="ct-product">'
-				+'<div class="image"><img src='+path+obj.pic+' alt=""></div><div class="inner">'//图片
-				+'<a  class="btn btn-motive ct-product-button"><i class="fa fa-shopping-cart"></i></a>'
-				+'<h2 class="ct-product-name">'+obj.gname+'</h2><h2 class="ct-product-title">'+obj.gid+'</h2>'//商品名称 ,//商品id
-				+'<p class="ct-product-description">A very delicious macaroons ...</p>'//商品描述
-				+'<span class="ct-product-price">$'+obj.price+'</span>'//商品价格
-				+'</div></div></div>');
-				if(i==(len-1)){
-					//fuzhi();
- 			 	
- 					
- 					//eval('var c = $("main").ctshop({currency: "$",paypal: {currency_code: "EUR"}});');
- 					//console.info(c); 
- 					
- 					 delete B;
-					  B=$("main").ctshop({
-						  currency: '$',
-						  paypal: {
-							currency_code: 'EUR'
-						  }
-						});
- 				//	console.info(B);  
- 					
-				}
+				$.each(obj.goodsinstances,function(j,instances){
+					var len2 =obj.goodsinstances.length;
+					
+					$("#tbd").append('<div id="ttt" class="col-sm-4">'
+							+'<div class="ct-product">'
+							+'<div class="image"><img src='+path+obj.pic+' alt=""></div><div class="inner">'//图片
+							+'<a  class="btn btn-motive ct-product-button"><i class="fa fa-shopping-cart"></i></a>'
+							+'<h2 class="ct-product-name">'+obj.gname+'</h2><h2 class="ct-product-title">'+instances.giid+'</h2>'//商品名称 ,//商品id
+							+'<p class="">'+instances.barcode+'</p>'//商品描述
+							+'<p class="ct-product-description">'+instances.spec+'</p>'//商品描述
+							+'<span class="ct-product-price">$'+obj.price+'</span>'//商品价格
+							+'</div></div></div>');
+					
+					if(i==(len-1)&&j==(len2-1)){
+	 					 delete B;
+						  B=$("main").ctshop({
+							  currency: '$',
+							  paypal: {
+								currency_code: 'EUR'
+							  },
+							 	display_total_value: "true",
+							 	currency_after_number: "false",
+					            permanent_cart_buttons: "true",
+					            permanent_total_value: "true",
+					            empty_disable: "true",
+					            animation: "fadeIn",
+					            //
+					            
+							});
+	 				//	console.info(B);  
+	 					
+					}
+				});
+				
+			
 			})
 		}
 	});
 	
+	//加载挂单
+	if(null!=JSON.parse(sessionStorage.getItem('orders'))){
+		orders = JSON.parse(sessionStorage.getItem('orders'));
+	}
+	
+	OutOrders();
+	
+	
 }
 
-
-function fuzhi(){
-	
-	$("main").ctshop({
-		  currency: '$',
-		  paypal: {
-			currency_code: 'EUR'
-		  }
-		});
-	
-	// $("main").unbind();
-	// $(".ct-product-button").off();
-	 //$(".ct-product-button").unbind();	
-}
 //挂单
 function guadan(){
 	//$(".ct-cart")
@@ -301,20 +351,7 @@ function guadan(){
 	$(".ct-cart ol li input").each(function(index,ele){//循环获取商品个数
 		console.log($(this).val());
 	});
-	
-	console.info(orders);
-	
-	/* var orders=[{
-		"orderid":1,
-		"goods":[{
-			"goodid":1,
-			"goodsname":"hyj",
-			"goodprice":0,
-			"goodnum":1},
-			{}
-			],
-		
-	}]; */	
+
 	var order = {//构建订单对象
 			"orderid":orders.length,
 			"total":$(".ct-cart-total").html(),
@@ -323,82 +360,147 @@ function guadan(){
 	};
 	
 	$(".ct-cart ol li ").each(function(index,ele){//添加至json对象
-
 		var good={//构建订单的商品对象
-				"goodid":$(this).attr("data-id"),
-				"goodname":$(this).find(".ct-cart-name").html(),
+				"goodid":$(this).attr("data-id"),//name+price+_“”；
+				"goodname":$(this).find(".ct-cart-name").html(),//是商品附表id
 				"goodprice":$(this).find(".ct-cart-price").html(),
-				"goodnum":$(this).find("input").val()	
+				"goodnum":$(this).find("input").val()//数量
 		};
-		
-		
-		
 		order.goods.push(good);//添加商品至订单
-		orders.push(order);//添加订单至订单车
 	
-			$("#olForguadan").html("");
-			for(var p in orders){//遍历json数组时，这么写p为索引，0,1
-				   //alert(orders[p].orderid);
-				   $("#olForguadan").append("<li onclick='fromOrdertoCar("+orders[p].orderid+")'>"+orders[p].orderid+"</li>");
-				}
-				
-				
 			
-		
-		
-		
+
 	});
+	orders.push(order);//添加订单至订单车（先后问题）
+	sessionStorage.setItem('orders',JSON.stringify(orders));
+	ordersStr=sessionStorage.getItem('orders');
+	orders = JSON.parse(ordersStr);
 	
+	OutOrders();
 	
 	console.info(orders);
 	alert(JSON.stringify(orders));
 }
-
-function gocheckout(){
-
-		
- 	 	/* $(".ct-product-title").each(function(index,ele){ //全不商品名	
- 	 		
- 	 		//console.info(ele);
- 	 		console.log($(this).html());
- 	 		//alert($(this).html())
- 	 	});	
- 	 	$(".ct-cart-name").each(function(index,ele){
- 	 		console.log($(this).html())
+//结算
+function gocheckout(){//传入参数（是否是会员id,*商品详情id，*商品数量，）
+	var vipid=$("#vipphone").val();//输入
+	var giid="-1";
+	var count="-1";
+	var price="-1";
+	var payway=$("#payway").val();
+		$(".ct-cart ol li span.ct-cart-name").each(function(index,ele){//循环获取商品名
 			
- 	 	});
-		//alert($(".ct-cart-input").val());
-		$(".ct-cart-input").each(function(index,ele){
-			console.log($(this).val());
-		}); */
+			giid+=","+($(this).html());
+		});
+		$(".ct-cart ol li span.ct-cart-price").each(function(index,ele){//循环获取商品价格
+			price+=","+($(this).html());
+		});
+		$(".ct-cart ol li input").each(function(index,ele){//循环获取商品个数
+			count+=","+($(this).val());
+		});
+		
+		if(0==$(".ct-cart ol li").length){
+			alert("购物车为空，请添加商品");
+			
+		}else{
+			$.ajax({
+				url:"[[@{/checkout}]]",
+				type:"get",
+				data:{
+					vipid:vipid,//手机号码
+					giid:giid,//商品详情id
+					count:count,//商品数量
+					price:price,//商品价格	
+					payway:payway//支付方式
+				},
+				dataType:"json",
+				success:function(res){
+					
+				}
+			});
+		}
+
+	
 }
 //从挂单添加单至购物车
 function fromOrdertoCar(id){
+	//获取li 里面的总金额
+			var total = 0;
+	
+	//为按钮添加事件（删除事件）
+	
+	
 	for(var p in orders){//遍历json数组时，这么写p为索引，0,1
 		if(orders[p].orderid==id){
-			$(".ct-cart ol").html("");
+			$(".ct-cart ol").html("");//添加商品
 			for(var g in orders[p].goods){
+				
 				console.info($(".ct-cart ol"));
 				$(".ct-cart ol").append("<li class='animated fadeIn' data-id='"+orders[p].goods[g].goodid+"'>"
 						+"<span class='ct-cart-name'>"+orders[p].goods[g].goodname+"</span>"
 						+"<span class='ct-cart-price'>"+orders[p].goods[g].goodprice+"</span>"
 						+"<input type='number' min='1' value='"+orders[p].goods[g].goodnum+"' class='ct-cart-input'>"
-						+"<button class='ct-cart-remove'>x</button></li>");	
+						+"<button class='ct-cart-remove' onclick='removeli(this)'>x</button></li>");	
 				
+				total+=(orders[p].goods[g].goodprice).substring(1)*(orders[p].goods[g].goodnum);
+				$(".ct-cart-total").html("$"+total);
 			}
 			
 			
 		}
 	
+	
+	
+	
 		}
 
+	//同时 把这个对象从orders中移除 11.28:11.48  (其他功能ok )  
 	
+	orders = JSON.parse(sessionStorage.getItem('orders'));
+	orders.splice(id,1);
+	
+	sessionStorage.setItem('orders',JSON.stringify(orders));
+	OutOrders();
+
 }
 
-//产生dom对象到订单
-function addHtmlorder(){
-	
+//移除单个li商品（）
+function removeli ($this){
+	$($this).parent().remove();
+	var total = 0;
+	var prices = [];
+	var numbers = [];
+	$(".ct-cart ol li span.ct-cart-price").each(function(index,ele){//循环获取商品价格
+		prices.push($(this).html());
+	});
+	$(".ct-cart ol li input").each(function(index,ele){//循环获取商品个数
+		numbers.push($(this).val());
+	});
+	for(var i =0 ;i<prices.length ; i++){
+		total+=(prices[i].substring(1))*numbers[i];
+		
+	}
+	$(".ct-cart-total").html("$"+total);
 }
+
+
+//
+function OutOrders (){
+	$("#olForguadan").html("");
+	for(var p in orders){//遍历json数组时，这么写p为索引，0,1
+		   //alert(orders[p].orderid);
+			var goodtr = "";
+			for(var i in orders[p].goods){ 
+				 goodtr+="商品名："+orders[p].goods[i].goodname+"价格："+orders[p].goods[i].goodprice+"数量："+orders[p].goods[i].goodnum+"</br>";
+			   }
+		  /*  $("#olForguadan").append("<li style=''" 
+		   +"onclick='fromOrdertoCar("+orders[p].orderid+")'>"+orders[p].orderid+"</li>"); */
+		   
+			  $("#olForguadan").append("<tr><td>"+orders[p].orderid+"</td><td>"+orders[p].total+"</td><td>"+goodtr+"</td>"
+					   +"<td><a onclick='fromOrdertoCar("+p+")'>移至购物车</a></td></tr>");
+		}
+}
+
 </script>
 		 
 	</body>

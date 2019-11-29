@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.accp.domain.Goodsinstance;
 import com.accp.domain.Record;
 import com.accp.mapper.RecordMapper;
 import com.github.pagehelper.PageHelper;
@@ -61,6 +62,12 @@ public class RecordService {
 			}
 			PageInfo<Record> pageinfo = new PageInfo<>(list);
 			return pageinfo;
+			
+		}
+		
+		/*	<!-- 根据主键查询商品详表的信息 -->*/
+		public 	Goodsinstance  selctGoodsinstsByID(Integer id) {
+			return mapper.selctGoodsinstsByID(id);
 			
 		}
 }
