@@ -208,7 +208,7 @@
 							<div class="modal-header" style="width: 700px;">
 
 								<h4 class="modal-title" id="myModalLabel">编辑职位</h4>
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -11px;">&times;</button>
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: -11px;" @click="times">&times;</button>
 							</div>
 							<div class="modal-body" style="width: 700px;">
 								<form role="form">
@@ -269,6 +269,10 @@
 		            		}
 		            	},
 		            	methods:{
+		            		times:function(){
+		            			var that=this;
+		            			that.pp.checked=[];
+		            		},
 		            		toUpdatePosition:function(positionid){
 		            			let that=this;
 		            			$.ajax({
