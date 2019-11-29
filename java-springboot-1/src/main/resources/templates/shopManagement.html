@@ -369,31 +369,56 @@
 		    
 		    //添加门店
 		    function addShop(){
-			    	var shopname=$("[name='shopname']").val();
+		    	    var bol=true;
+		    	    var shopname=$("[name='shopname']").val();
 			    	var contacts=$("[name='contacts']").val();
 			    	var phone=$("[name='phone']").val();
 			    	var cellphone=$("[name='cellphone']").val();
 			    	var address=$("[name='address']").val();
 			    	var status=$("[name='status']").val();
-		    	$.ajax({
-		    		url:"[[@{/shop/addShop}]]",
-		    		data:{
-		    			shopname:shopname,
-		    			contacts:contacts,
-		    			phone:phone,
-		    			cellphone:cellphone,
-		    			address:address,
-		    			status:status
-		    		},
-		    		type:"post",
-		    		success:function(res){
-		    			if(res=="F"){
-		    				alert("店铺已存在，请重新添加");
-		    			}else{
-		    				location.href="/shopManagement";
-		    			}
-		    		}
-		    	});
+		    	    if(shopname==""){
+		    	    	alert("请输入店名");
+		    	    	return false;
+		    	    }
+		    	    if(contacts==""){
+		    	    	alert("请输入联系人");
+		    	    	return false;
+		    	    }
+		    	    if(phone==""){
+		    	    	alert("请输入手机号");
+		    	    	return false;
+		    	    }
+		    	    if(cellphone==""){
+		    	    	alert("请输入电话");
+		    	    	return false;
+		    	    }
+		    	    if(address==""){
+		    	    	alert("请输入地址");
+		    	    	return false;
+		    	    }else{
+		    	    	
+		    	    }
+		    	    
+			    	$.ajax({
+			    		url:"[[@{/shop/addShop}]]",
+			    		data:{
+			    			shopname:shopname,
+			    			contacts:contacts,
+			    			phone:phone,
+			    			cellphone:cellphone,
+			    			address:address,
+			    			status:status
+			    		},
+			    		type:"post",
+			    		success:function(res){
+			    			if(res=="F"){
+			    				alert("店铺已存在，请重新添加");
+			    			}else{
+			    				location.href="/shopManagement";
+			    			}
+			    		}
+			    	});
+			    	return bol;
 		    }
   
 		</script>

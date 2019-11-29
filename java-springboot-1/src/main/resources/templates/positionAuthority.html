@@ -331,11 +331,20 @@
 		            		},
 		            		//添加职位
 		            		addPosition:function(){
+		            		   var bol=true;
 		            		   let checked=[];
 		            		   $("#myModal input:checked").each(function(index){
 		            			   checked[index]=$(this).val();
 		            		   })
 		            		   var ppname=$("#ppname").val();
+		            		   if(ppname==""){
+		            			   alert("请输入职位名称");
+		            			   return bol;
+		            		   }
+		            		   if(checked==""){
+		            			   alert("请勾选职位权限");
+		            			   return false;
+		            		   }
 		            		   console.log(ppname);
 		            		   console.log(checked);
 		            		   $.ajax({
@@ -354,6 +363,7 @@
 		            				   
 		            			   }
 		            		   });
+		            		   return bol;
 		            		}
 		            	},
 		            	
