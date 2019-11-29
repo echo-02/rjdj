@@ -215,7 +215,7 @@
 							<span style="font-size: 16px;font-family: '微软雅黑';">店铺</span>
 							<div class="form-horizontal">
 								<div class="col-lg-2">
-									<select class="form-control" οnchange="selectOnchang(this)" style="height: 35px;width:180px;margin: -39px 0 0 27px;" v-model="cc">
+									<select class="form-control" οnchange="selectOnchang(this)" style="height: 35px;width:180px;margin: -39px 0 0 27px;" v-model="cc" >
 										<option :value="0">请选择店铺</option>
 										<option :value="s.shopid" v-for="s in shop">{{s.shopname}}</option>
 									</select>
@@ -227,7 +227,7 @@
 								<span style="font-size: 16px;font-family: '微软雅黑';margin-top: 15px;position: relative;  top: -10px;">职位</span>
 								<div class="form-horizontal">
 									<div class="col-lg-2">
-										<select class="form-control" οnchange="selectOnchang(this)" style="height: 35px;width:180px;margin: -52px 0 0 27px;" v-model="dd">
+										<select class="form-control" οnchange="selectOnchang(this)" style="height: 35px;width:180px;margin: -52px 0 0 27px;" v-model="dd" >
 											<option :value="0">请选择职位</option>
 											<option :value="p.positionid" v-for="p in position">{{p.positionname}}</option>
 
@@ -401,6 +401,7 @@
 		    		updatePosition:function(){
 		    			var shopid=this.bb;
 		    			var positionid=this.aa;
+		    			
 		    			var jobnum=$("#jobnum").val();
 		    			var emname=$("#emname").val();
 		    			var empwd=$("#empwd").val();
@@ -427,11 +428,34 @@
 		    		},
 		    		//新增员工
 		    		addPosition:function(){
+		    			var bol=true;
 		    			var shopid=this.cc;
 		    			var positionid=this.dd;
 		    			var jobnum=$("[name='jobnum']").val();
 		    			var emname=$("[name='emname']").val();
 		    			var empwd=$("[name='empwd']").val();
+		    			if(shopid==""){
+		    				alert("请选择店铺");
+		    				return false;
+		    			}
+		    			if(positionid==""){
+		    				alert("请选择职位");
+		    				return false;
+		    			}
+		    			if(jobnum==""){
+		    				alert("请输入工号");
+		    				return false;
+		    			}
+		    			if(emname==""){
+		    				alert("请输入员工姓名");
+		    				return false;
+		    			}
+		    			if(empwd==""){
+		    				alert("请输入员工密码");
+		    				return false;
+		    			}
+		    			
+		    			
 		    			/* alert(shopid+"+"+positionid+"+"+jobnum+"+"+emname+"+"+empwd); */
 		    			$.ajax({
 		    				url:"[[@{/Staff/addPosition}]]",
@@ -450,6 +474,7 @@
 		    					}	
 		    				}
 		    			});
+		    			return bol;
 		    		},
 		    		search:function(){
 		    			alert(1);
