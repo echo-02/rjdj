@@ -11,6 +11,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.accp.domain.Jurisdiction;
+import com.accp.domain.User;
+import com.accp.service.PositionService;
+
 
 
 @Component//让spring容器创建该类对象，表示其它组建
@@ -22,11 +26,42 @@ public class MyInterceptor  implements HandlerInterceptor {
 	 * 执行控制器之前执行该方法，返回false表示不执行控制器
 	 * 
 	 */
+	@Autowired
+    PositionService ps;
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
+		    
+		   	System.out.println("preHander");
+		   	HttpSession session=request.getSession();
+		   	List<Jurisdiction> list = (List<Jurisdiction>)session.getAttribute("prem");
+		   	User user=(User)session.getAttribute("user");
+		   	System.out.println("user:"+user);
+		   	if(user==null) {
+		   		System.out.println("未登录");
+		   		response.sendRedirect("/login");
+		   		return false;
+		   	}else if(list==null) {
+		   		list=ps.findJurisdictionListByPositionId(user.getPositionid());
+		   		session.setAttribute("perm", list);
+		   		String path=request.getRequestURI();
+		   		System.out.println(path);
+		   		boolean flag=false;
+		   		for (Jurisdiction jurisdiction : list) {
+					if(path.equals(jurisdiction.getPath())) {
+						System.out.println("有权限...");
+						flag=true;
+						return true;
+					}
+				}
+		   		System.out.println("没有权限...");
+		   		
+			    return flag;
+		   	}else{
+		   		System.out.println("111");
+		   		return true;
+		   	}
 		   	
-		    return true;
 	}
 	
 	/**

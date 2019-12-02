@@ -21,10 +21,10 @@
   
   <select id="findJurisdictionByPositionId" 
   	resultMap="BaseResultMapExtends">
-  	select j.* from `jurisdiction` j
-	inner join `jurisdictionset` js on j.`jsid`=js.`jsid`
-	inner join `position` p on js.`positionid`=p.`positionid`
-	where p.`positionid`=#{positionid}
+	SELECT j.* FROM `jurisdiction` j
+	INNER JOIN `jurisdictionset` js ON j.`jsid`=js.`jsid`
+	INNER JOIN `position` p ON js.`positionid`=p.`positionid`
+	WHERE p.`positionid`=#{positionid}
   </select>
   
   <sql id="Example_Where_Clause" >

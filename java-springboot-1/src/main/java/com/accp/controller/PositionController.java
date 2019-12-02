@@ -53,7 +53,7 @@ public class PositionController {
 	@ResponseBody
 	public String updatePosition(@RequestParam String positionid, @RequestParam String positionname,@RequestParam(value="checked[]") String [] checked) {
 	        System.out.println(positionid+"+"+positionname+"+"+checked);
-	        ps.updatePosition(positionid,positionname, checked);
+		    ps.updatePosition(positionid,positionname, checked);  
 			return "success";
 	}
 	
