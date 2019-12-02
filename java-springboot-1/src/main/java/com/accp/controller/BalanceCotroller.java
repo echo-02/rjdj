@@ -13,6 +13,7 @@ import com.accp.domain.Balance;
 import com.accp.service.BalanceService;
 //积分抵扣页面业务
 @Controller
+@RequestMapping(value="Balance")
 public class BalanceCotroller {
 	
 	@Autowired

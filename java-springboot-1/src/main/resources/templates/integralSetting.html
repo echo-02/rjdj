@@ -123,7 +123,7 @@
 										
 										<div class="col-sm-2">									        										          								        
 										       <!-- <button type="submit" class="btn btn-default">开启</button>-->
-										       <input id="chck"  type="checkbox">
+										       <input id="chck"  type="checkbox" >
 												<label  for="chck" class="check-trail">
 													<span class="check-handler">
 													
@@ -178,7 +178,7 @@
 		
 		$(function(){
 			$.ajax({
-				url:"[[@{/selectBalance}]]",
+				url:"[[@{/Balance/selectBalance}]]",
 				type:"get",
 				data:{},
 				dataType:"json",
@@ -193,12 +193,30 @@
 			});
 		});
 		
-		function updateBlance(){
+		function updateBlance(balance){
 			if(($("#balance").val()=="")){
 				alert("请输入");
 			}else{
 				$.ajax({
-					url:"[[@{/updateBalance/}]]"+$("#balance").val(),
+					url:"[[@{/Balance/updateBalance/}]]"+$("#balance").val(),
+					type:"get",
+					data:{},
+					dataType:"json",
+					success:function(res){
+						//alert(res.mes);
+						window.location.href="[[@{/integralSetting}]]";
+					}
+				});
+			}
+			
+		}
+		
+	/* 	function updateBlance2(balance){
+			if(($("#balance").val()=="")){
+				alert("请输入");
+			}else{
+				$.ajax({
+					url:"[[@{/updateBalance/}]]"+balance,
 					type:"get",
 					data:{},
 					dataType:"json",
@@ -210,6 +228,15 @@
 			}
 			
 		}
+		
+		function changeStatus(){
+			if($("#balance").val()==0){
+				updateBlance2(100);
+			}else{
+				updateBlance2(0);
+			}
+	
+		} */
 		</script>
 	</body>
 </html>

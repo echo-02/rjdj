@@ -1,7 +1,9 @@
 package com.accp.service;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,13 +44,20 @@ public class TopupService {
 	
 	//充值抵扣表（会员表要插入数据）
 	
-	public void insertTopup(Topup t) {
+	public Map<String,String> insertTopup(Topup t) {
+		Map<String,String> map = new HashMap<>();
 		//冲值表插入数据
 		t.setTopdate(new Date());
 		Vip vip = new Vip();
 		VipExample vipExample = new VipExample();
 		vipExample.createCriteria().andPhoneEqualTo(t.getPhone());
-		vip=vipMapper.selectByExample(vipExample).get(0);
+		List<Vip> list= vipMapper.selectByExample(vipExample);
+		if(0!=list.size()) {
+			vip=vipMapper.selectByExample(vipExample).get(0);
+		}else {
+			map.put("mes", "账号不存在");
+			return map;
+		}
 		t.setVipid(vip.getId());
 		mapper.insert(t);
 		//获取插入数据的viid和充值的金额，赠送的积分
@@ -66,8 +75,7 @@ public class TopupService {
 		vip.setIntegral(Tpresenter+prepresenter);
 		
 		vipMapper.updateByPrimaryKey(vip);
-		
-	
-		;
+		map.put("mes","success");
+		return map;
 	}
 }

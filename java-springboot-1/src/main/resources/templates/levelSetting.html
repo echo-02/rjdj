@@ -271,7 +271,7 @@
 			$(function(){
 			
 				$.ajax({
-					url:"[[@{/selectViplevelexclude_1}]]",
+					url:"[[@{/Viplevel/selectViplevelexclude_1}]]",
 					type:"get",
 					data:{},
 					dataType:"json",
@@ -293,18 +293,18 @@
 			//根据id删除等级
 		function deleteViplevelById(id){
 			$.ajax({
-				url:"[[@{/deleteViplevelById/}]]"+id,
+				url:"[[@{/Viplevel/deleteViplevelById/}]]"+id,
 				type:"get",
 				data:{},
 				dataType:"json",
 				success:function(res){}
 				});
-			
+			window.location.href="[[@{/levelSetting}]]";
 		}
 			//添加等级
 			function addViplevel(){
 				$.ajax({
-					url:"[[@{/insertViplevel}]]",
+					url:"[[@{/Viplevel/insertViplevel}]]",
 					type:"get",
 					data:{
 						levelname:$("#insertlevelname").val(),
@@ -315,17 +315,18 @@
 					dataType:"json",
 					success:function(res){
 						
-						alert(res);
-					window.location.href="[[@{/levelSetting}]]";
+						//alert(res);
+					
 					}
 					
 					});
+				window.location.href="[[@{/levelSetting}]]";
 			}
 			
 			//查寻等级
 			function selectViplevelById(id){
 			$.ajax({
-							 	url:"[[@{/selectViplevelById/}]]"+id,
+							 	url:"[[@{/Viplevel/selectViplevelById/}]]"+id,
 							 	type:"get",
 							 	data:{},
 							 	dataType:"json",
@@ -341,7 +342,7 @@
 			//修改等级
 			function updateViplevel(){
 				$.ajax({
-					url:"[[@{/updateViplevel}]]",
+					url:"[[@{/Viplevel/updateViplevel}]]",
 					type:"get",
 					data:{
 						id:$("#insertid").val(),
@@ -353,11 +354,12 @@
 					dataType:"json",
 					success:function(res){
 						
-						alert(res);
-						window.location.href="[[@{/levelSetting}]]";
+						//alert(res);
+						
 						
 					}
 					});
+				window.location.href="[[@{/levelSetting}]]";
 			}
 		</script>
 	</body>

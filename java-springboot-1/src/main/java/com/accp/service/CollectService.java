@@ -162,6 +162,7 @@ public class CollectService {
 			//余额，积分更新
 		 if(vip.getBalance()>aftRecordtotal) {
 			 vip.setBalance(vip.getBalance()-aftRecordtotal);
+			 vip.setIntegral((int) ((aftRecordtotal)+vip.getIntegral()));
 		 }else {
 			 map.put("mes","余额不足");
 			 return map;
@@ -188,6 +189,7 @@ public class CollectService {
 			//r.setName(vip.getName());
 			//r.setPhone(vip.getPhone());
 			r.setTradedate(new Date());
+			r.setPayment(payway);
 			recordMapper.insertSelective(r);
 			
 			Integer recordReturnId=r.getId();//获取主表返回id
@@ -202,7 +204,7 @@ public class CollectService {
 				rinsts.setArtno(listGoods.get(i).getArtno());//设置商品货号
 				recordinstanceMapper.insert(rinsts);
 			}
-			map.put("money", String.valueOf(aftRecordtotal));
+			map.put("mes", "应付"+String.valueOf(aftRecordtotal)+"元");
 			
 		}else {//不是会员
 			//1 .查商品库存
@@ -233,6 +235,7 @@ public class CollectService {
 				//r.setName(vip.getName());
 				//r.setPhone(vip.getPhone());
 				r.setTradedate(new Date());
+				r.setPayment(payway);
 				recordMapper.insertSelective(r);
 				
 				Integer recordReturnId=r.getId();//获取主表返回id
@@ -246,7 +249,7 @@ public class CollectService {
 					rinsts.setPrice(listGoods.get(i).getPrice());//设置商品单价
 					rinsts.setArtno(listGoods.get(i).getArtno());//设置商品货号
 					recordinstanceMapper.insert(rinsts);
-					map.put("money", String.valueOf(Recordtotal));
+					map.put("mes", "应付"+String.valueOf(Recordtotal)+"元");
 		}
 	}//else
 		return map;

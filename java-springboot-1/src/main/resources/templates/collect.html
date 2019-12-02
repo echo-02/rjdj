@@ -379,7 +379,7 @@ function guadan(){
 	OutOrders();
 	
 	console.info(orders);
-	alert(JSON.stringify(orders));
+	//alert(JSON.stringify(orders));
 }
 //结算
 function gocheckout(){//传入参数（是否是会员id,*商品详情id，*商品数量，）
@@ -404,7 +404,7 @@ function gocheckout(){//传入参数（是否是会员id,*商品详情id，*商�
 			
 		}else{
 			$.ajax({
-				url:"[[@{/checkout}]]",
+				url:"[[@{/Collect/checkout}]]",
 				type:"get",
 				data:{
 					vipid:vipid,//手机号码
@@ -415,7 +415,8 @@ function gocheckout(){//传入参数（是否是会员id,*商品详情id，*商�
 				},
 				dataType:"json",
 				success:function(res){
-					
+					alert(res.mes);
+					window.location.href="[[@{/collect}]]";
 				}
 			});
 		}
