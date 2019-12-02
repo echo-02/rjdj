@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.accp.domain.User;
 import com.accp.service.UserService;
 @Controller
+@RequestMapping("/user")
 public class UserController {
    @Autowired
    UserService us;
@@ -29,7 +30,7 @@ public class UserController {
 	  }else {
 		  HttpSession session=getSession();
 		  session.setAttribute("user", user);
-		  session.setMaxInactiveInterval(-1);
+		  session.setMaxInactiveInterval(60*60);
 		  System.out.println(user);
 		  return "T";
 	  }
@@ -72,6 +73,5 @@ public class UserController {
    public String uploadAjax(MultipartFile [] files,HttpSession session) {
  		return us.uploadAjax(files, session);
    }  
-   
    
    }

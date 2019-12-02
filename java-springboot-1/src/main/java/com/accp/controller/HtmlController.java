@@ -30,6 +30,12 @@ public class HtmlController {
 	public String gotoauthorityManagement() {
 		return "authorityManagement";
 	}
+	
+	@RequestMapping("/none")
+	public String none() {
+		return "none";
+	}
+	
 	/**
 	 * 前往充值抵扣页面
 	 * @return

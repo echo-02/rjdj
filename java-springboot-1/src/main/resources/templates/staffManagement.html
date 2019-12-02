@@ -534,12 +534,12 @@
 		    		
 		    		//查询头像
 		    		$.ajax({
-		    			url:"[[@{/byUserId}]]",
+		    			url:"[[@{/user/byUserId}]]",
 		    			data:{
 		    				userid:"[[${session.user.userid}]]"
 		    			},
 		    			success:function(res){
-		    				$("img").attr("src",res.userpic);
+		    				$("img").attr("src","images/"+res.userpic);
 		    			}
 		    		});
 		    		

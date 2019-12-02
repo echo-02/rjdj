@@ -4,6 +4,7 @@ import com.accp.domain.Jurisdiction;
 import com.accp.domain.JurisdictionExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 public interface JurisdictionMapper {
 	List<Jurisdiction> findJurisdictionByParentId(@Param("parentId")Integer parentId,@Param("catalog")Integer catalog);
@@ -31,4 +32,9 @@ public interface JurisdictionMapper {
     int updateByPrimaryKeySelective(Jurisdiction record);
 
     int updateByPrimaryKey(Jurisdiction record);
+    @Select("SELECT j.* FROM `jurisdiction` j\n" + 
+    		"INNER JOIN `jurisdictionset` js ON j.`jsid`=js.`jsid`\n" + 
+    		"INNER JOIN `position` p ON js.`positionid`=p.`positionid`\n" + 
+    		"WHERE js.`positionid`=#{positionid}")
+    List<Jurisdiction> queryii(Integer positionid);
 }

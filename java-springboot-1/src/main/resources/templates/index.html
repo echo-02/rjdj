@@ -174,7 +174,7 @@
 			   var password=$("[name='password']").val();
 			   
 			   $.ajax({
-				   url:"[[@{/updateUser}]]",
+				   url:"[[@{/user/updateUser}]]",
 				   data:{
 					   userid:"[[${session.user.userid}]]",
 					   trade:trade,
@@ -190,13 +190,13 @@
 		   
 		   function byid(){
 			   $.ajax({
-				   url:"[[@{/byUserId}]]",
+				   url:"[[@{/user/byUserId}]]",
 				   data:{
 					   userid:"[[${session.user.userid}]]"
 				   },
 				   success:function(res){
 					   console.info(res)
-					   $("img").attr("src",ctxPath+res.userpic)
+					   $("img").attr("src",ctxPath+"images/"+res.userpic)
 					   $("[name='trade']").attr("value",res.trade);
 					   $("[name='username']").attr("value",res.username);
 					   $("[name='phone']").attr("value",res.phone);
@@ -216,7 +216,7 @@
 				console.log(formData);
 				
 				$.ajax({
-					url:"[[@{/uploadAjax}]]",
+					url:"[[@{/user/uploadAjax}]]",
 					data:formData,
 					type:"post",
 					processData:false,

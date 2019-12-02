@@ -20,11 +20,10 @@ public class MvcConfig extends WebMvcConfigurationSupport {
 	
 	@Autowired
 	MyInterceptor my;
-
 	@Override
 	protected void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/**").addResourceLocations("classpath:/static/")
-				.addResourceLocations("file:/D:/images/");
+				.addResourceLocations("file:/D:/images");
 		super.addResourceHandlers(registry);
 	}
 
@@ -39,7 +38,7 @@ public class MvcConfig extends WebMvcConfigurationSupport {
 	
 	@Override
 	protected void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(my).addPathPatterns("/**").excludePathPatterns("/static/**")
+		registry.addInterceptor(my).addPathPatterns("/*").excludePathPatterns("/images/**","/img/**","/css/**","/fonts/**","/js/**","/layui/**","/vendor/**")
 		.excludePathPatterns("/login");
 		super.addInterceptors(registry);
 	}

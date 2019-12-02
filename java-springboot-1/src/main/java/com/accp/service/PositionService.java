@@ -45,19 +45,19 @@ public class PositionService {
    
    
    public int updatePosition(String positionid,String positionname,String[] checked) {
-	   int i=0;
-	   Position p=new Position();
-	   p.setPositionid(Integer.parseInt(positionid));
-	   p.setPositionname(positionname);
-	   pm.updateByPrimaryKeySelective(p);
-	   jsm.deletePositionid(Integer.parseInt(positionid));
-	   for (String jsid : checked) {
-		   Jurisdictionset jurisdictionset=new Jurisdictionset();
-		   jurisdictionset.setPositionid(p.getPositionid());
-		   jurisdictionset.setJsid(Integer.parseInt(jsid));
-		   jsm.insertSelective(jurisdictionset);
-	   }
-	   return i;   
+	  Position p=new Position();
+	  p.setPositionid(Integer.parseInt(positionid));
+	  p.setPositionname(positionname);
+	  pm.updateByPrimaryKeySelective(p);
+	  jsm.deletePositionid(Integer.parseInt(positionid));
+	  for (String jsid : checked) {
+		 Jurisdictionset js=new Jurisdictionset();
+		 
+		 js.setPositionid(Integer.parseInt(positionid));
+		 js.setJsid(Integer.parseInt(jsid));
+		 jsm.insertSelective(js);
+	  }
+	  return 1;
    }
    
    public int insert(Position p) {
@@ -94,7 +94,7 @@ public class PositionService {
 	 * @return
 	 */
    public List<Jurisdiction> findJurisdictionByPositionId(Integer positionid){
-	   List<Jurisdiction> jlist=jm.findJurisdictionByPositionId(positionid);
+	   List<Jurisdiction> jlist=jm.selectByExample(null);
 	   Jurisdiction j=new Jurisdiction();
 	   j.setJsid(0);
 	   j.setJsname("顶层分类");
@@ -127,6 +127,13 @@ public class PositionService {
 		   }
 	   }
     }
+    
+	/*
+	 * public List<Jurisdiction> queryii(Integer positionid){ return
+	 * jm.queryii(positionid);
+	 * 
+	 * }
+	 */
    
 
 }

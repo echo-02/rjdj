@@ -316,6 +316,7 @@
 		<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
 		<script type="text/javascript" th:src="@{/js/vue.js}"></script>
 		<script type="text/javascript">
+		    
 		    var shopVm=new Vue({
 		    	el:'#shopContent',
 		    	data:{
@@ -341,14 +342,16 @@
 		    		}
 		    	},
 		    	created:function(){
+		    		var ctxPath = "[[@{/}]]";
 		    		//查询头像
 		    		$.ajax({
-		    			url:"[[@{/byUserId}]]",
+		    			url:"[[@{/user/byUserId}]]",
 		    			data:{
 		    				userid:"[[${session.user.userid}]]"
 		    			},
 		    			success:function(res){
-		    				$("img").attr("src",res.userpic);
+		    				console.log(res);
+		    				$("img").attr("src","images/"+res.userpic);
 		    			}
 		    		});
 		    		
