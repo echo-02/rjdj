@@ -169,11 +169,13 @@ public class CollectService {
 		 }
 		    //修改vip数据
 		 vipMapper.updateByPrimaryKey(vip);
-		
-	
-		 	
-		
+
 		//3修改商品库存
+		 
+			/*
+			 * for (Goods goods : listGoods) { goodsMapper.updateCount(goods.getGid()); }
+			 */
+		 
 		 for(int i = 0 ; i<listgoodsinstfromsql.size(); i++) {
 				int sqlcounts=listgoodsinstfromsql.get(i).getCounts();//数据库商品数量
 				int countfrom = listgoodsinstance.get(i).getCounts();//前台传入商品数量
@@ -181,6 +183,11 @@ public class CollectService {
 				GoodsinstanceExample goodinstexam = new GoodsinstanceExample();//跟新数据
 				goodinstexam.createCriteria().andGiidEqualTo(listgoodsinstfromsql.get(i).getGiid());
 				goodsinstanceMapper.updateByExample(listgoodsinstfromsql.get(i), goodinstexam);
+				//同时修改主表
+				// UPDATE `goods` SET counts=(SELECT SUM(counts) FROM `goodsinstance` WHERE gid=`goodsinstance`.`gid` AND gid=?) WHERE gid=? 
+				//sql 语句一求和  所以只要 获取 主表id就行了
+				goodsMapper.updateCount(listGoods.get(i).getGid());
+				
 			}
 		//4插入交易记录（获取会员信息 ，消费总金额）需要商品主/附表 ！！！用到主从插入
 			Record r = new Record();
@@ -226,8 +233,8 @@ public class CollectService {
 					GoodsinstanceExample goodinstexam = new GoodsinstanceExample();//跟新数据
 					goodinstexam.createCriteria().andGiidEqualTo(listgoodsinstfromsql.get(i).getGiid());
 					goodsinstanceMapper.updateByExample(listgoodsinstfromsql.get(i), goodinstexam);
+					goodsMapper.updateCount(listGoods.get(i).getGid());
 				}
-			 
 			//4插入交易记录（获取会员信息 ，消费总金额）需要商品主/附表 ！！！用到主从插入
 				Record r = new Record();
 				r.setMoney(Recordtotal);

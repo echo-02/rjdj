@@ -333,7 +333,7 @@ function getGoods(){
 //挂单
 function guadan(){
 	//$(".ct-cart")
-	$(".ct-cart-total").val();//购物车总金额；
+	/* $(".ct-cart-total").val();//购物车总金额；
 	$(".ct-cart ol ")//添加的商品无序表；
 	
 	console.info($(".ct-cart-total").html());
@@ -350,7 +350,7 @@ function guadan(){
 	});
 	$(".ct-cart ol li input").each(function(index,ele){//循环获取商品个数
 		console.log($(this).val());
-	});
+	}); */
 
 	var order = {//构建订单对象
 			"orderid":orders.length,
@@ -432,11 +432,11 @@ function fromOrdertoCar(id){
 	
 	
 	for(var p in orders){//遍历json数组时，这么写p为索引，0,1
-		if(orders[p].orderid==id){
+		if(p==id){
 			$(".ct-cart ol").html("");//添加商品
 			for(var g in orders[p].goods){
 				
-				console.info($(".ct-cart ol"));
+			//	console.info($(".ct-cart ol"));
 				$(".ct-cart ol").append("<li class='animated fadeIn' data-id='"+orders[p].goods[g].goodid+"'>"
 						+"<span class='ct-cart-name'>"+orders[p].goods[g].goodname+"</span>"
 						+"<span class='ct-cart-price'>"+orders[p].goods[g].goodprice+"</span>"
@@ -462,7 +462,7 @@ function fromOrdertoCar(id){
 	
 	sessionStorage.setItem('orders',JSON.stringify(orders));
 	OutOrders();
-
+	console.info(orders);
 }
 
 //移除单个li商品（）
