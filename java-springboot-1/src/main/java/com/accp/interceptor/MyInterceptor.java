@@ -45,7 +45,7 @@ public class MyInterceptor  implements HandlerInterceptor {
 		   		list=ps.findJurisdictionListByPositionId(user.getPositionid());
 		   		session.setAttribute("perm", list);
 		   		String path=request.getRequestURI();
-		   		System.out.println(path);
+			/* System.out.println(path); */
 		   		boolean flag=false;
 		   		for (Jurisdiction jurisdiction : list) {
 					if(path.equals(jurisdiction.getPath())) {
@@ -55,7 +55,7 @@ public class MyInterceptor  implements HandlerInterceptor {
 					}
 				}
 		   		System.out.println("没有权限...");
-		   		
+			    response.sendRedirect("/none"); 
 			    return flag;
 		   	}else{
 		   		System.out.println("111");
