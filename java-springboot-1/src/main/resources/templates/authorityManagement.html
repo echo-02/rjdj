@@ -28,7 +28,8 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 	</head>
 	<body>
-		<!-- 头部-->
+	<div id="ctx">
+	    <!-- 头部-->
 		<header class="header">
 			<nav class="navbar navbar-expand-lg px-4 py-2 bg-white shadow">
 				<a href="#" class="sidebar-toggler text-gray-500 mr-4 mr-lg-5 lead">
@@ -37,7 +38,7 @@
 				<a href="index.html" class="navbar-brand font-weight-bold text-uppercase text-base">日进斗金管理系统</a>
 				<ul class="ml-auto d-flex align-items-center list-unstyled mb-0">
 					<li class="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown"
-						 aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img src="img/avatar-6.jpg" alt="Jason Doe"
+						 aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle"><img id="img" alt="Jason Doe"
 							 style="max-width: 2.5rem;" class="img-fluid rounded-circle shadow"></a>
 						<div aria-labelledby="userInfo" class="dropdown-menu"><a href="#" class="dropdown-item"><strong class="d-block text-uppercase headings-font-family">Mark
 									Stephen</strong><small>Web Developer</small></a>
@@ -107,6 +108,7 @@
 			<div class="page-holder w-100 d-flex flex-wrap">
 				<div class="container-fluid px-xl-5">
 					<!-- 自己的页面内容 -->
+					<img alt="图片不见了" th:src="@{/images/019ea4554be28b000001bf72381f24.jpg@1280w_1l_2o_100sh.jpg}" style="display: block;margin: -20px auto;  height:580px;width:80%;">
 				</div>
 				<footer class="footer bg-white shadow align-self-end py-3 px-xl-5 w-100">
 					<div class="container-fluid">
@@ -116,6 +118,8 @@
 				</footer>
 			</div>
 		</div>
+	</div>
+		
 		<!-- JavaScript files-->
 		<script src="vendor/jquery/jquery.min.js"></script>
 		<script src="vendor/popper.js/umd/popper.min.js"> </script>
@@ -124,5 +128,22 @@
 		<script src="vendor/chart.js/Chart.min.js"></script>
 		<script src="js/js.cookie.min.js"></script>
 		<script src="js/front.js"></script>
+		
+		<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+		<script type="text/javascript" th:src="@{/js/vue.js}"></script>
+		<script type="text/javascript">
+		   $(function(){
+			   $.ajax({
+	    			url:"[[@{/user/byUserId}]]",
+	    			data:{
+	    				userid:"[[${session.user.userid}]]"
+	    			},
+	    			success:function(res){
+	    				console.log(res);
+	    				$("#img").attr("src","images/"+res.userpic);
+	    			}
+	    		});
+		   })
+		</script>
 	</body>
 </html>
