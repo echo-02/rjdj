@@ -17,6 +17,11 @@ import com.accp.service.PurchaseService;
 public class PurchaseController {
 	@Autowired
 	private PurchaseService purchaseService;
+	@RequestMapping("/getPurchaseId")
+	@ResponseBody
+	public String getPurchaseId() {
+		return purchaseService.getPurchaseId();
+	}
 	/**
 	 * 保存采购信息
 	 * @param purchase
@@ -67,5 +72,10 @@ public class PurchaseController {
 	@ResponseBody
 	public int checkPurchase(String id) {
 		return purchaseService.checkPurchase(id);
+	}
+	@RequestMapping("/getPurchaseById")
+	@ResponseBody
+	public Purchase getPurchaseById(String id) {
+		return purchaseService.getPurchaseById(id);
 	}
 }

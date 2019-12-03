@@ -167,7 +167,7 @@
 							<form class="form-inline">
 								<div class="form-group">
 									<label>单号</label>
-									<input class="form-control" name="id" />
+									<input class="form-control" name="id" readonly="readonly"/>
 								</div>
 								<div class="form-group">
 									<label>交期</label>
@@ -344,7 +344,7 @@
 					})
 				});
 				/* 检查采购单号 */
-				$("[name=id]").blur(function(){
+				/* $("[name=id]").blur(function(){
 					let pid=$(this).val();
 					$.get("[[@{/purchase/ckPid}]]",{pid:pid},function(res){
 						if(res){
@@ -352,7 +352,7 @@
 							alert("采购单号已存在，请重新输入")
 						}
 					})
-				})
+				}) */
 				/* 保存选中的商品 */
 				$("#saveCkPro").click(function(){
 					let giids="-1";
@@ -400,7 +400,7 @@
 						let statusStr="审核中";
 						if(obj.status!=0){
 							statusStr="已审核";
-						}						
+						}					
 						let tr="<tr>"+
 							"<td>"+(i+1)+"</td>"+
 							"<td>"+statusStr+"</td>"+
@@ -411,12 +411,52 @@
 							"<td>"+obj.money+"</td>"+
 							"<td>"+obj.remark+"</td>"+
 							"<td>"+
-								"<button type=\"button\" class=\"btn btn-dark\" onclick=\"openpurModel("+obj.id+")\">审核</button>"+
-							"</td>"+
+								"<button type=\"button\" class=\"btn btn-dark\" onclick=\"openpurModel("+obj.id+")\">审核</button>";
+						if(obj.status==0){
+							tr+="<button type=\"button\" class=\"btn btn-dark\" onclick=\"updatePur("+obj.id+")\">修改</button>";
+						}
+						tr+="</td>"+
 						"</tr>";
 						$("#purchases").append(tr);
 					})
 				});
+			}
+			/* 修改采购单 */
+			function updatePur(id){
+				//渲染采购主表
+				$.getJSON("[[@{/purchase/getPurchaseById}]]",{id:id},function(res){
+					/* console.info(res); */
+					$("[name=id]").val(res.id);
+					$("[name=deliverydate]").val(res.deliverydate);
+					$("[name=sid]").val(res.sid);
+					$("[name=lister]").val(res.lister);
+					$("[name=remark]").val(res.remark);
+				})
+				//渲染采购从表
+				$.getJSON("[[@{/purchase/getPurinsByPid}]]",{pid:id},function(res){
+					/* console.info(res); */
+					$("#newpurdels").empty();
+					$.each(res,function(i,obj){
+						let tr="<tr gid=\""+this.gid+"\">"+
+							"<td class=\"atrno\">"+obj.artno+"</td>"+
+							"<td class=\"barcode\">"+this.barcode+"</td>"+
+							"<td>"+obj.gname+"</td>"+
+							"<td>"+this.spec+"</td>"+
+							"<td>"+
+								"<span class=\"price\">"+obj.cost+"</span>"+
+							"</td>"+
+							"<td>"+
+								"<input name=\"nums\" type=\"number\" onchange=\"getSum()\" min=\"0\" value='"+this.numbers+"' />"+
+							"</td>"+
+							"<td>"+
+								"<span class=\"money\"></span>"+
+							"</td>"+
+						"</tr>";
+						$("#newpurdels").append(tr);
+						getSum();
+					})
+				})
+				openaddpur();
 			}
 			/* 打开审核框 */
 			function openpurModel(id){
@@ -480,6 +520,9 @@
 			}
 			/* 打开新增 */
 			function openaddpur() {
+				$.get("[[@{/purchase/getPurchaseId}]]",function(res){
+					$("[name=id]").val(res);
+				})
 				$(".purhead").hide();
 				$(".purcontent").hide();
 				$(".addpur").show();
