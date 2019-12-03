@@ -31,11 +31,6 @@ public class HtmlController {
 		return "authorityManagement";
 	}
 	
-	@RequestMapping("/none")
-	public String none() {
-		return "none";
-	}
-	
 	/**
 	 * 前往充值抵扣页面
 	 * @return
@@ -52,6 +47,17 @@ public class HtmlController {
 	public String gotocollect() {
 		return "collect";
 	}
+	
+	/**
+	 * 无权限页面
+	 * @return
+	 */
+	@RequestMapping("/none")
+	public String none() {
+		return "none";
+	}
+	
+	
 	/**
 	 * 前往积分设置页面
 	 * @return

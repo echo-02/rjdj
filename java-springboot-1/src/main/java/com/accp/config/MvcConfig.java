@@ -38,8 +38,8 @@ public class MvcConfig extends WebMvcConfigurationSupport {
 	
 	@Override
 	protected void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(my).addPathPatterns("/*").excludePathPatterns("/images/**","/img/**","/css/**","/fonts/**","/js/**","/layui/**","/vendor/**")
-		.excludePathPatterns("/login");
+		registry.addInterceptor(my).addPathPatterns("/*").excludePathPatterns("/images/**","/img/**","/css/**","/fonts/**","/js/**","/layui/**","/vendor/**,015e1a554be28b000001bf7208ef3f.jpg")
+		.excludePathPatterns("/login").excludePathPatterns("/none");
 		super.addInterceptors(registry);
 	}
 
