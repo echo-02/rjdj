@@ -124,14 +124,14 @@ public class GoodsService {
 		goodspicExample.createCriteria().andGidEqualTo(goods.getGid());
 		goodspicMapper.deleteByExample(goodspicExample);
 		//图片上传
-		String path="/D:/images";
+		String path="/D:/";
 		File directory = new File(path);
 		if(!directory.exists()) {
 			directory.mkdirs();
 		}
 		if(pics!=null&&pics.length>0) {
 			for(MultipartFile l : pics) {
-				String fileName=UUID.randomUUID().toString();
+				String fileName="images/"+UUID.randomUUID().toString();
 				fileName+=l.getOriginalFilename().substring(l.getOriginalFilename().lastIndexOf("."));
 				String url = path+"\\"+fileName;
 				File f = new File(url);

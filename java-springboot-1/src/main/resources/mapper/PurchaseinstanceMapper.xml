@@ -16,7 +16,7 @@
   	<result column="spec" property="spec" jdbcType="VARCHAR" />
   </resultMap>
   <select id="getPurinsByPid" resultMap="BaseResultMapExtends">
-  	SELECT p.`artno`,p.`barcode`,p.`cost`,p.`numbers`,g.`gname`,GROUP_CONCAT(test.sfdname) AS spec
+  	SELECT p.`artno`,p.`barcode`,p.`cost`,p.`numbers`,g.`gname`,GROUP_CONCAT(test.sfdname) AS spec,gs.`giid` AS gid
 	FROM `goods` AS g INNER JOIN `goodsinstance` AS gs ON g.`gid`=gs.`gid`
 	INNER JOIN `purchaseinstance` AS p ON p.`gid`=gs.`giid`,
 	(SELECT * FROM `specificationdetails`) AS test
