@@ -162,17 +162,20 @@ public class CollectService {
 			//余额，积分更新
 		 if(vip.getBalance()>aftRecordtotal) {
 			 vip.setBalance(vip.getBalance()-aftRecordtotal);
+			 vip.setIntegral((int) ((aftRecordtotal)+vip.getIntegral()));
 		 }else {
 			 map.put("mes","余额不足");
 			 return map;
 		 }
 		    //修改vip数据
 		 vipMapper.updateByPrimaryKey(vip);
-		
-	
-		 	
-		
+
 		//3修改商品库存
+		 
+			/*
+			 * for (Goods goods : listGoods) { goodsMapper.updateCount(goods.getGid()); }
+			 */
+		 
 		 for(int i = 0 ; i<listgoodsinstfromsql.size(); i++) {
 				int sqlcounts=listgoodsinstfromsql.get(i).getCounts();//数据库商品数量
 				int countfrom = listgoodsinstance.get(i).getCounts();//前台传入商品数量
@@ -180,6 +183,11 @@ public class CollectService {
 				GoodsinstanceExample goodinstexam = new GoodsinstanceExample();//跟新数据
 				goodinstexam.createCriteria().andGiidEqualTo(listgoodsinstfromsql.get(i).getGiid());
 				goodsinstanceMapper.updateByExample(listgoodsinstfromsql.get(i), goodinstexam);
+				//同时修改主表
+				// UPDATE `goods` SET counts=(SELECT SUM(counts) FROM `goodsinstance` WHERE gid=`goodsinstance`.`gid` AND gid=?) WHERE gid=? 
+				//sql 语句一求和  所以只要 获取 主表id就行了
+				goodsMapper.updateCount(listGoods.get(i).getGid());
+				
 			}
 		//4插入交易记录（获取会员信息 ，消费总金额）需要商品主/附表 ！！！用到主从插入
 			Record r = new Record();
@@ -188,6 +196,7 @@ public class CollectService {
 			//r.setName(vip.getName());
 			//r.setPhone(vip.getPhone());
 			r.setTradedate(new Date());
+			r.setPayment(payway);
 			recordMapper.insertSelective(r);
 			
 			Integer recordReturnId=r.getId();//获取主表返回id
@@ -202,7 +211,7 @@ public class CollectService {
 				rinsts.setArtno(listGoods.get(i).getArtno());//设置商品货号
 				recordinstanceMapper.insert(rinsts);
 			}
-			map.put("money", String.valueOf(aftRecordtotal));
+			map.put("mes", "应付"+String.valueOf(aftRecordtotal)+"元");
 			
 		}else {//不是会员
 			//1 .查商品库存
@@ -224,8 +233,8 @@ public class CollectService {
 					GoodsinstanceExample goodinstexam = new GoodsinstanceExample();//跟新数据
 					goodinstexam.createCriteria().andGiidEqualTo(listgoodsinstfromsql.get(i).getGiid());
 					goodsinstanceMapper.updateByExample(listgoodsinstfromsql.get(i), goodinstexam);
+					goodsMapper.updateCount(listGoods.get(i).getGid());
 				}
-			 
 			//4插入交易记录（获取会员信息 ，消费总金额）需要商品主/附表 ！！！用到主从插入
 				Record r = new Record();
 				r.setMoney(Recordtotal);
@@ -233,6 +242,7 @@ public class CollectService {
 				//r.setName(vip.getName());
 				//r.setPhone(vip.getPhone());
 				r.setTradedate(new Date());
+				r.setPayment(payway);
 				recordMapper.insertSelective(r);
 				
 				Integer recordReturnId=r.getId();//获取主表返回id
@@ -246,7 +256,7 @@ public class CollectService {
 					rinsts.setPrice(listGoods.get(i).getPrice());//设置商品单价
 					rinsts.setArtno(listGoods.get(i).getArtno());//设置商品货号
 					recordinstanceMapper.insert(rinsts);
-					map.put("money", String.valueOf(Recordtotal));
+					map.put("mes", "应付"+String.valueOf(Recordtotal)+"元");
 		}
 	}//else
 		return map;

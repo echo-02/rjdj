@@ -12,6 +12,7 @@ import com.accp.domain.Viplevel;
 import com.accp.service.ViplevelService;
 
 @Controller
+@RequestMapping(value="Viplevel")
 public class ViplevelController {
 
 	@Autowired

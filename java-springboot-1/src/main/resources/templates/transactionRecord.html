@@ -268,11 +268,11 @@ function checkbox(){
 function gopage(pageNum,vlaue){
 	if(vlaue==1){
 		$.ajax({
-			url:"[[@{/selectRecordBypage}]]",
+			url:"[[@{/Record/selectRecordBypage}]]",
 			type:"get",
 			data:{
 				pageNum:pageNum,
-				pageSize:2,
+				pageSize:10,
 				time:$("#test10").val(),
 				name:$("#name").val()
 			},
@@ -302,11 +302,11 @@ function gopage(pageNum,vlaue){
 		});
 	}else{
 		$.ajax({
-			url:"[[@{/selectRecordBypageByP}]]",
+			url:"[[@{/Record/selectRecordBypageByP}]]",
 			type:"get",
 			data:{
 				pageNum:pageNum,
-				pageSize:2,
+				pageSize:10,
 				time:$("#test10").val(),
 				name:$("#name").val()
 			},

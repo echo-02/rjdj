@@ -35,7 +35,7 @@ import com.accp.service.ViplevelService;
 import com.github.pagehelper.PageInfo;
 
 @Controller
-
+@RequestMapping(value="Vip")
 public class VipController {
 
 	@Autowired

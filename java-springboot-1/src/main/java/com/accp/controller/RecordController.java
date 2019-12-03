@@ -10,6 +10,7 @@ import com.accp.service.RecordService;
 import com.github.pagehelper.PageInfo;
 
 @Controller
+@RequestMapping(value="Record")
 public class RecordController {
 	@Autowired
 	private RecordService service;

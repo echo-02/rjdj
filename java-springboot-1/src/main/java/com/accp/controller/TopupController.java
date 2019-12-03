@@ -25,6 +25,7 @@ import com.accp.service.TopupService;
 import com.github.pagehelper.PageInfo;
 
 @Controller
+@RequestMapping(value="Topup")
 public class TopupController {
 
 	@Autowired
@@ -64,9 +65,7 @@ public class TopupController {
 	 public Map<String,String> insertTopup(Topup t){ 
 		//TopupExample exam = new TopupExample();
 		Map<String, String> map = new HashMap<String, String>();
-			service.insertTopup(t);
-			map.put("mes", "success");
-		 return map;
+			return service.insertTopup(t);
 	  
 	 }
 	 

@@ -15,6 +15,7 @@ import com.accp.domain.Vip;
 import com.accp.service.CollectService;
 
 @Controller
+@RequestMapping(value="Collect")
 public class CollectController {
 	@Autowired
 	private CollectService collectService;
@@ -22,9 +23,9 @@ public class CollectController {
 	@RequestMapping(value="/checkout")
 	@ResponseBody
 	public Map<String,String> checkout(String giid,String vipid,String count,String price,String payway){
-		collectService.checkout( giid, vipid, count, price,payway);
+		
 
-		return null;
+		return collectService.checkout( giid, vipid, count, price,payway);
 		
 	}
 	

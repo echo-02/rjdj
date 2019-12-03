@@ -300,11 +300,11 @@ $(function(){
 
 function selectTopupBypage(pageNum){
 	$.ajax({
-		url:"[[@{/selectTopupBypage}]]",
+		url:"[[@{/Topup/selectTopupBypage}]]",
 		type:"get",
 		data:{
 			pageNum:pageNum,
-			pageSize:15,
+			pageSize:10,
 			time:$("#test10").val(),
 			name:$("#name").val()
 		},
@@ -347,7 +347,7 @@ function gopage(pageNum){
 //充值
 function insertTopup(){
 	$.ajax({
-		url:"[[@{/insertTopup}]]",
+		url:"[[@{/Topup/insertTopup}]]",
 		type:"get",
 		data:{
 			phone:$("#id").val(),

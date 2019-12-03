@@ -220,7 +220,7 @@
 				
 				<div class="row" style="  margin-top: 15px;">
 					<div class="col-md-12">
-						<form th:action="@{/excelUpload}" method="post" enctype="multipart/form-data">
+						<form th:action="@{/Vip/excelUpload}" method="post" enctype="multipart/form-data">
 							请选择文件：<input class="btn btn-green" name="file" type="file">
 							<input class="btn btn-green" style="margin-top: 10px" type="submit" value="上传excel">
 						</form>
@@ -228,7 +228,7 @@
 				</div>
 				<div class="row" style="  margin-top: 15px;">
 					<div class="col-md-12">
-							<a style="display: inline-block; width: 110px;height: 20px;" th:href="@{/download}"> 下载模板文件</a>
+							<a style="display: inline-block; width: 110px;height: 20px;" th:href="@{/Vip/download}"> 下载模板文件</a>
 					</div>
 				</div>
 				
@@ -435,7 +435,7 @@
 			//查询所有vip等级信息
 			$(function(){
 				$.ajax({
-					url:"[[@{/selectAllViplevel}]]",
+					url:"[[@{/Viplevel/selectAllViplevel}]]",
 					type:"get",
 					data:{},
 					dataType:"json",
@@ -450,7 +450,7 @@
 			//查询所有vip等级信息(新增)
 				$(function(){
 				$.ajax({
-					url:"[[@{/selectViplevelexclude_1}]]",
+					url:"[[@{/Viplevel/selectViplevelexclude_1}]]",
 					type:"get",
 					data:{},
 					dataType:"json",
@@ -467,7 +467,7 @@
 				//查询所有vip等级信息(修改)
 				$(function(){
 				$.ajax({
-					url:"[[@{/selectViplevelexclude_1}]]",
+					url:"[[@{/Viplevel/selectViplevelexclude_1}]]",
 					type:"get",
 					data:{},
 					dataType:"json",
@@ -490,13 +490,13 @@
 			function gopage(pageNum){
 				//按条件查询分页
 				$.ajax({
-					url:"[[@{/selectVipByPage}]]",
+					url:"[[@{/Vip/selectVipByPage}]]",
 					type:"get",
 					data:{
 						name:$("#Vipname").val(),
 						vlid:$("#vlid").val(),
 						pageNum:pageNum,
-						pageSize:2
+						pageSize:10
 					},
 					dataType:"json",
 					success:function(res){
@@ -514,7 +514,7 @@
 						$.each(res.list,function(i,obj){
 							//查询对应的vip等级
 							$.ajax({
-							 	url:"[[@{/selectViplevelById}]]"+"/"+obj.vlid,
+							 	url:"[[@{/Viplevel/selectViplevelById}]]"+"/"+obj.vlid,
 							 	type:"get",
 							 	data:{},
 							 	dataType:"json",
@@ -525,7 +525,7 @@
 							 		$("#tbd").append("<tr><td>"+(i+1)+"</td><td>"+obj.name+"</td><td>"+obj.phone+"</td><td>"+obj.vlid+"</td><td>1</td><td>1111</td>"
 										 	+"<td>"+obj.balance+"</td><td>"+obj.integral+"</td><td>-</td><td data-toggle='modal' data-target='#myModal2' onclick='slectVipById("+obj.id+")'>编辑</td></tr>"); */
 							 		$.ajax({
-									 	url:"[[@{/selectVipMandC}]]"+"/"+obj.id,
+									 	url:"[[@{/Vip/selectVipMandC}]]"+"/"+obj.id,
 									 	type:"get",
 									 	data:{},
 									 	dataType:"json",
@@ -568,7 +568,7 @@
 		//新增会员
 		 function insertVip(){
 				$.ajax({
-					url:"[[@{/insertVip}]]",
+					url:"[[@{/Vip/insertVip}]]",
 					type:"get",
 					data:{
 						phone:$("#insertphone").val(),
@@ -582,7 +582,7 @@
 					},
 					dataType:"json",
 					success:function(res){
-						alert(res.mes);
+						//alert(res.mes);
 						window.location.href="[[@{/vipInfo}]]";
 					}
 					
@@ -592,7 +592,7 @@
 			//根据id查找会员
 			function slectVipById(id){
 				$.ajax({
-					url:"[[@{/selectVipById/}]]"+id,
+					url:"[[@{/Vip/selectVipById/}]]"+id,
 					type:"get",
 					data:{
 					
@@ -619,7 +619,7 @@
 			//编辑会员
 			 function updateVip(){
 				$.ajax({
-					url:"[[@{/updateVip}]]",
+					url:"[[@{/Vip/updateVip}]]",
 					type:"get",
 					data:{
 						id:$("#updateid").val(),
@@ -634,7 +634,7 @@
 					},
 					dataType:"json",
 					success:function(res){
-						alert(res.mes);
+						//alert(res.mes);
 						window.location.href="[[@{/vipInfo}]]";
 					}
 					
@@ -644,7 +644,7 @@
 			function exportExcel(){
 				name=$("#Vipname").val();
 				vlid=$("#vlid").val();
-				window.location.href="[[@{/exportExcel}]]?name="+name+"&vlid="+vlid;
+				window.location.href="[[@{/Vip/exportExcel}]]?name="+name+"&vlid="+vlid;
 			}
 			
 			</script>
