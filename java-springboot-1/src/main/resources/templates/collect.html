@@ -133,6 +133,7 @@
 			<div class="col-md-8">
 			</div>	
 			<div class="col-md-4">
+			<input type="text" class="btn btn-info" id="selectProduct" value="" onchange="selectProduct()">
 			<input type="button" class="btn btn-default" value="挂单" onclick="guadan()">
 			</div>
 		</div>	
@@ -149,7 +150,7 @@
 		  </div>
 		</div>
 		<div class="col-md-9">
-		  <div class="row" id="tbd">
+		  <div class="row" id="tbd" style=" height:500px ; overflow-y:scroll;">
 		  </div>
 		</div>
 	  </div>
@@ -267,7 +268,6 @@ var path="[[@{/}]]";
 
 $(function(){
 getGoods();//ajax获取商品
-
 });
 
 function getGoods(){
@@ -501,6 +501,36 @@ function OutOrders (){
 					   +"<td><a onclick='fromOrdertoCar("+p+")'>移至购物车</a></td></tr>");
 		}
 }
+// 12.03:10.19 添加前台查询
+function selectProduct(){
+	//$($this);
+	
+	$(".ct-product-title").each(function(index,ele){
+				//$(this).parent().parent().parent().css({"display":"block"});	
+				$(this).parent().parent().parent().show();
+		});	
+	
+	var name =$("#selectProduct").val();
+	if(''==name){
+		$(".ct-product-title").each(function(index,ele){
+				//$(this).parent().parent().parent().css({"display":"block"});	
+				$(this).parent().parent().parent().show();
+		});	
+	}else{
+		$(".ct-product-title").each(function(index,ele){
+			console.log($(this).html());
+			console.log(ele);
+			if(name!=$(this).html()){
+				//$(this).parent().parent().parent().css({"display":"none"});
+				$(this).parent().parent().parent().hide();
+			}
+			
+		});
+	}
+	//显示所有商品
+}
+
+
 
 </script>
 		 
