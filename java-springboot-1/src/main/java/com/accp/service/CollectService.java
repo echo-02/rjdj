@@ -94,7 +94,15 @@ public class CollectService {
 		Vip vip = new Vip();//如果vipid 不等于空 则查出vip  
 		VipExample vipexam = new VipExample();
 		vipexam.createCriteria().andPhoneEqualTo(vipid);
-		vip= vipMapper.selectByExample(vipexam).get(0);//获取了会员基本信息
+		List<Vip> list = vipMapper.selectByExample(vipexam);
+		if(0!=list.size()) {
+			vip=list.get(0);
+		}else {
+			map.put("mes", "账号不存在");
+			return map;
+		}
+		//vip= vipMapper.selectByExample(vipexam).get(0);//获取了会员基本信息
+		
 		//获取折扣
 		Viplevel viplv= new Viplevel();//获取会员等级信息
 		viplv =viplevelMapper.selectByPrimaryKey(vip.getVlid());

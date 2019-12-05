@@ -283,17 +283,17 @@ function getGoods(){
 				//console.info(len);
 				$.each(obj.goodsinstances,function(j,instances){
 					var len2 =obj.goodsinstances.length;
-					
+					if(instances.counts!=0){
 					$("#tbd").append('<div id="ttt" class="col-sm-4">'
 							+'<div class="ct-product">'
 							+'<div class="image"><img src='+path+obj.pic+' alt=""></div><div class="inner">'//图片
 							+'<a  class="btn btn-motive ct-product-button"><i class="fa fa-shopping-cart"></i></a>'
-							+'<h2 class="ct-product-name">'+obj.gname+'</h2><h2 class="ct-product-title">'+instances.giid+'</h2>'//商品名称 ,//商品id
-							+'<p class="">'+instances.barcode+'</p>'//商品描述
+							+'<h2 class="ct-product-title" style="font-size:larger;">'+obj.gname+'_'+instances.giid+'</h2>'//商品名称 ,//商品id
+							+'<p class="">'+instances.barcode+'/库存：'+instances.counts+'</p>'//商品描述
 							+'<p class="ct-product-description">'+instances.spec+'</p>'//商品描述
 							+'<span class="ct-product-price">$'+obj.price+'</span>'//商品价格
-							+'</div></div></div>');
-					
+							+'</div></div></div>');}
+					/* +'<h2 class="ct-product-title">'+obj.gname+'</h2><h2 class="ct-product-title">'+instances.giid+'</h2>'//商品名称 ,//商品id */
 					if(i==(len-1)&&j==(len2-1)){
 	 					 delete B;
 						  B=$("main").ctshop({
@@ -389,8 +389,10 @@ function gocheckout(){//传入参数（是否是会员id,*商品详情id，*商�
 	var price="-1";
 	var payway=$("#payway").val();
 		$(".ct-cart ol li span.ct-cart-name").each(function(index,ele){//循环获取商品名
-			
-			giid+=","+($(this).html());
+			var preid = $(this).html();
+			var i = preid.lastIndexOf("_");
+			var aftid=preid.substr(i+1);
+			giid+=","+(aftid);
 		});
 		$(".ct-cart ol li span.ct-cart-price").each(function(index,ele){//循环获取商品价格
 			price+=","+($(this).html());
@@ -416,7 +418,7 @@ function gocheckout(){//传入参数（是否是会员id,*商品详情id，*商�
 				dataType:"json",
 				success:function(res){
 					alert(res.mes);
-					window.location.href="[[@{/collect}]]";
+					//window.location.href="[[@{/collect}]]";
 				}
 			});
 		}
@@ -511,7 +513,18 @@ function selectProduct(){
 		});	
 	
 	var name =$("#selectProduct").val();
-	if(''==name){
+	var reg = new RegExp(name);
+	$(".ct-product-title").each(function(index,ele){
+		//$(this).parent().parent().parent().css({"display":"block"});	
+	
+		if($(this).html().match(reg)){
+			$(this).parent().parent().parent().show();
+		}else{
+			$(this).parent().parent().parent().hide();
+		}
+		
+});	
+/* 	if(''==name){
 		$(".ct-product-title").each(function(index,ele){
 				//$(this).parent().parent().parent().css({"display":"block"});	
 				$(this).parent().parent().parent().show();
@@ -526,7 +539,7 @@ function selectProduct(){
 			}
 			
 		});
-	}
+	} */
 	//显示所有商品
 }
 
