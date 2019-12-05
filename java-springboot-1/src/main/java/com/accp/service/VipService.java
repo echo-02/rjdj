@@ -70,6 +70,10 @@ public class VipService {
 
 	public void updateVip(Vip vip) {
 		// TODO Auto-generated method stub
+		Vip vip2 = new Vip();
+		vip2=mapper.selectByPrimaryKey(vip.getId());
+		vip.setBalance(vip2.getBalance());
+		vip.setIntegral(vip2.getIntegral());
 		mapper.updateByPrimaryKey(vip);
 	}
 

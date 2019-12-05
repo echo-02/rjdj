@@ -511,6 +511,7 @@
 							Prepage=;
 						} */
 						$("#tft").html("<tr><td></td><td></td><td></td><td></td><td>总页数:"+res.pages+"</td><td><input type='text' id='topage'></td><td onclick='topage()'>--></td><td><a onclick='gopage("+Prepage+")'>上一页</a></td><td><a onclick='gopage("+Nextpage+")'>下一页</a></td></tr>");
+						let index=0;
 						$.each(res.list,function(i,obj){
 							//查询对应的vip等级
 							$.ajax({
@@ -534,9 +535,9 @@
 									 		//添加table数据
 									 		console.log(res3);
 									 		
-									 		$("#tbd").append("<tr><td>"+(i+1)+"</td><td>"+obj.name+"</td><td>"+obj.phone+"</td><td>"+obj.vlid+"</td><td>"+res3.numbers+"</td><td>"+res3.money+"</td>"
+									 		$("#tbd").append("<tr><td>"+(index+1)+"</td><td>"+obj.name+"</td><td>"+obj.phone+"</td><td>"+obj.vlid+"</td><td>"+res3.numbers+"</td><td>"+res3.money+"</td>"
 												 	+"<td>"+obj.balance+"</td><td>"+obj.integral+"</td><td>-</td><td data-toggle='modal' data-target='#myModal2' onclick='slectVipById("+obj.id+")'>编辑</td></tr>");
-									 		
+									 		index++;
 									 	}
 									});
 							 	
